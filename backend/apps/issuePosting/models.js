@@ -1,24 +1,24 @@
-const {Sequelize} = require('./db');
+const {sequelize} = require('./db');
 const {DataTypes} = require('sequelize');
-const sequelize = new Sequelize('sqlite::memory:');
 
-export class Customer extends Model {
-    @Attribute(DataTypes.INTEGER)
-    @PrimaryKey
-    @AutoIncrement
-    customerID;
+sequelize.define('Customer', {
+    username:{
+        type:DataTypes.STRING,
+        validate:{
+            max:20
+        }
+    },
+    language:{
+        type:DataTypes.STRING
+    }
+})
 
-    @Attribute(DataTypes.STRING)
-    @NotNull
-    username;
-
-    @Attribute(DataTypes.STRING)
-    @NotNull
-    language;
+const syncModels = async () => {
+    sequelize.sync().then(() => {
+        console.log('Customer table created');
+    }).catch((error)=> {
+        console.errog('Unable to create table : ', error);
+    });
 }
 
-sequelize.sync().then(() => {
-    console.log('Customer table created');
-}).catch((error)=> {
-    console.errog('Unable to create table : ', error);
-});
+module.exports = {syncModels}
