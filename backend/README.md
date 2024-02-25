@@ -10,4 +10,6 @@ npm run start
 alternatively, you can run the script:
 ```
 .\scripts\run.bat
+
+npm install mysql
 ```
