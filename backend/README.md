@@ -12,4 +12,7 @@ alternatively, you can run the script:
 .\scripts\run.bat
 
 npm install mysql
+
+#for ORM
+npm install sequelize mysql2
 ```
