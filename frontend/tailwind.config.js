@@ -1,10 +1,17 @@
 module.exports = {
     content: [
         "./App.{js,jsx,ts,tsx}",
-        "./<custom directory>/**/*.{js,jsx,ts,tsx}",
+        "./pages/**/*.{html,js}",
+        "./components/**/*.{html,js}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                athensGray: "#efeff0",
+            },
+            width: {
+                "90vw": "90vw",
+            },
+        },
     },
-    plugins: [],
 };
