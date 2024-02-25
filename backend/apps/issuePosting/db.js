@@ -1,6 +1,6 @@
 const {Sequelize} = require('sequelize');
 const sequelize = new Sequelize(
-    'issuePostingDB',
+    'myDB',
     'root',
     'root',{
         dialect:'mysql',
