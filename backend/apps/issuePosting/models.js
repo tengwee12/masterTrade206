@@ -1,8 +1,8 @@
 const {sequelize} = require('./db');
 const {DataTypes} = require('sequelize');
 
-sequelize.define('Issues', {
-    reviewID: {
+sequelize.define('Issue', {
+    issueID: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -24,8 +24,15 @@ sequelize.define('Issues', {
     },
     address:{
         type:DataTypes.STRING
+    },
+    startDate: {
+        type:DataTypes.DATEONLY
+    },
+    endDate: {
+        type:DataTypes.DATEONLY
     }
 })
+
 
 const syncModels = async () => {
     sequelize.sync().then(() => {
