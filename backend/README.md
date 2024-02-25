@@ -7,6 +7,7 @@ under the backend folder run:
 npm run start
 ```
 
-alternatively you can run the script:
+alternatively, you can run the script:
+```
 .\scripts\run.bat
 ```
