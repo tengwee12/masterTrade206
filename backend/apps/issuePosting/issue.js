@@ -1,31 +1,15 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const {sequelize, connectToDB} = require('./db');
 
 app.get('/', (req, res) => {
     res.send('post backend is running!');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async ()=> {
     console.log(`Server is running on port ${PORT}`);
-});
-
-const mysql = require('mysql');
-
-// Create connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'issuePostingDB'
-});
-
-// Connect
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('MySQL connected...');
+    await connectToDB();
 });
 
 // Create a route to test the connection
