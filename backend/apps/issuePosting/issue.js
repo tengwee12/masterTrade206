@@ -95,6 +95,30 @@ app.get('/issues/date-range', async (req, res) => {  // this part is a bit buggy
     }
 });
 
+app.delete('/issues/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the issue post by ID
+        const issue = await Issue.findByPk(id);
+
+        // If issue post doesn't exist, return 404 Not Found
+        if (!issue) {
+            return res.status(404).json({ error: 'Issue post not found' });
+        }
+
+        // Delete the issue post
+        await issue.destroy();
+
+        // Respond with a success message
+        res.json({ message: 'Issue post deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting issue post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 
 
 

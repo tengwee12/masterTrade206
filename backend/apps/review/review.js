@@ -73,3 +73,27 @@ app.get('/reviews/:id', async (req, res) => {
     }
 });
 
+app.delete('/reviews/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the review by ID
+        const review = await Reviews.findByPk(id);
+
+        // If review doesn't exist, return 404 Not Found
+        if (!review) {
+            return res.status(404).json({ error: 'Review not found' });
+        }
+
+        // Delete the review
+        await review.destroy();
+
+        // Respond with a success message
+        res.json({ message: 'Review deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting review:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
