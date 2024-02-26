@@ -7,7 +7,7 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                athensGray: "#efeff0",
+                silver: "#c0c0c0",
             },
             width: {
                 "90vw": "90vw",

@@ -1,10 +1,12 @@
-import React from 'react'
-import { Text } from "react-native";
+import React from "react";
+import { Alert, Text, Pressable } from "react-native";
 
 const ChatPage = () => {
-  return (
-    <Text>ChatPage</Text>
-  )
-}
+    return (
+        <>
+            
+        </>
+    );
+};
 
-export default ChatPage
+export default ChatPage;
