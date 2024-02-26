@@ -9,7 +9,7 @@ export default function ListItem({ text }) {
 
     return (
         <TouchableOpacity
-            className="bg-athensGray rounded-lg cursor-pointer p-2 w-90vw m-4"
+            className="bg-athensGray rounded-lg p-2 w-90% m-4"
             onPress={handlePress}
         >
             <Text>{text}</Text>
