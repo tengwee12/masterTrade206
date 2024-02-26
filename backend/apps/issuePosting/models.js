@@ -1,8 +1,8 @@
 const {sequelize} = require('./db');
 const {DataTypes} = require('sequelize');
 
-sequelize.define('Issue', {
-    issueID: {
+const Issue = sequelize.define('Issue', {  //creates Issue model as a const so that can export to issue.js for use in api endpoint
+    issuePostID: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
@@ -36,10 +36,11 @@ sequelize.define('Issue', {
 
 const syncModels = async () => {
     sequelize.sync().then(() => {
-        console.log('Issue Posts table created');
+        console.log('Issue Posts table created/updated');
     }).catch((error)=> {
         console.errog('Unable to create table : ', error);
     });
 }
 
-module.exports = {syncModels}
+module.exports = {syncModels};  //exports the syncmodels function
+module.exports = { Issue, syncModels };  //exports the Issue model
