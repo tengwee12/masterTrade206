@@ -79,7 +79,7 @@ app.get('/issues/:id', async (req, res) => {
     }
 });
 
-app.get('/issues/date-range', async (req, res) => {
+app.get('/issues/date-range', async (req, res) => {  // this part is a bit buggy, potential fix needed
     const { startDate, endDate } = req.query;
     try {
         const issues = await Issue.findAll({
@@ -88,12 +88,16 @@ app.get('/issues/date-range', async (req, res) => {
                 endDate: { [Op.lte]: endDate }
             }
         });
-        res.json(issues);
+        res.json(issues); 
     } catch (error) {
         console.error('Error retrieving issues by date range:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+
+
+
 
 
 
