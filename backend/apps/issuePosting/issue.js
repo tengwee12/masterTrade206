@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3001;
 const { sequelize, connectToDB } = require('./db');
 const { syncModels } = require('./models')
 const { Issue } = require('./models'); // Import the Issue model
+const { Op } = require('sequelize');
 
 app.get('/', (req, res) => {
     res.send('post backend is running!');
@@ -62,8 +63,30 @@ app.post('/issues', async (req, res) => {  //REST API endpoint to update table t
     }
 });
 
+//returns any issue in the database that has an overlapping daterange with the input daterange
+app.get('/issues/date-range', async (req, res) => {
+  const startDate = req.query.startDate;
+  const endDate = req.query.endDate;
+  try {
+        const issues = await Issue.findAll({
+            where: {
+              [Op.or]: [
+                { startDate: { [Op.lte]: startDate },
+                endDate: { [Op.gte]: startDate } }, 
 
-// Retrieve Issue by ID
+                {startDate: { [Op.gte]: startDate},
+                startDate: { [Op.lte]: endDate} }
+              ]
+            }
+        });
+        res.json(issues)
+    } catch (error) {
+        console.error('Error retrieving issues by date range:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+//Retrieve Issue by ID
 app.get('/issues/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -116,22 +139,6 @@ app.put('/issues/image/:id', async (req, res) => {
       }
     } catch (error) {
         console.error('Error retrieving issue:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.get('/issues/date-range', async (req, res) => {  // this part is a bit buggy, potential fix needed
-    const { startDate, endDate } = req.query;
-    try {
-        const issues = await Issue.findAll({
-            where: {
-                startDate: { [Op.gte]: startDate },
-                endDate: { [Op.lte]: endDate }
-            }
-        });
-        res.json(issues); 
-    } catch (error) {
-        console.error('Error retrieving issues by date range:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
