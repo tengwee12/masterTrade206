@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat App</title>
+    <style>
+        #messages {
+            height: 200px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Chat App</h1>
+    <div id="messages"></div>
+    <input type="text" id="messageInput" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const ws = new WebSocket('ws://localhost:3000');
+    
+        // Set binaryType to 'blob'
+        ws.binaryType = 'blob';
+    
+        // Function to append a message to the messages div
+        function appendMessage(message) {
+            const p = document.createElement('p');
+            p.textContent = message;
+            messagesDiv.appendChild(p);
+        }
+    
+        // Function to send a message to the WebSocket server
+        function sendMessage() {
+            const message = messageInput.value;
+            ws.send(message);
+            messageInput.value = '';
+        }
+    
+        // Event listener to handle incoming messages from the server
+        ws.onmessage = function(event) {
+            // Convert Blob object to string
+            const reader = new FileReader();
+            reader.onload = function() {
+                const message = reader.result;
+                appendMessage(message);
+            };
+            reader.readAsText(event.data);
+        };
+    </script>
+    
+</body>
+</html>
