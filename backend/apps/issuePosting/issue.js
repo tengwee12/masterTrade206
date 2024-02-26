@@ -79,6 +79,47 @@ app.get('/issues/:id', async (req, res) => {
     }
 });
 
+// Update startDate, endDate, by ID
+app.put('/issues/date-range/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+      const { startDate, endDate } = req.body;
+      const issue = await Issue.findByPk(id);
+      if (issue) {
+          //update begins here
+          issue.startDate = startDate;
+          issue.endDate = endDate;
+          await issue.save();
+          res.json(issue);
+      } else {
+          res.status(404).json({ error: 'Issue not found' });
+      }
+    } catch (error) {
+        console.error('Error retrieving issue:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Update image_link, by ID
+app.put('/issues/image/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+      const { image_link } = req.body;
+      const issue = await Issue.findByPk(id);
+      if (issue) {
+          //update begins here
+          issue.image_link = image_link;
+          await issue.save();
+          res.json(issue);
+      } else {
+          res.status(404).json({ error: 'Issue not found' });
+      }
+    } catch (error) {
+        console.error('Error retrieving issue:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.get('/issues/date-range', async (req, res) => {  // this part is a bit buggy, potential fix needed
     const { startDate, endDate } = req.query;
     try {
