@@ -1,10 +1,8 @@
-import React from 'react'
+import React from "react";
 import { Text } from "react-native";
 
 const ReviewPage = () => {
-  return (
-    <Text>ReviewPage</Text>
-  )
-}
+    return;
+};
 
-export default ReviewPage
+export default ReviewPage;

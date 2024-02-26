@@ -1,11 +1,28 @@
-import { Text } from "react-native";
+import { View, Text, Alert } from "react-native";
+import Button from "../../components/Button";
 
 export default function App() {
+    const handlePress = (serviceType) => {
+        Alert.alert(serviceType);
+    };
+
     return (
-        <>
-            <Text>This is the post page</Text>
-            <Text>Step 1 of 5</Text>
-            <Text className="text-lg font-bold">What kind of service are you looking for?</Text>
-        </>
+        <View className="p-4">
+            <Text className="pb-2 pt-2">
+                Step 1 of 5
+            </Text>
+            <Text className="font-bold text-lg pb-2">
+                What kind of service are you looking for?
+            </Text>
+            <Button text="Pipes" onPress={() => handlePress("Pipes")} />
+            <Button
+                text="Ceiling Leak"
+                onPress={() => handlePress("Ceiling Leak")}
+            />
+            <Button
+                text="Toilet Bowl"
+                onPress={() => handlePress("Toilet Bowl")}
+            />
+        </View>
     );
 }
