@@ -1,7 +1,7 @@
 const {sequelize} = require('./db');
 const {DataTypes} = require('sequelize');
 
-sequelize.define('Review', {
+const Reviews = sequelize.define('Review', {
     reviewID: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -12,9 +12,6 @@ sequelize.define('Review', {
     },
     plumberId:{
         type:DataTypes.INTEGER,
-        validate:{
-            max:20
-        }
     },
     description:{
         type:DataTypes.STRING
@@ -30,10 +27,11 @@ sequelize.define('Review', {
 
 const syncModels = async () => {
     sequelize.sync().then(() => {
-        console.log('Issue Posts table created');
+        console.log('Review table created');
     }).catch((error)=> {
         console.errog('Unable to create table : ', error);
     });
 }
 
-module.exports = {syncModels}
+//module.exports = {syncModels}
+module.exports = { Reviews, syncModels };  //exports the Issue model

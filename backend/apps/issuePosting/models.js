@@ -42,5 +42,5 @@ const syncModels = async () => {
     });
 }
 
-module.exports = {syncModels};  //exports the syncmodels function
+//module.exports = {syncModels};  //exports the syncmodels function
 module.exports = { Issue, syncModels };  //exports the Issue model
