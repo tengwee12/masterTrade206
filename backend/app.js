@@ -4,6 +4,7 @@ const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+require('./config/passport')(passport);
 
 // database
 const { Sequelize } = require('sequelize');
@@ -22,6 +23,8 @@ const apiRoute = require('./apps/api');
 // Body parser middleware to parse HTTP body in order to read HTTP data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(passport.initialize());
 
 // cors
 app.use(cors());

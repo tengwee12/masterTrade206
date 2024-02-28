@@ -39,7 +39,14 @@ const setUpDB = (drop) => {
                 endDate: Date.now(),
               }
             ])
-            .then(() => console.log("successfully added intial data"))
+            .then(() => console.log("successfully added intial posting data"))
+            .catch((err) => console.log(err));
+          
+            User.create({
+              email: "test@gmail.com",
+              password: "12345"
+            })
+            .then(() => console.log("successfully added intial user data"))
             .catch((err) => console.log(err));
         })
         .catch((err) => {
