@@ -1,4 +1,3 @@
-// ChatPage.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Message from './Message';
@@ -12,7 +11,7 @@ const ChatPage = () => {
         message="Hello. How are you today?"
         time="11:00"
         isSent={false}
-      />
+      />    
       <Message
         message="Hey! I'm fine. Thanks for asking!"
         time="11:01"
