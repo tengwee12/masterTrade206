@@ -3,6 +3,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const passport = require('passport');
 
 // database
 const { Sequelize } = require('sequelize');
@@ -31,6 +32,10 @@ app.use('/api', apiRoute);
 // default route
 app.get('/', (req, res) => {
     res.send('server is running!');
+});
+
+app.get('/protected', passport.authenticate('jwt', {session: false}), (req, res) => {
+    res.send('auth success!');
 });
 
 app.listen(PORT, () => {
