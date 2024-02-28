@@ -1,6 +1,9 @@
 const db = require("./db");
 
 const Issue = require("../apps/issue/model");
+const Review = require("../apps/review/model");
+const User = require("../apps/user/model");
+
 const setUpDB = (drop) => {
   db.authenticate()
     .then(() => {

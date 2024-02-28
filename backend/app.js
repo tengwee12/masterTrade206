@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 // database
 const { Sequelize } = require('sequelize');
@@ -17,12 +18,15 @@ const app = express();
 // import routes
 const apiRoute = require('./apps/api');
 
-// use routes
-app.use('/api', apiRoute);
-
-    
 // Body parser middleware to parse HTTP body in order to read HTTP data
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+// cors
+app.use(cors());
+
+// use routes
+app.use('/api', apiRoute);
 
 // default route
 app.get('/', (req, res) => {
