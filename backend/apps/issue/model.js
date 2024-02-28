@@ -8,10 +8,13 @@ const Issue = db.define('Issue', {
         primaryKey: true
     },
     customerId:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.INTEGER
     },
     description:{
-        type:DataTypes.STRING
+        type:DataTypes.TEXT,
+        validate: {
+            max: 1000
+        }
     },
     title:{
         type:DataTypes.STRING
