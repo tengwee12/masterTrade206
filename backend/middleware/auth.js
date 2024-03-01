@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 
+
 function issueJWT(user) {
   const email = user.email;
 
@@ -15,7 +16,7 @@ function issueJWT(user) {
   });
 
   return {
-    token: "Bearer " + signedToken,
+    token: signedToken,
     expires: expiresIn,
   };
 }
@@ -24,7 +25,7 @@ module.exports.issueJWT = issueJWT;
 
 //verification for JWT
 function verifyJWT(req, res, next) {
-  const token = req.headers.authorization;
+  const token = req.cookies.token;
 
   if (!token) {
     return res.status(401).json({ message: 'Please log in first!' });
