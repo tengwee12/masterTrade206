@@ -8,6 +8,7 @@ module.exports = {
         extend: {
             colors: {
                 silver: "#c0c0c0",
+                inputGray: "#d0d0d0",
             },
             width: {
                 "90vw": "90vw",

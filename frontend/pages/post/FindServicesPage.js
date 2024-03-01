@@ -23,7 +23,7 @@ export default function App({navigation}) {
                 onPress={() => handlePress("Toilet Bowl")}
             />
 
-            <Button text="Go to Media Upload Page" onPress={() => navigation.navigate('PictureUploadPage')}/>
+            <Button text="Go to Media Upload Page" onPress={() => navigation.navigate('MediaUploadPage')}/>
         </View>
     );
 }
