@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostScreen from "./pages/post/PostPage";
+import PostScreen from "./pages/post/Post";
 import ChatScreen from "./pages/chat/ChatPage";
 import ReviewScreen from "./pages/review/ReviewPage";
 
