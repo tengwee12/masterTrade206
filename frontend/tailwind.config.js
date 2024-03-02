@@ -9,6 +9,7 @@ module.exports = {
             colors: {
                 silver: "#c0c0c0",
                 purple: '#7c15ff'
+                inputGray: "#d0d0d0",
             },
             width: {
                 "90vw": "90vw",
