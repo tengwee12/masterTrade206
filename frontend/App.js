@@ -17,9 +17,13 @@ export default function App() {
         return <Text>Fonts not loaded</Text>
     } else {
         return (
-            <NavigationContainer>
-                {isAuthenticated ? <TabNavigator /> : <AuthStack />}
-            </NavigationContainer>
+            <>
+                <NavigationContainer>
+                    {isAuthenticated ? <TabNavigator /> : <AuthStack />}
+                </NavigationContainer>
+                <YourPostsScreen />
+            </>
+            
         );
     }
 
