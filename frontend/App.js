@@ -5,6 +5,8 @@ import AuthStack from "./navigation/AuthStack";
 import { useFonts, Poppins_800ExtraBold } from "@expo-google-fonts/poppins"
 import { Text } from "react-native"
 
+import YourPostsScreen from './pages/post/YourPostsScreen';
+
 export default function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [fontsLoaded] = useFonts({
@@ -20,4 +22,6 @@ export default function App() {
             </NavigationContainer>
         );
     }
+
+    
 }
