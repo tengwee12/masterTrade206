@@ -1,20 +1,23 @@
-import { Text, View } from "react-native";
+import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostScreen from "./pages/post/Post";
-import ChatScreen from "./pages/chat/ChatPage";
-import ReviewScreen from "./pages/review/ReviewPage";
-
-const Tab = createBottomTabNavigator();
+import TabNavigator from "./navigation/TabNavigator";
+import AuthStack from "./navigation/AuthStack";
+import { useFonts, Poppins_800ExtraBold } from "@expo-google-fonts/poppins"
+import { Text } from "react-native"
 
 export default function App() {
-    return (
-        <NavigationContainer>
-            <Tab.Navigator initialRouteName="Home">
-                <Tab.Screen name="Chat" component={ChatScreen} />
-                <Tab.Screen name="Review" component={ReviewScreen} />
-                <Tab.Screen name="Post" component={PostScreen} />
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [fontsLoaded] = useFonts({
+        Poppins_800ExtraBold
+    })    
+
+    if (!fontsLoaded) {
+        return <Text>Fonts not loaded</Text>
+    } else {
+        return (
+            <NavigationContainer>
+                {isAuthenticated ? <TabNavigator /> : <AuthStack />}
+            </NavigationContainer>
+        );
+    }
 }
