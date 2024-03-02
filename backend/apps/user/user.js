@@ -18,9 +18,6 @@ router.get("/login", async (req, res, next) => {
 
         if (user.password === req.body.password) {
             const tokenObject = auth.issueJWT(user);
-            res.cookie("token", tokenObject.token, {
-                httpOnly: true,
-              });
             res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
 
         } else {
