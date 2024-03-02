@@ -1,20 +1,14 @@
-import { Text, View } from "react-native";
+import { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import PostScreen from "./pages/post/PostPage";
-import ChatScreen from "./pages/chat/ChatPage";
-import ReviewScreen from "./pages/review/ReviewPage";
-
-const Tab = createBottomTabNavigator();
+import TabNavigator from "./navigation/TabNavigator";
+import AuthStack from "./navigation/AuthStack";
 
 export default function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+
     return (
         <NavigationContainer>
-            <Tab.Navigator initialRouteName="Home">
-                <Tab.Screen name="Chat" component={ChatScreen} />
-                <Tab.Screen name="Review" component={ReviewScreen} />
-                <Tab.Screen name="Post" component={PostScreen} />
-            </Tab.Navigator>
+            {isAuthenticated ? <TabNavigator /> : <AuthStack />}
         </NavigationContainer>
     );
 }

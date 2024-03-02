@@ -8,9 +8,13 @@ module.exports = {
         extend: {
             colors: {
                 silver: "#c0c0c0",
+                purple: '#7c15ff'
             },
             width: {
                 "90vw": "90vw",
+            },
+            fontFamily: {
+                poppinsExtrabold: ['Poppins_800ExtraBold'],
             },
         },
     },
