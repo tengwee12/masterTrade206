@@ -2,12 +2,18 @@ import { useState } from "react";
 import { SafeAreaView, View, Text, Image, TextInput } from "react-native";
 import PurpleButton from "../../components/PurpleButton";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import axiosInstance from "../../services/axios"
 
 export default function AuthScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    const response = await axiosInstance.get("/api/user/login", {
+      username: email,
+      password: password
+    })
+  };
 
   return (
     <SafeAreaView>
