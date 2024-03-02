@@ -1,5 +1,5 @@
 // step 3 of 5
-import { View, Text, SafeAreaView, TextInput } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import Button from "../../components/Button";
 import { useState } from "react";
 
@@ -21,8 +21,8 @@ const DescribeIssuePage = ({ navigation }) => {
             />
 
             <Button
-                text="Go to Input Availability Page"
-                onPress={() => navigation.navigate("InputAvailabilityPage")}
+                text="Go to Input Availability Screen"
+                onPress={() => navigation.navigate("InputAvailabilityScreen")}
             />
         </View>
     );
