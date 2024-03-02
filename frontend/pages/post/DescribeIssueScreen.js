@@ -21,8 +21,8 @@ const DescribeIssuePage = ({ navigation }) => {
             />
 
             <Button
-                text="Go to Input Availability Page"
-                onPress={() => navigation.navigate("InputAvailabilityPage")}
+                text="Go to Input Availability Screen"
+                onPress={() => navigation.navigate("InputAvailabilityScreen")}
             />
         </View>
     );

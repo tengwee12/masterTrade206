@@ -9,7 +9,7 @@ const YourPostsPage = ({navigation}) => {
             A user will be able to see posts that they have created. {"\n"}
             The user can also click the button to create a new post.
         </Text>
-        <Button text="New post" onPress={() => navigation.navigate("FindServicesPage")} />
+        <Button text="New post" onPress={() => navigation.navigate("FindServicesScreen")} />
     </View>;
 };
 

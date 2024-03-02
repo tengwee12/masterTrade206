@@ -7,7 +7,7 @@ const SelectLocationPage = ({ navigation }) => {
         Alert.alert("Post created!", "", [
             {
                 text: "OK",
-                onPress: () => navigation.navigate("YourPostsPage"),
+                onPress: () => navigation.navigate("YourPostsScreen"),
             },
         ]);
     };

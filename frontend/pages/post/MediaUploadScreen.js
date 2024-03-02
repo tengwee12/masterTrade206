@@ -6,7 +6,7 @@ const PictureUploadPage = ({navigation}) => {
     return (
         <View className="p-4">
             <Text>Photo/Video upload function will be here</Text>
-            <Button text="Go to Describe Issue Page" onPress={() => navigation.navigate('DescribeIssuePage')}/>
+            <Button text="Go to Describe Issue Screen" onPress={() => navigation.navigate('DescribeIssueScreen')}/>
         </View>
     );
 };
