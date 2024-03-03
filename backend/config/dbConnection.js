@@ -3,6 +3,7 @@ const db = require("./db");
 const Issue = require("../apps/issue/model");
 const Review = require("../apps/review/model");
 const User = require("../apps/user/model");
+const Plumber = require("../apps/plumber/model");
 
 const setUpDB = (drop) => {
   db.authenticate()
@@ -48,6 +49,14 @@ const setUpDB = (drop) => {
             })
             .then(() => console.log("successfully added intial user data"))
             .catch((err) => console.log(err));
+
+            Plumber.create({
+              email: "plumberChuan@gmail.com",
+              password: "12345"
+            })
+            .then(() => console.log("successfully added intial user(plumber) data"))
+            .catch((err) => console.log(err));
+            
         })
         .catch((err) => {
           console.log(err);
