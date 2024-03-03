@@ -9,18 +9,22 @@ const Review = db.define('Review', {
     },
     customerId:{
         type:DataTypes.INTEGER,
+        allowNull: false
     },
     plumberId:{
         type:DataTypes.INTEGER,
+        allowNull: false
     },
     description:{
         type:DataTypes.STRING
     },
     dateTime:{
-        type:DataTypes.STRING
+        type:DataTypes.STRING,
+        allowNull: false
     },
     rating:{
         type:DataTypes.INTEGER,
+        allowNull: false
     },
     media:{
         type:DataTypes.STRING,

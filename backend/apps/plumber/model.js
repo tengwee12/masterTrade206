@@ -12,15 +12,18 @@ const Plumber = db.define('Plumber', {
         validate: {
             isEmail: true
         },
+        allowNull: false
     },
     password:{
         type:DataTypes.STRING,
+        allowNull: false
     },
     description:{
         type:DataTypes.TEXT
     },
     license:{
-        type:DataTypes.BOOLEAN
+        type:DataTypes.BOOLEAN,
+        defaultValue: false
     },
     image:{
         type:DataTypes.STRING,

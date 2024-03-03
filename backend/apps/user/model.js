@@ -12,9 +12,11 @@ const User = db.define('User', {
         validate: {
             isEmail: true
         },
+        allowNull: false
     },
     password:{
         type:DataTypes.STRING,
+        allowNull: false
     }
 });
 

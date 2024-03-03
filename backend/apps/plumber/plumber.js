@@ -49,4 +49,65 @@ router.post("/register", async (req, res) => {
     })
 });
 
+// Update description, by ID
+router.put("/description/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const { description } = req.body;
+      const plumber = await Plumber.findByPk(id);
+      if (plumber) {
+        //update begins here
+        plumber.description = description;
+        await plumber.save();
+        res.json(plumber);
+      } else {
+        res.status(404).json({ error: "Plumber account not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  
+// Update license, by ID
+router.put("/license/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const { license } = req.body;
+      const plumber = await Plumber.findByPk(id);
+      if (plumber) {
+        //update begins here
+        plumber.license = license;
+        await plumber.save();
+        res.json(plumber);
+      } else {
+        res.status(404).json({ error: "Plumber account not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+  // Update profile pic, by ID
+router.put("/image/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+      const { image } = req.body;
+      const plumber = await Plumber.findByPk(id);
+      if (plumber) {
+        //update begins here
+        plumber.image = image;
+        await plumber.save();
+        res.json(plumber);
+      } else {
+        res.status(404).json({ error: "Plumber account not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
 module.exports = router;
