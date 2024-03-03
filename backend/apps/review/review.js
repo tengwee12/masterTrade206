@@ -38,7 +38,7 @@ app.get('/reviews', async (req, res) => {  //REST API endpoint to get all the ro
 app.post('/reviews', async (req, res) => {
     try {
         // Extract data from the request body
-        const { customerId, plumberId, description, dateTime, rating } = req.body;
+        const { customerId, plumberId, description, dateTime, rating, media } = req.body;
 
         // Create a new review record in the database
         const newReview = await Reviews.create({
@@ -46,7 +46,8 @@ app.post('/reviews', async (req, res) => {
             plumberId,
             description,
             dateTime,
-            rating
+            rating,
+            media
         });
 
         // Respond with the newly created review
