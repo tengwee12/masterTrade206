@@ -4,6 +4,9 @@ const db = require('../../config/db');
 const User = db.define('User', {
     email: {
         type: DataTypes.STRING,
+        validate: {
+            isEmail: true
+        },
         primaryKey: true
     },
     password:{
