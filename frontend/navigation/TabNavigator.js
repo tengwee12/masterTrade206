@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatScreen from "../pages/chat/ChatPage";
 import ReviewScreen from "../pages/review/ReviewPage";
-import PostScreen from "./PostPage";
 import HomePage from "../pages/HomePage";
 import { Ionicons } from '@expo/vector-icons';
+import PostStack from "./PostStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +37,7 @@ export default function TabNavigator() {
       <Tab.Screen name="Home" component={HomePage} />
       <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Review" component={ReviewScreen} />
-      <Tab.Screen name="Post" component={PostScreen} />
+      <Tab.Screen name="PostStack" component={PostStack} />
     </Tab.Navigator>
   );
 }

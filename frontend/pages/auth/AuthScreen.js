@@ -2,10 +2,10 @@ import { useState } from "react";
 import { SafeAreaView, View, Text, Image, TextInput } from "react-native";
 import PurpleButton from "../../components/PurpleButton";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
-import { axiosInstance } from "../../services/axios"
-import * as SecureStore from 'expo-secure-store';
- 
-export default function AuthScreen() {
+import { axiosInstance } from "../../services/axios";
+import * as SecureStore from "expo-secure-store";
+
+export default function AuthScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,21 +13,33 @@ export default function AuthScreen() {
     try {
       const response = await axiosInstance.post("/api/user/login", {
         username: email,
-        password: password
-      })
-      console.log(response.data.token)
-      await SecureStore.setItemAsync('token', response.data.token);
+        password: password,
+      });
+      console.log(response.data.token);
+      await SecureStore.setItemAsync("token", response.data.token);
+      navigation.navigate('TabNavigator')
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
     }
   };
 
   return (
     <SafeAreaView>
+      <Image
+        source={require("../../assets/tap-left.png")}
+        className="absolute left-0 top-8 w-20"
+        resizeMode="contain"
+      />
+      <Image
+        source={require("../../assets/tube-right.png")}
+        className="absolute right-0 top-44"
+        resizeMode="contain"
+      />
       <View className="flex flex-col justify-center items-center gap-y-2 p-4">
         <Image
           source={require("../../assets/3d-plumber.png")}
-          className="w-24 h-64"
+          className="h-72"
+          resizeMode="contain"
         />
         <Text className="font-bold text-center text-2xl">
           Login to MasterTrade
