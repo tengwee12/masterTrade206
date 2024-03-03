@@ -32,15 +32,19 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/register", async (req, res) => {
     const { email, password } = req.body;
-    User.findOne({ email: email })
+    User.findOne({where: { email: req.body.email }})
     .then((user) => {
         if (user) {
-            return res.status(400).json({ success:: false, msg: "this email already exists"});
+            return res.status(400).json({ success: false, msg: "this email already exists"});
         } else {
             User.create({
                 email,
                 password
             })
+              .catch((err) => {
+                response.status(500).end();
+              });
+            res.status(200).json({ success: true, msg: "you are now registered!"})
         }
     })
 });
