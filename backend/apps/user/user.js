@@ -10,7 +10,7 @@ router.get('/protected', passport.authenticate('jwt', { session: false }), (req,
 });
 
 router.post("/login", async (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({where: { email: req.body.email }})
     .then((user) => {
         if (!user) {
             return res.status(401).json({ success: false, msg: "could not find user" });
