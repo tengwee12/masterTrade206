@@ -21,6 +21,24 @@ const Review = db.define('Review', {
     },
     rating:{
         type:DataTypes.INTEGER,
+    },
+    media1:{
+        type:DataTypes.STRING,
+        validate: {
+            isUrl: true
+        }
+    },
+    media2:{
+        type:DataTypes.STRING,
+        validate: {
+            isUrl: true
+        }
+    },
+    media3:{
+        type:DataTypes.STRING,
+        validate: {
+            isUrl: true
+        }
     }
 
 });
