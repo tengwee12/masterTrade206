@@ -9,7 +9,7 @@ router.get('/protected', passport.authenticate('jwt', { session: false }), (req,
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
-router.get("/login", async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
     User.findOne({ email: req.body.email })
     .then((user) => {
         if (!user) {
