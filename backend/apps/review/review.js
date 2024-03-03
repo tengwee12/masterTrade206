@@ -3,10 +3,11 @@ const router = express.Router();
 const middleware = require("../../middleware/auth")
 
 const Review = require("./model");
+router.use(middleware.verifyJWT);
 
 router.get('/', async (req, res) => {  //REST API endpoint to get all the rows in Reviews
     try {
-        const reviews = await Reviews.findAll();  //integrated sequelize function, no need to add own boilerplate
+        const reviews = await Review.findAll();  //integrated sequelize function, no need to add own boilerplate
         console.log("stuff has been fetched\n");
         res.json(reviews);
     } catch (error) {
