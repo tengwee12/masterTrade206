@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TextInput } from 'react-native';
 import Message from './Message';
 import Quotation from './Quotation'; // Import the Quotation component
 
@@ -27,6 +27,7 @@ const ChatPage = () => {
         time="11:05"
         isSent={true}
       />
+    <TextInput></TextInput>
     </View>
   );
 };
