@@ -1,33 +1,48 @@
-import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import Message from './Message';
-import Quotation from './Quotation'; // Import the Quotation component
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { GiftedChat } from 'react-native-gifted-chat';
+import Quotation from './Quotation';
+import Message from './Message'; // Import the Message component
 
 const ChatPage = () => {
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: 'Hello!',
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: 'React Native',
+          avatar: 'https://placeimg.com/140/140/any',
+        },
+      },
+    ]);
+  }, []);
+
+  const onSend = (newMessages = []) => {
+    setMessages((previousMessages) =>
+      GiftedChat.append(previousMessages, newMessages)
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Quotation plumberName="John Doe" quotation="$50 per hour" />
-      <Message
-        message="Hello. How are you today?"
-        time="11:00"
-        isSent={false}
-      />    
-      <Message
-        message="Hey! I'm fine. Thanks for asking!"
-        time="11:01"
-        isSent={true}
+      <GiftedChat
+        messages={messages}
+        onSend={(newMessages) => onSend(newMessages)}
+        user={{ _id: 1 }}
+        renderMessage={(props) => (
+          <Message
+            message={props.currentMessage.text}
+            time={props.currentMessage.createdAt} // Format the time properly
+            isSent={props.currentMessage.user._id === 1} // Assuming user 1 is the current user
+          />
+        )}
       />
-      <Message
-        message="Sweet! So, what do you wanna do today?"
-        time="11:02"
-        isSent={false}
-      />
-      <Message
-        message="Nah, I dunno. Play soccer.. or learn more coding perhaps?"
-        time="11:05"
-        isSent={true}
-      />
-    <TextInput></TextInput>
     </View>
   );
 };
@@ -40,3 +55,4 @@ const styles = StyleSheet.create({
 });
 
 export default ChatPage;
+
