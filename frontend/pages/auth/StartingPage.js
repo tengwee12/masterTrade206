@@ -3,6 +3,9 @@ import PurpleButton from "../../components/PurpleButton";
 import Logo from "../../components/Logo";
 
 export default StartingPage = ({ navigation }) => {
+  const handleGetStarted = () => {
+    navigation.push('AuthScreen');
+  };
   return (
     <SafeAreaView>
       <ImageBackground
@@ -18,7 +21,7 @@ export default StartingPage = ({ navigation }) => {
             Connecting you to skilled plumbers, with expert convenience at your
             doorstep
           </Text>
-          <PurpleButton text="Get Started" onPress={navigation.push('AuthScreen')} />
+          <PurpleButton text="Get Started" onPress={handleGetStarted} />
         </View>
       </ImageBackground>
     </SafeAreaView>
