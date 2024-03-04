@@ -19,9 +19,19 @@ const Issue = db.define('Issue', {
     title:{
         type:DataTypes.STRING
     },
-    imageLink:{
-        type:DataTypes.STRING
-    },
+    media: {
+        type: DataTypes.TEXT,
+        validate: {
+          isValidUrls(value) {
+            const urls = value.split(';');
+            for (const url of urls) {
+              if (!this.constructor.sequelize.Validator.isUrl(url.trim())) {
+                throw new Error(`Invalid URL: ${url}`);
+              }
+            }
+          }
+        }
+      },
     category:{
         type:DataTypes.STRING
     },
