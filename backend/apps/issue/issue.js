@@ -11,14 +11,6 @@ router.use(middleware.verifyJWT);
  * Get all issue
  */
 router.get("/", async (req, res) => {
-  // try {
-  //     const issues = await Issue.findAll();  //integrated sequelize function, no need to add own boilerplate
-  //     console.log("stuff has been fetched\n");
-  //     res.json(issues);
-  // } catch (error) {
-  //     console.error('Error retrieving issues:', error);
-  //     res.status(500).json({ error: 'Internal Server Error' });
-  // }
   Issue.findAll()
     .then((issue_list) => {
       res.status(200).json(issue_list);
@@ -33,28 +25,6 @@ router.get("/", async (req, res) => {
  * Add an issue
  */
 router.post("/", async (req, res) => {
-  // try {
-  //     // Extract data from the request body
-  //     const { customerId, description, title, image_link, category, address, startDate, endDate } = req.body;
-
-  //     // Create a new issue record in the database
-  //     const newIssue = await Issue.create({
-  //         customerId,
-  //         description,
-  //         title,
-  //         image_link,
-  //         category,
-  //         address,
-  //         startDate,
-  //         endDate
-  //     });
-
-  //     // Respond with the newly created issue
-  //     res.status(201).json(newIssue);
-  // } catch (error) {
-  //     console.error('Error adding new issue:', error);
-  //     res.status(500).json({ error: 'Internal Server Error' });
-  // }
 
   const { customerId, description, title, image_link, category, address, startDate, endDate } = req.body;
 

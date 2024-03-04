@@ -12,14 +12,14 @@ export default function AuthScreen({ navigation }) {
   const handleLogin = async () => {
     try {
       const response = await axiosInstance.post("/api/user/login", {
-        username: email,
+        email: email,
         password: password,
       });
       console.log(response.data.token);
       await SecureStore.setItemAsync("token", response.data.token);
       navigation.navigate('TabNavigator')
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
     }
   };
 

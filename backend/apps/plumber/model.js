@@ -1,32 +1,31 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../config/db');
 
-const Review = db.define('Review', {
-    reviewID: {
+const Plumber = db.define('Plumber', {
+    id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    customerId:{
-        type:DataTypes.INTEGER,
+    email: {
+        type: DataTypes.STRING,
+        validate: {
+            isEmail: true
+        },
         allowNull: false
     },
-    plumberId:{
-        type:DataTypes.INTEGER,
-        allowNull: false
-    },
-    description:{
-        type:DataTypes.STRING
-    },
-    dateTime:{
+    password:{
         type:DataTypes.STRING,
         allowNull: false
     },
-    rating:{
-        type:DataTypes.INTEGER,
-        allowNull: false
+    description:{
+        type:DataTypes.TEXT
     },
-    media:{
+    license:{
+        type:DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    image:{
         type:DataTypes.STRING,
         validate: {
             isUrl: true
@@ -35,4 +34,4 @@ const Review = db.define('Review', {
 
 });
 
-module.exports = Review;
+module.exports = Plumber;

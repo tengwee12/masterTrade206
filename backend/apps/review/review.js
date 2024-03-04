@@ -1,32 +1,13 @@
 const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3001;
-const {sequelize, connectToDB} = require('./db');
-const {syncModels} = require('./models')
-const { Reviews } = require('./models'); // Import the Reviews model
-const bodyParser = require('body-parser'); //imports the middleware to access REST requests
+const router = express.Router();
+const middleware = require("../../middleware/auth")
 
-app.get('/', (req, res) => {
-    res.send('reviews backend is running!');
-});
+const Review = require("./model");
+router.use(middleware.verifyJWT);
 
-
-app.listen(PORT, async ()=> {
-    console.log(`Server is running on port ${PORT}`);
-    await connectToDB();
-    await syncModels();
-});
-
-// Create a route to test the connection
-app.get('/', (req, res) => {
-  res.send('MySQL connection established!');
-});
-
-app.use(bodyParser.json()); //basically allows middleware to access and parse REST requests
-
-app.get('/reviews', async (req, res) => {  //REST API endpoint to get all the rows in Reviews
+router.get('/', async (req, res) => {  //REST API endpoint to get all the rows in Reviews
     try {
-        const reviews = await Reviews.findAll();  //integrated sequelize function, no need to add own boilerplate
+        const reviews = await Review.findAll();  //integrated sequelize function, no need to add own boilerplate
         console.log("stuff has been fetched\n");
         res.json(reviews);
     } catch (error) {
@@ -35,18 +16,19 @@ app.get('/reviews', async (req, res) => {  //REST API endpoint to get all the ro
     }
 });
 
-app.post('/reviews', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         // Extract data from the request body
-        const { customerId, plumberId, description, dateTime, rating } = req.body;
+        const { customerId, plumberId, description, dateTime, rating, media } = req.body;
 
         // Create a new review record in the database
-        const newReview = await Reviews.create({
+        const newReview = await Review.create({
             customerId,
             plumberId,
             description,
             dateTime,
-            rating
+            rating,
+            media
         });
 
         // Respond with the newly created review
@@ -58,10 +40,10 @@ app.post('/reviews', async (req, res) => {
 });
 
 // Retrieve review by ID
-app.get('/reviews/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const review = await Reviews.findByPk(id);
+        const review = await Review.findByPk(id);
         if (review) {
             res.json(review);
         } else {
@@ -73,12 +55,12 @@ app.get('/reviews/:id', async (req, res) => {
     }
 });
 
-app.delete('/reviews/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
         // Find the review by ID
-        const review = await Reviews.findByPk(id);
+        const review = await Review.findByPk(id);
 
         // If review doesn't exist, return 404 Not Found
         if (!review) {
@@ -96,4 +78,4 @@ app.delete('/reviews/:id', async (req, res) => {
     }
 });
 
-
+module.exports = router;
