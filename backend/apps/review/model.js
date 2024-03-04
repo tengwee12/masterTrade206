@@ -26,12 +26,19 @@ const Review = db.define('Review', {
         type:DataTypes.INTEGER,
         allowNull: false
     },
-    media:{
-        type:DataTypes.STRING,
+    media: {
+        type: DataTypes.TEXT,
         validate: {
-            isUrl: true
+          isValidUrls(value) {
+            const urls = value.split(';');
+            for (const url of urls) {
+              if (!this.constructor.sequelize.Validator.isUrl(url.trim())) {
+                throw new Error(`Invalid URL: ${url}`);
+              }
+            }
+          }
         }
-    }
+      }
 
 });
 

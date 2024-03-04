@@ -30,6 +30,20 @@ router.post("/login", async (req, res, next) => {
 
 });
 
+// Get all plumbers
+router.get('/getAllPlumbers', async (req, res) => {
+  try {
+    // Find all plumbers
+    const plumbers = await Plumber.findAll();
+
+    // Return the plumbers as JSON
+    res.json(plumbers);
+  } catch (error) {
+    console.error("Error retrieving plumbers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 router.post("/register", async (req, res) => {
     const { email, password } = req.body;
     Plumber.findOne({where: { email: req.body.email }})
@@ -69,6 +83,26 @@ router.put("/description/:id", async (req, res) => {
     }
   });
 
+// Retrieve plumber information by plumber ID
+router.get("/retrieve/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+      // Find the plumber by ID
+      const plumber = await Plumber.findByPk(id);
+
+      if (!plumber) {
+          // If plumber not found, return a 404 error
+          return res.status(404).json({ error: "Plumber not found" });
+      }
+
+      // Return the plumber information as JSON
+      res.json(plumber);
+  } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
   
 // Update license, by ID
 router.put("/license/:id", async (req, res) => {
@@ -95,7 +129,7 @@ router.put("/image/:id", async (req, res) => {
     const { id } = req.params;
     try {
       const { image } = req.body;
-      const plumber = await Plumber.findByPk(id);
+      const plumber = await Plumber.findByPk(id);  //overwrites everything though
       if (plumber) {
         //update begins here
         plumber.image = image;
