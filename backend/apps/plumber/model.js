@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const db = require('../../config/db');
 
+
 const Plumber = db.define('Plumber', {
     id: {
         type: DataTypes.INTEGER,
@@ -25,13 +26,20 @@ const Plumber = db.define('Plumber', {
         type:DataTypes.BOOLEAN,
         defaultValue: false
     },
-    image:{
-        type:DataTypes.STRING,
+    image: {
+        type: DataTypes.TEXT,
         validate: {
-            isUrl: true
+          isValidUrls(value) {
+            const urls = value.split(';');
+            for (const url of urls) {
+              if (!this.constructor.sequelize.Validator.isUrl(url.trim())) {
+                throw new Error(`Invalid URL: ${url}`);
+              }
+            }
+          }
         }
-    }
-
-});
+      }
+    });
+    
 
 module.exports = Plumber;
