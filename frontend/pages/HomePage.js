@@ -15,7 +15,9 @@ export default function HomePage({ navigation }) {
         <Logo />
         <PurpleButton text="Reset Navigation" onPress={handleResetNavigation} />
 
-        <PlumberProfile />
+        <View className="h-3/6">
+          <PlumberProfile />
+        </View>
     </SafeAreaView>
   );
 }
