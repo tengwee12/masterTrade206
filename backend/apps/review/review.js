@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const middleware = require("../../middleware/auth")
+
 
 const Review = require("./model");
-router.use(middleware.verifyJWT);
 
 router.get('/', async (req, res) => {  //REST API endpoint to get all the rows in Reviews
     try {

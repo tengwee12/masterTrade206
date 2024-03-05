@@ -7,9 +7,6 @@ const Issue = db.define('Issue', {
         autoIncrement: true,
         primaryKey: true
     },
-    customerId:{
-        type:DataTypes.INTEGER
-    },
     description:{
         type:DataTypes.TEXT,
         validate: {
