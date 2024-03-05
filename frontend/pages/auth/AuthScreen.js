@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, Image, TextInput } from "react-native";
 import PurpleButton from "../../components/PurpleButton";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { axiosInstance } from "../../services/axios";
-import * as SecureStore from "expo-secure-store";
+import { save } from "../../services/secureStore"
 
 export default function AuthScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export default function AuthScreen({ navigation }) {
         password: password,
       });
       console.log(response.data.token);
-      await SecureStore.setItemAsync("token", response.data.token);
+      await save("token", response.data.token);
       navigation.navigate('TabNavigator')
     } catch (err) {
       console.error(err.message);

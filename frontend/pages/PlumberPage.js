@@ -1,14 +1,16 @@
 import { SafeAreaView, View, Text, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function PlumberPage() {
+export default function PlumberPage({ route, navigation }) {
+  const { plumberID } = route.params;
+
   return (
     <SafeAreaView>
       <Image source={require("../assets/mario.png")} />
 
       <View className="flex flex-row items-center">
         <View>
-          <Text className="font-bold text-base">Plumber Phua</Text>
+          <Text className="font-bold text-base">Plumber {plumberID}</Text>
           <View className="flex flex-row items-center">
             <MaterialCommunityIcons
               name="check-decagram"
