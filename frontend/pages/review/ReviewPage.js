@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { SafeAreaView, Text, TextInput, View, Pressable } from "react-native";
+import { SafeAreaView, Text, TextInput, View, Pressable, Image } from "react-native";
 import { Rating } from "react-native-ratings";
 import PurpleButton from "../../components/PurpleButton";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
-import { uploadData } from 'aws-amplify/storage';
+import { uploadData } from "aws-amplify/storage";
+import { axiosInstance } from "../../services/axios";
+import { useNavigation } from "@react-navigation/native";
 
 const ReviewPage = ({ route }) => {
-  // const { plumberID } = route.params;
+  const navigation = useNavigation();
+
+  const { plumberID } = route.params;
   const [image, setImage] = useState();
   const [rating, setRating] = useState({});
   const [description, setDescription] = useState("");
@@ -22,18 +26,25 @@ const ReviewPage = ({ route }) => {
       quality: 1,
     });
 
+    if (result.canceled) {
+      return;
+    }
+
     console.log(result);
     try {
-      const img = await fetchImageFromUri(result.assets[0].uri)
-      console.log(img)
-      const uploadResult = await uploadData({key: result.assets[0].fileName,
-            data: img,
-            options: {
-            accessLevel: 'guest',
-      }}).result;
-      console.log('Succeeded ', uploadResult)
+      const img = await fetchImageFromUri(result.assets[0].uri);
+      console.log(img);
+      const uploadResult = await uploadData({
+        key: result.assets[0].fileName,
+        data: img,
+        options: {
+          accessLevel: "guest",
+        },
+      }).result;
+      setImage(uploadResult.key);
+      console.log("Succeeded ", uploadResult);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -44,18 +55,25 @@ const ReviewPage = ({ route }) => {
   };
 
   const handlePostReview = async () => {
-    let result = await axiosInstance.post("/api/review/", {
-      plumberId: plumberID,
-      customerId: 1,
-      description: description,
-      rating: rating,
-    });
+    try {
+      let result = await axiosInstance.post("/api/review/", {
+        plumberId: plumberID,
+        customerId: 1,
+        description: description,
+        dateTime: new Date(),
+        rating: rating,
+      });
+    console.log(result.data);
+      navigation.navigate('Plumber', { plumberID: plumberID });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <SafeAreaView>
       <View className="p-4 bg-white flex flex-col gap-y-4">
-        <Text>Rate your experience for {/* {plumberID} */}</Text>
+        <Text>Rate your experience for {plumberID}</Text>
         <Rating
           defaultRating={0}
           ratingCount={5}
@@ -80,13 +98,13 @@ const ReviewPage = ({ route }) => {
           <View>
             <Image
               source={{ uri: image }}
-              style={{ width: 250, height: 250 }}
+              className="h-24 w-24 rounded"
             />
           </View>
         )}
         <PurpleButton text="Post Review" onPress={handlePostReview} />
       </View>
-    </SafeAreaView> 
+    </SafeAreaView>
   );
 };
 

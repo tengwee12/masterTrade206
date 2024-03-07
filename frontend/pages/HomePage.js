@@ -9,17 +9,22 @@ export default function HomePage({ navigation }) {
   const [plumberList, setPlumberList] = useState([]);
 
   const fetchPlumberList = async () => {
-    let token = await getValueFor("token");
-    console.log("retrieved token", token);
+    try {
+      let token = await getValueFor("token");
+      console.log("retrieved token", token);
+      console.log("fetch plumbers")
 
-    const result = await axiosInstance.get("/api/plumber/getAllPlumbers", {
-      headers: {
-        Authorization: token,
-      },
-    });
+      const result = await axiosInstance.get("/api/plumber/getAllPlumbers", {
+        headers: {
+          Authorization: "INSERT TOKEN HERE",
+        },
+      });
 
-    console.log(result.data);
-    setPlumberList(result.data);
+      console.log(result.data);
+      setPlumberList(result.data);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   useEffect(() => {
