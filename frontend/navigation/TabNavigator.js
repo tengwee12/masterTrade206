@@ -4,6 +4,7 @@ import ReviewScreen from "../pages/review/ReviewPage";
 import HomePage from "../pages/HomePage";
 import { Ionicons } from '@expo/vector-icons';
 import PostStack from "./PostStack";
+import PlumberPage from "../pages/PlumberPage";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,9 +33,11 @@ export default function TabNavigator() {
         },
         tabBarActiveTintColor: "#7c15ff",
         tabBarInactiveTintColor: "gray",
+        headerShown: false
       })}
     >
       <Tab.Screen name="Home" component={HomePage} />
+      <Tab.Screen name="Plumber" component={PlumberPage} />
       <Tab.Screen name="Chat" component={ChatScreen} />
       <Tab.Screen name="Review" component={ReviewScreen} />
       <Tab.Screen name="PostStack" component={PostStack} />
