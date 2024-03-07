@@ -1,8 +1,37 @@
 import { SafeAreaView, View, Text, Image } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import PurpleButton from "../components/PurpleButton";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "../services/axios";
+import { useNavigation } from "@react-navigation/native";
 
-export default function PlumberPage({ route, navigation }) {
+export default function PlumberPage({ route }) {
   const { plumberID } = route.params;
+  const navigation = useNavigation();
+  const [reviews, setReviews] = useState([]);
+
+  const getReviews = async () => {
+    let result = await axiosInstance.get(
+      `/api/review/getByPlumber/${plumberID}`,
+      {
+        headers: {
+          Authorization:
+            "INSERT TOKEN HERE",
+        },
+      }
+    );
+
+    console.log(result.data);
+    setReviews(result.data);
+  };
+
+  const navigateToReviewForm = () => {
+    navigation.navigate("Review", { plumberID: plumberID });
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -40,6 +69,13 @@ export default function PlumberPage({ route, navigation }) {
         </View>
         <Text className="font-bold text-sm">Services Provided</Text>
         <Text className="font-bold text-sm">Reviews</Text>
+        <PurpleButton text="Write a Review" onPress={navigateToReviewForm} />
+        {reviews.length > 0 &&
+          reviews.map((r) => {
+            <View key={r.id}>
+              <Text>{r.description}</Text>
+            </View>;
+          })}
       </View>
     </SafeAreaView>
   );

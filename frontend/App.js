@@ -3,9 +3,12 @@ import TabNavigator from "./navigation/TabNavigator";
 import AuthStack from "./navigation/AuthStack";
 import { useFonts, Poppins_800ExtraBold } from "@expo-google-fonts/poppins";
 import { Text } from "react-native";
-
 import { createStackNavigator } from '@react-navigation/stack';
+import { Amplify } from "aws-amplify";
+import awsconfig from "./aws-exports";
+
 const Stack = createStackNavigator();
+Amplify.configure(awsconfig);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -18,7 +21,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="AuthStack" component={AuthStack}/>
+            {/* <Stack.Screen name="AuthStack" component={AuthStack}/> */}
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
         </Stack.Navigator>
       </NavigationContainer>
