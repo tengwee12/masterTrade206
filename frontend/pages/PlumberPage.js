@@ -1,14 +1,58 @@
-import { SafeAreaView, View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import PurpleButton from "../components/PurpleButton";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "../services/axios";
+import { useNavigation } from "@react-navigation/native";
+import UserReview from "../components/UserReview";
+import StarRating from "../components/StarRating";
 
-export default function PlumberPage() {
+export default function PlumberPage({ route }) {
+  const { plumberID } = route.params;
+  const navigation = useNavigation();
+  const [reviews, setReviews] = useState([]);
+  const [averageRating, setAverageRating] = useState(0);
+
+  const getReviews = async () => {
+    try {
+      let result = await axiosInstance.get(
+        `/api/review/getByPlumber/${plumberID}`,
+        {
+          headers: {
+            Authorization: "INSERT TOKEN HERE",
+          },
+        }
+      );
+
+      let reviewsData = result.data;
+      const totalSum = reviewsData.reduce(
+        (sum, review) => sum + review.rating,
+        0
+      );
+      setAverageRating(totalSum / reviews.length);
+
+      console.log(reviewsData);
+      setReviews(reviewsData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const navigateToReviewForm = () => {
+    navigation.navigate("Review", { plumberID: plumberID });
+  };
+
+  useEffect(() => {
+    getReviews();
+  }, []);
+
   return (
-    <SafeAreaView>
+    <ScrollView>
       <Image source={require("../assets/mario.png")} />
 
       <View className="flex flex-row items-center">
-        <View>
-          <Text className="font-bold text-base">Plumber Phua</Text>
+        <View className="pr-3">
+          <Text className="font-bold text-base">Plumber {plumberID}</Text>
           <View className="flex flex-row items-center">
             <MaterialCommunityIcons
               name="check-decagram"
@@ -37,8 +81,50 @@ export default function PlumberPage() {
           </Text>
         </View>
         <Text className="font-bold text-sm">Services Provided</Text>
+        <View className="flex flex-row">
+          <View className="w-1/2">
+            <Image
+              source={require("../assets/sink-leak.jpg")}
+              className="h-32"
+            />
+            <Text>Sink Choke or Leak ($80-100)</Text>
+          </View>
+          <View className="w-1/2">
+            <Image
+              source={require("../assets/toilet-leak.jpg")}
+              className="h-32"
+            />
+            <Text>Toilet Bowl Choke or Leak ($60)</Text>
+          </View>
+        </View>
+        <View className="flex flex-row">
+          <View className="w-1/2">
+            <Image
+              source={require("../assets/tap-leak.jpg")}
+              className="h-32"
+            />
+            <Text>Water Tap Leak($90-100)</Text>
+          </View>
+          <View className="w-1/2">
+            <Image
+              source={require("../assets/heater-leak.jpg")}
+              className="h-32"
+            />
+            <Text>Water Heater Installation ($70-90)</Text>
+          </View>
+        </View>
         <Text className="font-bold text-sm">Reviews</Text>
+        {averageRating > 0 && (
+          <View className="flex flex-row items-center">
+            <Text className="pr-2">{averageRating}</Text>
+            <StarRating rating={averageRating}/>
+            <Text className="pl-2">{reviews.length} reviews</Text>
+          </View>
+        )}
+        <PurpleButton text="Write a Review" onPress={navigateToReviewForm} />
+        {reviews.length > 0 &&
+          reviews.map((r) => <UserReview reviewData={r} />)}
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 }

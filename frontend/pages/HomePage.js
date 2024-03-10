@@ -1,13 +1,35 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Logo from "../components/Logo";
-import PurpleButton from "../components/PurpleButton";
-
-import PlumberProfile from "../components/PlumberProfile";
+import { useState, useEffect } from "react";
+import { axiosInstance } from "../services/axios";
+import PlumberCard from "../components/PlumberCard";
+import { getValueFor } from "../services/secureStore";
 
 export default function HomePage({ navigation }) {
-  const handleResetNavigation = () => {
-    navigation.reset()
-  }
+  const [plumberList, setPlumberList] = useState([]);
+
+  const fetchPlumberList = async () => {
+    try {
+      let token = await getValueFor("token");
+      console.log("retrieved token", token);
+      console.log("fetch plumbers")
+
+      const result = await axiosInstance.get("/api/plumber/getAllPlumbers", {
+        headers: {
+          Authorization: "INSERT TOKEN HERE",
+        },
+      });
+
+      console.log(result.data);
+      setPlumberList(result.data);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  useEffect(() => {
+    fetchPlumberList();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -15,9 +37,7 @@ export default function HomePage({ navigation }) {
         <Logo />
         <PurpleButton text="Reset Navigation" onPress={handleResetNavigation} />
 
-        <View className="h-3/6">
-          <PlumberProfile />
-        </View>
+        <PlumberProfile />
     </SafeAreaView>
   );
 }

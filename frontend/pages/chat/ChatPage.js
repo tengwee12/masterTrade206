@@ -22,6 +22,7 @@ const ChatPage = () => {
     ]);
   }, []);
 
+  //TODO : send this to backend
   const onSend = (newMessages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, newMessages)
