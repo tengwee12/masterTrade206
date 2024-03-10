@@ -32,12 +32,17 @@ export default function HomePage({ navigation }) {
   }, []);
 
   return (
-    <SafeAreaView>
-        <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
-        <Logo />
-        <PurpleButton text="Reset Navigation" onPress={handleResetNavigation} />
-
-        <PlumberProfile />
-    </SafeAreaView>
+    <View>
+      <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
+      <Logo />
+      <Text>Plumbers for you</Text>
+      {plumberList.length > 0 &&
+        plumberList.map((p) => (
+          <PlumberCard
+            key={p.id}
+            plumberData={p}
+          />
+        ))}
+    </View>
   );
 }
