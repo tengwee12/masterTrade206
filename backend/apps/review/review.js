@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
+const Issue = require("../issue/model");
+const Plumber = require("../plumber/model");
 
 const Review = require("./model");
 
@@ -18,17 +19,38 @@ router.get('/', async (req, res) => {  //REST API endpoint to get all the rows i
 router.post('/', async (req, res) => {
     try {
         // Extract data from the request body
-        const { customerId, plumberId, description, dateTime, rating, media } = req.body;
+        const { customerId, description, dateTime, rating, media, IssueId } = req.body;
 
         // Create a new review record in the database
         const newReview = await Review.create({
             customerId,
-            plumberId,
             description,
             dateTime,
             rating,
-            media
+            media,
+            IssueId
         });
+        const issue = await Issue.findByPk(IssueId);
+        const plumber = await issue.getPlumber();
+        const plumberId = plumber.id;
+        const issues = await Issue.findAll({
+          where: {
+            PlumberId: plumberId
+          }
+        })
+        let averageRating = 0;
+        let count = 0;
+        console.log(issues.length)
+        for (let i = 0; i < issues.length; i++) {
+          const review = await issues[i].getReview(); 
+          if (review) {
+            averageRating += review.rating
+            count++;
+          }
+        }
+        averageRating = averageRating / count;
+        plumber.averageRating = averageRating;
+        await plumber.save();
 
         // Respond with the newly created review
         res.status(201).json(newReview);

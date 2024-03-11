@@ -38,7 +38,10 @@ const Plumber = db.define('Plumber', {
             }
           }
         }
-      }
+      },
+    averageRating: {
+      type:DataTypes.INTEGER
+    }
     });
     
 

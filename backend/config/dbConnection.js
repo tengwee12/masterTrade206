@@ -67,7 +67,9 @@ const setUpDB = (drop) => {
                   PlumberId: 1
                 }
               ])
-              .then(() => console.log("successfully added intial posting data"))
+              .then(() => console.log("successfully added intial posting data")
+              
+              ).then(() => console.log("Review created successfully"))
               .catch((err) => console.log(err));
             
             })
@@ -79,11 +81,11 @@ const setUpDB = (drop) => {
 
             Review.create({
               customerId: 1, // Example customer ID
-              plumberId: 1, // Example plumber ID
               description: "Great service!", // Example review description
               dateTime: "2024-03-04 12:00:00", // Example date and time
               rating: 5, // Example rating
-              media: "image1.com" // Example media URLs
+              media: "image1.com", // Example media URLs
+              IssueId: 1 // Example issue ID
             })
               .then(() => console.log("Review created successfully"))
               .catch((err) => console.error("Error creating review:", err));
