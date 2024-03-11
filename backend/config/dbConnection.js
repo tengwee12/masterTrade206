@@ -16,6 +16,7 @@ const setUpDB = (drop) => {
 
       Issue.belongsTo(Plumber);
       Issue.hasOne(Review);
+      Review.belongsTo(Issue);
 
       // Plumber.hasMany(Review);
 
@@ -67,28 +68,29 @@ const setUpDB = (drop) => {
                   PlumberId: 1
                 }
               ])
-              .then(() => console.log("successfully added intial posting data")
+              .then(() => {
+              console.log("successfully added intial posting data")
+                
+                Review.create({
+                  customerId: 1, // Example customer ID
+                  description: "Great service!", // Example review description
+                  dateTime: "2024-03-04 12:00:00", // Example date and time
+                  rating: 5, // Example rating
+                  media: "image1.com", // Example media URLs
+                  IssueId: 1, // Example issue ID
+                  price: 6.9
+                })
+                  .then(() => console.log("Review created successfully"))
+                  .catch((err) => console.error("Error creating review:", err))}
+                  ).then(() => console.log("Review created successfully"))
+                  .catch((err) => console.log(err));
               
-              ).then(() => console.log("Review created successfully"))
-              .catch((err) => console.log(err));
-            
             })
             .catch((err) => console.log(err));
           })
           .catch((err) => console.log(err));
 
           
-
-            Review.create({
-              customerId: 1, // Example customer ID
-              description: "Great service!", // Example review description
-              dateTime: "2024-03-04 12:00:00", // Example date and time
-              rating: 5, // Example rating
-              media: "image1.com", // Example media URLs
-              IssueId: 1 // Example issue ID
-            })
-              .then(() => console.log("Review created successfully"))
-              .catch((err) => console.error("Error creating review:", err));
             
         })
         .catch((err) => {

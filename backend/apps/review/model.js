@@ -22,6 +22,10 @@ const Review = db.define('Review', {
         type:DataTypes.INTEGER,
         allowNull: false
     },
+    price: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
     media: {
         type: DataTypes.TEXT,
         validate: {

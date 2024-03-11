@@ -19,7 +19,14 @@ router.get('/', async (req, res) => {  //REST API endpoint to get all the rows i
 router.post('/', async (req, res) => {
     try {
         // Extract data from the request body
-        const { customerId, description, dateTime, rating, media, IssueId } = req.body;
+        const { customerId, description, dateTime, rating, media, IssueId, price } = req.body;
+
+        //check if review for this issue already exists
+        const rev = await Review.findAll({
+          where: {
+            IssueId: IssueId
+          }
+        })
 
         // Create a new review record in the database
         const newReview = await Review.create({
@@ -28,7 +35,8 @@ router.post('/', async (req, res) => {
             dateTime,
             rating,
             media,
-            IssueId
+            IssueId,
+            price
         });
         const issue = await Issue.findByPk(IssueId);
         const plumber = await issue.getPlumber();
