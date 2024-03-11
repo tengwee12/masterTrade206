@@ -1,10 +1,20 @@
 // step 3 of 5
-import { View, Text, TextInput } from "react-native";
+import { Alert, View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
 import Button from "../../components/Button";
 import { useState } from "react";
+import { Keyboard } from "react-native";
 
 const DescribeIssuePage = ({ navigation }) => {
-    const [text, onChangeText] = useState("");
+    const [title, onChangeTitle] = useState("")
+    const [description, onChangeDescription] = useState("")
+
+    const handleSubmit = () => {
+        Alert.alert(`Submitted form with title: ${title}\n description: ${description}`)
+        onChangeTitle("")
+        onChangeDescription("")
+        navigation.navigate('InputAvailabilityScreen')
+    }
+
     return (
         <View className="p-4">
             <Text className="pb-2 pt-2">Step 3 of 5</Text>
@@ -12,17 +22,32 @@ const DescribeIssuePage = ({ navigation }) => {
                 Describe the issue in detail
             </Text>
 
-            <Text className="pb-2 pt-2">Description</Text>
-            <TextInput
-                value={text}
-                placeholder="Enter description here"
-                onChangeText={onChangeText}
-                className="p-4 bg-inputGray rounded-md"
-            />
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <View>
+                    <Text className="pb-2 pt-4">Title</Text>
+                    <TextInput 
+                        value={title}
+                        placeholder="Enter title here"
+                        onChangeText={onChangeTitle}
+                        className="p-4 bg-inputGray rounded-md"
+                    />
 
-            <Button
-                text="Go to Input Availability Screen"
-                onPress={() => navigation.navigate("InputAvailabilityScreen")}
+                    <Text className="pb-2 pt-6">Description</Text>
+                    <TextInput
+                        value={description}
+                        placeholder="Enter description here"
+                        onChangeText={onChangeDescription}
+                        multiline={true}
+                        className="p-4 bg-inputGray rounded-md h-2/5"
+                    />
+
+                    <Text className="pt-2">Include clear details so that your contractor understands the problem.</Text>
+                </View>
+            </TouchableWithoutFeedback>
+
+            <Button 
+                text="Submit"
+                onPress={handleSubmit}
             />
         </View>
     );

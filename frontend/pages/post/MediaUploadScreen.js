@@ -80,13 +80,6 @@ const PictureUploadPage = ({ navigation }) => {
                 Upload photos/videos of the issue
             </Text>
             <View className="">
-                <View className="justify-between">
-                    <Button
-                        text="Photo Library"
-                        onPress={() => selectImage(true)}
-                    />
-                    <Button text="Use Camera" onPress={() => selectImage(false)} />
-                </View>
                 <FlatList 
                     data={images}
                     keyExtractor={(item, index) => index.toString()}
@@ -103,6 +96,14 @@ const PictureUploadPage = ({ navigation }) => {
                         </Text>
                     )}
                 />
+                <View className="justify-between">
+                    <Button
+                        text="Photo Library"
+                        onPress={() => selectImage(true)}
+                    />
+                    <Button text="Use Camera" onPress={() => selectImage(false)} />
+                </View>
+                <Button text="Go to Describe Issue Screen" onPress={() => navigation.navigate('DescribeIssueScreen')}/>
             </View>
         </View>
     );
