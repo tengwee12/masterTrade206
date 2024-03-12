@@ -38,7 +38,9 @@ const setUpDB = (drop) => {
 
             Plumber.create({
               email: "plumberChuan@gmail.com",
-              password: "12345"
+              password: "12345",
+              name: "Plumber Chuan",
+              image: "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png"
             })
             .then(() => {
               console.log("successfully added intial user(plumber) data")

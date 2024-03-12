@@ -5,12 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 export default PlumberCard = ({ plumberData }) => {
   const navigation = useNavigation();
 
-  const dummyPlumber = {
-    name: "Mario",
-    rating: 3.5,
-    imageLink: "../assets/mario.png",
-  };
-
   const handleClickPlumber = () => {
     navigation.navigate("Plumber", {
       plumberID: plumberData.id,
@@ -18,17 +12,16 @@ export default PlumberCard = ({ plumberData }) => {
   };
 
   return (
-    <View>
+    <View className="w-32">
       <Pressable onPress={handleClickPlumber}>
         <Image
-          source={require("../assets/mario.png")}
-          className="h-24 w-24 rounded"
+          source={{ uri: plumberData.image }}
+          className="h-32 w-32 rounded"
         />
         <View className="flex flex-row items-center justify-between">
-          <Text className="">{dummyPlumber.name}</Text>
-          <Text>{plumberData.id}</Text>
+          <Text className="">{plumberData.name}</Text>
           <View className="flex flex-row items-center">
-            <Text className="">{dummyPlumber.rating}</Text>
+            <Text className="">{plumberData.averageRating}</Text>
             <FontAwesome name="star" size={24} color="#f1c40f" />
           </View>
         </View>
