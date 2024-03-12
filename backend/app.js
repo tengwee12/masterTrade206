@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 require('./config/passport')(passport);
+const authMiddleware = require("./middleware/auth");
 
 // database
 const { Sequelize } = require('sequelize');
@@ -25,6 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(passport.initialize());
+// app.use(authMiddleware.verifyJWT);
 
 // cors
 app.use(cors());

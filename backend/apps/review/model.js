@@ -11,10 +11,6 @@ const Review = db.define('Review', {
         type:DataTypes.INTEGER,
         allowNull: false
     },
-    plumberId:{
-        type:DataTypes.INTEGER,
-        allowNull: false
-    },
     description:{
         type:DataTypes.STRING
     },
@@ -25,6 +21,10 @@ const Review = db.define('Review', {
     rating:{
         type:DataTypes.INTEGER,
         allowNull: false
+    },
+    price: {
+      type: DataTypes.DOUBLE,
+      allowNull: false
     },
     media: {
         type: DataTypes.TEXT,

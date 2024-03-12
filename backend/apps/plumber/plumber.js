@@ -45,7 +45,7 @@ router.get('/getAllPlumbers', async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-    const { email, password } = req.body;
+    const { email, name, password } = req.body;
     Plumber.findOne({where: { email: req.body.email }})
     .then((plumber) => {
         if (plumber) {
@@ -53,6 +53,7 @@ router.post("/register", async (req, res) => {
         } else {
             Plumber.create({
                 email,
+                name,
                 password
             })
               .catch((err) => {
