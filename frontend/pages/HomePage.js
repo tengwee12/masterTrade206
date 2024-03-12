@@ -5,7 +5,7 @@ import { axiosInstance } from "../services/axios";
 import PlumberCard from "../components/PlumberCard";
 import { getValueFor } from "../services/secureStore";
 
-export default function HomePage({ navigation }) {
+export default function HomePage() {
   const [plumberList, setPlumberList] = useState([]);
 
   const fetchPlumberList = async () => {
