@@ -1,29 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ChatScreen from "../pages/chat/ChatPage";
-import ReviewScreen from "../pages/review/ReviewPage";
-import HomePage from "../pages/HomePage";
 import { Ionicons } from '@expo/vector-icons';
 import PostStack from "./PostStack";
-import PlumberPage from "../pages/PlumberPage";
+import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="HomeStack"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
-            case 'Home':
+            case 'HomeStack':
               iconName = focused ? 'home' : 'home-outline'
               break
             case 'Chat':
               iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
               break
-            case 'Post':
+            case 'PostStack':
               iconName = focused ? 'create' : 'create-outline'
               break
           } 
@@ -36,10 +34,8 @@ export default function TabNavigator() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Plumber" component={PlumberPage} />
+      <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="Chat" component={ChatScreen} />
-      <Tab.Screen name="Review" component={ReviewScreen} />
       <Tab.Screen name="PostStack" component={PostStack} />
     </Tab.Navigator>
   );

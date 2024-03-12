@@ -107,6 +107,7 @@ const ReviewPage = ({ route }) => {
         </Pressable>
         <FlatList
           data={images}
+          horizontal={true}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <Image

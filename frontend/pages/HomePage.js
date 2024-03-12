@@ -1,13 +1,22 @@
-import { Text, View, TextInput, ScrollView, Image } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  ScrollView,
+  Image,
+  FlatList,
+} from "react-native";
 import Logo from "../components/Logo";
 import { useState, useEffect } from "react";
-import { axiosInstance } from "../services/axios";
 import PlumberCard from "../components/PlumberCard";
 import { getValueFor, save } from "../services/secureStore";
+import { useNavigation } from "@react-navigation/native";
+import { fetchPlumbers } from "../services/plumber";
 
 export default function HomePage() {
   const [plumberList, setPlumberList] = useState([]);
   const [searchBar, setSearchBar] = useState("");
+  const navigation = useNavigation();
 
   const fetchPlumberList = async () => {
     try {
@@ -15,17 +24,16 @@ export default function HomePage() {
       const token = await getValueFor("token");
       console.log("retrieved token", token);
 
-      const result = await axiosInstance.get("/api/plumber/getAllPlumbers", {
-        headers: {
-          Authorization: token,
-        },
-      });
-
-      console.log(result.data);
-      setPlumberList(result.data);
+      const result = await fetchPlumbers(token);
+      console.log(result);
+      setPlumberList(result);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSearch = () => {
+    navigation.navigate("Filter", { searchBar, plumberList });
   };
 
   useEffect(() => {
@@ -33,7 +41,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <ScrollView>
+    <View>
       <View className="absolute left-0 right-0 top-0 h-32 bg-brandPurple"></View>
       <Logo />
       <TextInput
@@ -41,6 +49,7 @@ export default function HomePage() {
         onChangeText={setSearchBar}
         value={searchBar}
         placeholder="Search"
+        onSubmitEditing={handleSearch}
       />
       <View className="p-3">
         <ScrollView horizontal>
@@ -60,11 +69,11 @@ export default function HomePage() {
           </View>
         </ScrollView>
         <Text className="font-bold text-base pt-4">Plumbers for you</Text>
-        <ScrollView>
+        <ScrollView horizontal>
           {plumberList.length > 0 &&
             plumberList.map((p) => <PlumberCard key={p.id} plumberData={p} />)}
         </ScrollView>
       </View>
-    </ScrollView>
+    </View>
   );
 }
