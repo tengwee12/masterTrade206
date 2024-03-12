@@ -9,30 +9,30 @@ const jwtOptions = {
   secretOrKey: "secret",
 };
 
-module.exports = (passport) => {
-  passport.use(
-    new Strategy(jwtOptions, (jwtPayload, done) => {
-      console.log(jwtPayload);
+// module.exports = (passport) => {
+//   passport.use(
+//     new Strategy(jwtOptions, (jwtPayload, done) => {
+//       console.log(jwtPayload);
   
-      Plumber.findOne({ username: jwtPayload.username })
-        .then((user) => {
-          if (user) {
-            return done(null, user);
-          } else {
-            return done(null, false);
-          }
-        })
-        .catch((err) => done(err, null));
-    })
-  );
-}
+//       Plumber.findOne({ username: jwtPayload.username })
+//         .then((user) => {
+//           if (user) {
+//             return done(null, user);
+//           } else {
+//             return done(null, false);
+//           }
+//         })
+//         .catch((err) => done(err, null));
+//     })
+//   );
+// }
 
 module.exports = (passport) => {
   passport.use(
     new Strategy(jwtOptions, (jwtPayload, done) => {
       console.log(jwtPayload);
   
-      User.findOne({ username: jwtPayload.username })
+      User.findOne({ where: { id: jwtPayload.sub }})
         .then((user) => {
           if (user) {
             return done(null, user);

@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken");
 
 
 function issueJWT(user) {
-  const email = user.email;
+  const id = user.id;
 
   const expiresIn = "1d";
 
   const payload = {
-    sub: email,
+    sub: id,
     iat: Date.now(),
   };
 
@@ -34,6 +34,9 @@ function verifyJWT(req, res, next) {
   try {
     const decoded = jwt.verify(token, "secret"); 
     req.user = decoded;
+    console.log("AAAAAAAAAAAAA");
+    console.log(req.user);
+    console.log(req.user.sub);
     next();
   } catch (error) {
     return res.status(403).json({ message: 'Invalid token' });
