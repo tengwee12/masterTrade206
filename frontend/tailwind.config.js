@@ -11,6 +11,7 @@ module.exports = {
                 purple: '#7c15ff',
                 inputGray: "#d0d0d0",
                 brandPurple: '#440d88',
+                textInputGray: '#f0f0f0',
             },
             width: {
                 "90vw": "90vw",
