@@ -42,6 +42,10 @@ const Plumber = db.define('Plumber', {
           }
         }
       },
+      services: {
+        type: DataTypes.TEXT,
+        defaultValue: ""
+      },
     averageRating: {
       type:DataTypes.DOUBLE
     }

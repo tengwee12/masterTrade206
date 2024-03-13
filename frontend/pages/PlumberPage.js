@@ -6,6 +6,7 @@ import { axiosInstance } from "../services/axios";
 import { useNavigation } from "@react-navigation/native";
 import UserReview from "../components/UserReview";
 import StarRating from "../components/StarRating";
+import { getItemAsync } from "expo-secure-store";
 
 export default function PlumberPage({ route }) {
   const { plumberID } = route.params;
@@ -15,11 +16,12 @@ export default function PlumberPage({ route }) {
 
   const getReviews = async () => {
     try {
+      const token = await getItemAsync("token");
       let result = await axiosInstance.get(
         `/api/review/getByPlumber/${plumberID}`,
         {
           headers: {
-            Authorization: "INSERT TOKEN HERE",
+            Authorization: token,
           },
         }
       );

@@ -3,11 +3,16 @@ import PurpleButton from "../../components/PurpleButton";
 import Logo from "../../components/Logo";
 
 export default StartingPage = ({ navigation }) => {
-  const handleGetStarted = () => {
-    navigation.push('AuthScreen');
+  const handleIAmAPlumber = () => {
+    navigation.push("PlumberLoginPage");
   };
+
+  const handleIAmAUser = () => {
+    navigation.push("UserLoginPage");
+  };
+
   return (
-    <SafeAreaView>
+    <View>
       <ImageBackground
         className="h-full flex flex-col justify-between"
         source={require("../../assets/gold_pipes.png")}
@@ -21,9 +26,10 @@ export default StartingPage = ({ navigation }) => {
             Connecting you to skilled plumbers, with expert convenience at your
             doorstep
           </Text>
-          <PurpleButton text="Get Started" onPress={handleGetStarted} />
+          <PurpleButton text="I am a Plumber" onPress={handleIAmAPlumber} />
+          <PurpleButton text="I am a User" onPress={handleIAmAUser} />
         </View>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 };
