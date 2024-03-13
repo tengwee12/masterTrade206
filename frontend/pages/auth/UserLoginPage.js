@@ -1,26 +1,37 @@
 import { useState } from "react";
-import { SafeAreaView, View, Text, Image, TextInput } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  TextInput,
+  Pressable,
+} from "react-native";
 import PurpleButton from "../../components/PurpleButton";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { axiosInstance } from "../../services/axios";
-import { save } from "../../services/secureStore"
+import { setItemAsync } from "expo-secure-store";
 
-export default function AuthScreen({ navigation }) {
+export default function UserLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
       const response = await axiosInstance.post("/api/user/login", {
-        email: email,
-        password: password,
+        email,
+        password,
       });
-      console.log(response.data.token);
-      await save("token", response.data.token);
-      navigation.navigate('TabNavigator')
+      await setItemAsync("token", response.data.token);
+      navigation.navigate("UserTabNavigator");
     } catch (err) {
-      console.error(err.message);
+      setError(err.message);
     }
+  };
+
+  const goToUserRegisterPage = () => {
+    navigation.navigate("UserRegisterPage");
   };
 
   return (
@@ -73,8 +84,14 @@ export default function AuthScreen({ navigation }) {
             secureTextEntry={true}
           />
         </View>
+        {error && <Text className="text-red-600">{error}</Text>}
         <PurpleButton text="Login" onPress={handleLogin} />
-        <Text>Don't have an account? Register</Text>
+        <Pressable onPress={goToUserRegisterPage}>
+          <Text>
+            Don't have an account?{" "}
+            <Text className="font-semibold">Register</Text>
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
