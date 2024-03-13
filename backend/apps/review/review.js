@@ -207,15 +207,24 @@ router.delete("/media/:id", async (req, res) => {
 
 
 // GET route to retrieve all reviews for a specific plumber by plumberId
-router.get('/getByPlumber/:plumberId', async (req, res) => {
+router.get('/getplumber/:plumberId', async (req, res) => {
     const plumberId = req.params.plumberId;
   
     try {
       // Find all reviews with the specified plumberId
-      const reviews = await Review.findAll({
-        where: { plumberId: plumberId }
+      const issues = await Issue.findAll({
+        where: { PlumberId: plumberId }
       });
-  
+      let reviews  = [];
+      if (issues) {
+        for (let i = 0; i < issues.length; i++) {
+            const review = await issues[i].getReview();
+            if (review) {
+              reviews.push(review);
+            }
+          }
+        }
+      
       // Return the reviews as JSON
       res.json(reviews);
     } catch (error) {
