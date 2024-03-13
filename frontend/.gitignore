@@ -2,6 +2,9 @@
 
 # dependencies
 node_modules/
+.env
+
+./services/firebase.js
 
 # Expo
 .expo/
