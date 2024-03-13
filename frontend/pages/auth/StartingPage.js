@@ -12,7 +12,7 @@ export default StartingPage = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    <View>
       <ImageBackground
         className="h-full flex flex-col justify-between"
         source={require("../../assets/gold_pipes.png")}
@@ -30,6 +30,6 @@ export default StartingPage = ({ navigation }) => {
           <PurpleButton text="I am a User" onPress={handleIAmAUser} />
         </View>
       </ImageBackground>
-    </SafeAreaView>
+    </View>
   );
 };
