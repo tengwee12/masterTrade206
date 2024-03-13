@@ -40,7 +40,7 @@ export default function UserRegisterPage({ navigation }) {
         password,
       });
       console.log(response);
-      navigation.navigate("TabNavigator");
+      navigation.navigate("UserTabNavigator");
     } catch (err) {
       setError(err.message);
     }

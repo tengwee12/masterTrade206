@@ -6,7 +6,7 @@ import HomeStack from "./HomeStack";
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigator() {
+export default function UserTabNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="HomeStack"

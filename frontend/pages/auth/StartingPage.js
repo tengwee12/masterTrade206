@@ -3,7 +3,11 @@ import PurpleButton from "../../components/PurpleButton";
 import Logo from "../../components/Logo";
 
 export default StartingPage = ({ navigation }) => {
-  const handleGetStarted = () => {
+  const handleIAmAPlumber = () => {
+    navigation.push("PlumberLoginPage");
+  };
+
+  const handleIAmAUser = () => {
     navigation.push("UserLoginPage");
   };
 
@@ -22,10 +26,8 @@ export default StartingPage = ({ navigation }) => {
             Connecting you to skilled plumbers, with expert convenience at your
             doorstep
           </Text>
-          <PurpleButton
-            text="I am a Plumber"
-          />
-          <PurpleButton text="I am a User" onPress={handleGetStarted} />
+          <PurpleButton text="I am a Plumber" onPress={handleIAmAPlumber} />
+          <PurpleButton text="I am a User" onPress={handleIAmAUser} />
         </View>
       </ImageBackground>
     </SafeAreaView>
