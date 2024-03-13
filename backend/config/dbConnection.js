@@ -15,11 +15,13 @@ const setUpDB = (drop) => {
 
       Issue.belongsTo(Plumber);
       Issue.hasOne(Review);
+      
+
+      Plumber.hasMany(Review);
+
       Review.belongsTo(Issue);
-
-      // Plumber.hasMany(Review);
-
-      // Review.belongsTo(User);
+      Review.belongsTo(User);
+      Review.belongsTo(Plumber);
 
       db.sync({
         force: drop,

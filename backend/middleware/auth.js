@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 
-function issueJWT(user) {
+function issueJWT(user, userType) {
   const id = user.id;
 
   const expiresIn = "1d";
@@ -9,6 +9,7 @@ function issueJWT(user) {
   const payload = {
     sub: id,
     iat: Date.now(),
+    type: userType
   };
 
   const signedToken = jwt.sign(payload, "secret", {
