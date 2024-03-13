@@ -4,14 +4,13 @@ import {
   TextInput,
   ScrollView,
   Image,
-  FlatList,
 } from "react-native";
 import Logo from "../components/Logo";
 import { useState, useEffect } from "react";
 import PlumberCard from "../components/PlumberCard";
-import { getValueFor, save } from "../services/secureStore";
 import { useNavigation } from "@react-navigation/native";
 import { fetchPlumbers } from "../services/plumber";
+import { getItemAsync } from "expo-secure-store";
 
 export default function HomePage() {
   const [plumberList, setPlumberList] = useState([]);
@@ -20,10 +19,8 @@ export default function HomePage() {
 
   const fetchPlumberList = async () => {
     try {
-      await save("token", "IAMTOKEN");
-      const token = await getValueFor("token");
+      const token = await getItemAsync("token");
       console.log("retrieved token", token);
-
       const result = await fetchPlumbers(token);
       console.log(result);
       setPlumberList(result);

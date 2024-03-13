@@ -4,9 +4,9 @@ import {
   TextInput,
   View,
   Pressable,
-  Image, 
+  Image,
   FlatList,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { Rating } from "react-native-ratings";
 import PurpleButton from "../../components/PurpleButton";
@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { uploadData } from "aws-amplify/storage";
 import { axiosInstance } from "../../services/axios";
 import { useNavigation } from "@react-navigation/native";
+import { getItemAsync } from "expo-secure-store";
 
 const ReviewPage = ({ route }) => {
   const navigation = useNavigation();
@@ -53,7 +54,7 @@ const ReviewPage = ({ route }) => {
       }).result;
       setImages((prev) => [...prev, result.assets[0].uri]);
       console.log("Succeeded ", result.assets[0].uri);
-      console.log(uploadResult)
+      console.log(uploadResult);
     } catch (error) {
       console.log(error);
     }
@@ -67,13 +68,22 @@ const ReviewPage = ({ route }) => {
 
   const handlePostReview = async () => {
     try {
-      let result = await axiosInstance.post("/api/review/", {
-        plumberId: plumberID,
-        customerId: 1,
-        description: description,
-        dateTime: new Date(),
-        rating: rating
-      });
+      const token = await getItemAsync("token");
+      let result = await axiosInstance.post(
+        "/api/review/",
+        {
+          plumberId: plumberID,
+          customerId: 1,
+          description: description,
+          dateTime: new Date(),
+          rating: rating,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       console.log(result.data);
       navigation.navigate("Plumber", { plumberID: plumberID });
     } catch (error) {
@@ -112,7 +122,7 @@ const ReviewPage = ({ route }) => {
           renderItem={({ item }) => (
             <Image
               source={{ uri: item }}
-              style={{ width: 300, height: 200, marginBottom: 10 }} 
+              style={{ width: 300, height: 200, marginBottom: 10 }}
             />
           )}
           contentContainerStyle={{ alignItems: "center", flexGrow: 1 }}

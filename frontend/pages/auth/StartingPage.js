@@ -4,8 +4,9 @@ import Logo from "../../components/Logo";
 
 export default StartingPage = ({ navigation }) => {
   const handleGetStarted = () => {
-    navigation.push('AuthScreen');
+    navigation.push("UserLoginPage");
   };
+
   return (
     <SafeAreaView>
       <ImageBackground
@@ -21,7 +22,10 @@ export default StartingPage = ({ navigation }) => {
             Connecting you to skilled plumbers, with expert convenience at your
             doorstep
           </Text>
-          <PurpleButton text="Get Started" onPress={handleGetStarted} />
+          <PurpleButton
+            text="I am a Plumber"
+          />
+          <PurpleButton text="I am a User" onPress={handleGetStarted} />
         </View>
       </ImageBackground>
     </SafeAreaView>
