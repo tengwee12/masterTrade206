@@ -20,7 +20,7 @@ router.post("/login", async (req, res, next) => {
         }
 
         if (user.password === req.body.password) {
-            const tokenObject = auth.issueJWT(user);
+            const tokenObject = auth.issueJWT(user, "user");
             res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
 
         } else {
