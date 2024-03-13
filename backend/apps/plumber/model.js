@@ -34,6 +34,10 @@ const Plumber = db.define("Plumber", {
   averageRating: {
     type: DataTypes.DOUBLE,
   },
+  services: {
+    type: DataTypes.TEXT,
+    defaultValue: ""
+  }
 });
 
 module.exports = Plumber;

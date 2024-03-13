@@ -1,25 +1,32 @@
-import { useState } from "react";
-import { SafeAreaView, View, Text, Image, TextInput } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  TextInput,
+  Pressable,
+} from "react-native";
 import PurpleButton from "../../components/PurpleButton";
+import { useState } from "react";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { axiosInstance } from "../../services/axios";
-import { save } from "../../services/secureStore"
+import { setItemAsync } from "expo-secure-store";
 
-export default function AuthScreen({ navigation }) {
+export default function PlumberLoginPage({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await axiosInstance.post("/api/user/login", {
-        email: email,
-        password: password,
-      });
-      console.log(response.data.token);
-      await save("token", response.data.token);
-      navigation.navigate('TabNavigator')
+      const response = await axiosInstance.post("/api/plumber/login", {
+        email,
+        password,
+      })
+      await setItemAsync("token", response.data.token);
+      navigation.navigate("PlumberTabNavigator")
     } catch (err) {
-      console.error(err.message);
+      setError(err.message);
     }
   };
 
@@ -41,11 +48,10 @@ export default function AuthScreen({ navigation }) {
           className="h-72"
           resizeMode="contain"
         />
-        <Text className="font-bold text-center text-2xl">
-          Login to MasterTrade
-        </Text>
+        <Text className="font-bold text-center text-2xl">Welcome Back</Text>
         <Text className="font-medium text-center">
-          Open your door to skilled plumbing solutions: convenience redefined.
+          Unlock a flood of opportunities! Join our plumbing network and watch
+          your business flow to new heights.
         </Text>
         <View className="flex flex-row items-center">
           <MaterialCommunityIcons
@@ -73,8 +79,14 @@ export default function AuthScreen({ navigation }) {
             secureTextEntry={true}
           />
         </View>
+        {error && <Text className="text-red-600">{error}</Text>}
         <PurpleButton text="Login" onPress={handleLogin} />
-        <Text>Don't have an account? Register</Text>
+        <Pressable>
+          <Text>
+            Don't have an account?{" "}
+            <Text className="font-semibold">Register</Text>
+          </Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );

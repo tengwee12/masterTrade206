@@ -18,6 +18,7 @@ router.get(
   }
 );
 
+
 router.post("/login", async (req, res, next) => {
   Plumber.findOne({ where: { email: req.body.email } })
     .then((plumber) => {
@@ -45,9 +46,9 @@ router.post("/login", async (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+
 /*
   Get all revien given plumber id
-
 */
 router.get("/:id/review", passport.authenticate("jwt", { session: false }), async (req, res) => {
 
@@ -104,7 +105,8 @@ router.post("/register", async (req, res) => {
   });
 });
 
-// Update plumber deatils, by plumber ID
+
+
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -160,8 +162,9 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
   }
 );
 
-// Update license, by plumber ID
-router.put("/:id/license", async (req, res) => {
+
+// Update license, by ID
+router.put("/license/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const { license } = req.body;
@@ -179,6 +182,26 @@ router.put("/:id/license", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// Update profile pic, by plumber ID
+// router.put("/image/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const { image } = req.body;
+//     const plumber = await Plumber.findByPk(id); //overwrites everything though
+//     if (plumber) {
+//       //update begins here
+//       plumber.image = image;
+//       await plumber.save();
+//       res.json(plumber);
+//     } else {
+//       res.status(404).json({ error: "Plumber account not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error retrieving plumber account:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 // Update profile pic, by plumber ID
 // router.put("/image/:id", async (req, res) => {
@@ -227,6 +250,7 @@ router.put("/:id/license", async (req, res) => {
 //   }
 // });
 
+
 // Add a DELETE route to delete a specific image link for a plumber by ID
 router.delete("/image/:id", async (req, res) => {
   const { id } = req.params;
@@ -274,5 +298,57 @@ router.delete("/image/:id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+     
+// Add service, by ID
+// router.put("/services/add/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const { service } = req.body;
+//     const plumber = await Plumber.findByPk(id);
+//     if (plumber) {
+//       if (plumber.services === ""){
+//         plumber.services = service;
+//       }
+//       //update begins here
+//       else {
+//         plumber.services = plumber.services + ";" + service;
+//       }
+//       await plumber.save();
+//       res.json(plumber);
+//     } else {
+//       res.status(404).json({ error: "Plumber account not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error retrieving plumber account:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// Add a GET route to fetch image links for a specific plumber by ID
+// router.get("/image/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     // Find the plumber by ID
+//     const plumber = await Plumber.findByPk(id);
+
+//     if (!plumber) {
+//       // If plumber not found, return a 404 error
+//       return res.status(404).json({ error: "Plumber not found" });
+//     }
+
+//     if (!plumber.image) {
+//       // If plumber has no image links, return an empty array
+//       console.log("NO LINKS")
+//       return res.json([]);
+//     }
+
+//     // Split the concatenated image links and send them as an array
+//     const imageLinks = plumber.image.split(';').filter(Boolean); // Filter to remove empty strings
+//     res.json(imageLinks);
+//   } catch (error) {
+//     console.error("Error retrieving image links:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 
 module.exports = router;
