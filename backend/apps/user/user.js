@@ -21,7 +21,7 @@ router.post("/login", async (req, res, next) => {
 
         if (user.password === req.body.password) {
             const tokenObject = auth.issueJWT(user);
-            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+            res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, userId: user.id });
 
         } else {
             res.status(401).json({ success: false, msg: "you entered the wrong password" });
@@ -32,6 +32,18 @@ router.post("/login", async (req, res, next) => {
     .catch((err) => console.log(err));
 
 });
+
+router.get('/getid/:email', async (req, res) => {
+    const { email } = req.params;
+    User.findOne({where: {email: email}})
+    .then((user) => {
+        if (!user) {
+            return res.status(401).json({ success: false, msg: "could not find user" });
+        } else {
+            res.json(user.id);
+        }
+    }).catch((err) => console.log(err));
+})
 
 router.post("/register", async (req, res) => {
     const { email, password } = req.body;
