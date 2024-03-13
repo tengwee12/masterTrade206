@@ -33,6 +33,18 @@ router.post("/login", async (req, res, next) => {
 
 });
 
+router.get('/getid/:email', async (req, res) => {
+    const { email } = req.params;
+    User.findOne({where: {email: email}})
+    .then((user) => {
+        if (!user) {
+            return res.status(401).json({ success: false, msg: "could not find user" });
+        } else {
+            res.json(user.id);
+        }
+    }).catch((err) => console.log(err));
+})
+
 router.post("/register", async (req, res) => {
     const { email, password } = req.body;
     User.findOne({where: { email: req.body.email }})
