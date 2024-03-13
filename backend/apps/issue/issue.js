@@ -1,11 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const middleware = require("../../middleware/auth")
 
 const Issue = require("./model"); // Import the Issue model
 const { Op } = require("sequelize");
 
-router.use(middleware.verifyJWT);
 
 /**
  * Get all issue

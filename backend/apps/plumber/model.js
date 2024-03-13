@@ -8,6 +8,9 @@ const Plumber = db.define('Plumber', {
         autoIncrement: true,
         primaryKey: true
     },
+    name: {
+      type: DataTypes.STRING
+    },
     email: {
         type: DataTypes.STRING,
         validate: {
@@ -38,7 +41,14 @@ const Plumber = db.define('Plumber', {
             }
           }
         }
-      }
+      },
+      services: {
+        type: DataTypes.TEXT,
+        defaultValue: ""
+      },
+    averageRating: {
+      type:DataTypes.DOUBLE
+    }
     });
     
 
