@@ -4,7 +4,8 @@
 node_modules/
 .env
 
-./services/firebase.js
+#firebase
+services/firebase.js
 
 # Expo
 .expo/
