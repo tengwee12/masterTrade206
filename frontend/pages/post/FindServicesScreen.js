@@ -5,6 +5,7 @@ export default function App({navigation}) {
 
     const handlePress = (serviceType) => {
         Alert.alert(serviceType);
+        navigation.navigate('MediaUploadScreen')
     };
 
     return (
@@ -22,8 +23,6 @@ export default function App({navigation}) {
                 text="Toilet Bowl"
                 onPress={() => handlePress("Toilet Bowl")}
             />
-
-            <Button text="Go to Media Upload Page" onPress={() => navigation.navigate('MediaUploadScreen')}/>
         </View>
     );
 }
