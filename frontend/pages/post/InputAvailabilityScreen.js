@@ -1,12 +1,13 @@
 // step 4 of 5
-import { View, Text, ScrollView, Alert } from "react-native";
+import { View, Text, ScrollView, Alert, FlatList } from "react-native";
 import Button from "../../components/Button";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useState } from "react";
 
 // TODO: the available slots are not displaying
 
-const InputAvailabilityPage = ({ navigation }) => {
+const InputAvailabilityPage = ({ navigation, route }) => {
+    const issue = route.params;
     const [date, setDate] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [startTime, setStartTime] = useState("");
@@ -54,11 +55,16 @@ const InputAvailabilityPage = ({ navigation }) => {
 
     const handleSubmit = () => {
         if (date && startTime && endTime) {
-            const availableSlot = { date, startTime, endTime };
-            Alert.alert(
-                `date: ${date}, startTime:" ${startTime}, endTime: ${endTime}`
-            );
-            setAvailableSlots([...availableSlots, availableSlot]);
+            const startDateTime = `${date}T${startTime}:00`;
+            const endDateTime = `${date}T${endTime}:00`;
+            const updatedIssue = {
+                ...issue,
+                startDate: startDateTime,
+                endDate: endDateTime,
+            };
+            Alert.alert(`Start: ${startDateTime}, End: ${endDateTime}`);
+            console.log(updatedIssue)
+            navigation.navigate("SelectLocationScreen", {issue: updatedIssue})
         }
     };
 
@@ -115,7 +121,7 @@ const InputAvailabilityPage = ({ navigation }) => {
 
             <Button text="Submit" onPress={handleSubmit} />
 
-            <ScrollView>
+            <FlatList>
                 {availableSlots.map((slot, index) => {
                     <View key={index} className="mt-2 p-2 bg-slate-400">
                         <Text>
@@ -124,7 +130,7 @@ const InputAvailabilityPage = ({ navigation }) => {
                         <Text>hello</Text>
                     </View>;
                 })}
-            </ScrollView>
+            </FlatList>
 
             <Button
                 text="Go to Select Location Screen"

@@ -4,15 +4,20 @@ import Button from "../../components/Button";
 import { useState } from "react";
 import { Keyboard } from "react-native";
 
-const DescribeIssuePage = ({ navigation }) => {
+const DescribeIssuePage = ({ navigation, route }) => {
+    const issue = route.params
     const [title, onChangeTitle] = useState("")
     const [description, onChangeDescription] = useState("")
 
     const handleSubmit = () => {
+        const updatedIssue = {
+            ...issue,
+            title: title,
+            description: description,
+        }
         Alert.alert(`Submitted form with title: ${title}\n description: ${description}`)
-        onChangeTitle("")
-        onChangeDescription("")
-        navigation.navigate('InputAvailabilityScreen')
+        console.log(updatedIssue)
+        navigation.navigate('InputAvailabilityScreen', {issue: updatedIssue})
     }
 
     return (

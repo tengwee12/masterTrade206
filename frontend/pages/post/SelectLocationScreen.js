@@ -9,7 +9,8 @@ import { useState } from "react";
 import { Keyboard } from "react-native";
 import Button from "../../components/Button";
 
-const SelectLocationScreen = () => {
+const SelectLocationScreen = ({navigation, route}) => {
+    const issue = route.params
     const [location, setLocation] = useState("");
 
     const [country, setCountry] = useState("");
@@ -18,9 +19,15 @@ const SelectLocationScreen = () => {
 
     const saveLocation = () => {
         if (country !== "" && postalCode !== "" && address !== "") {
-            setLocation(`${country}:${postalCode}:${address}`);
-            Alert.alert(location);
-            return;
+            const updatedIssue = {
+                ...issue,
+                address: `${country}:${postalCode}:${address}`,
+            }
+            console.log(updatedIssue)
+            Alert.alert("Complete!")
+            // TODO: we need to send this issue to the backend now
+            navigation.navigate("YourPostsScreen")
+            return
         }
 
         let message = "Following fields cannot be empty: \n";
@@ -71,7 +78,7 @@ const SelectLocationScreen = () => {
                     <Text className="pb-2 pt-4">Address</Text>
                     <TextInput
                         value={address}
-                        placeholder="eg. 266913"
+                        placeholder="eg. Blk 123 Hello Ave 100 #12-3456"
                         onChangeText={onChangeAddress}
                     />
                 </View>
