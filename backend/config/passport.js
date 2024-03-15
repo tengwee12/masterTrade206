@@ -32,9 +32,11 @@ module.exports = (passport) => {
     new Strategy(jwtOptions, (jwtPayload, done) => {
       console.log(jwtPayload);
 
-      if (jwtPayload.userType == "user") {
+      if (jwtPayload.type == "user") {
+
         User.findOne({ where: { id: jwtPayload.sub } })
           .then((user) => {
+            console.log(user);
             if (user) {
               return done(null, user);
             } else {
@@ -42,7 +44,7 @@ module.exports = (passport) => {
             }
           })
           .catch((err) => done(err, null));
-      } else if (jwtPayload.userType == "plumber") {
+      } else if (jwtPayload.type == "plumber") {
         Plumber.findOne({ where: { id: jwtPayload.sub } })
           .then((user) => {
             if (user) {
@@ -52,9 +54,10 @@ module.exports = (passport) => {
             }
           })
           .catch((err) => done(err, null));
+      } else {
+        return done(null, false);
       }
-
-      return done(null, false);
+      
     })
   );
 };
