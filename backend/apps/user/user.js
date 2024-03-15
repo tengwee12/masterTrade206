@@ -6,7 +6,10 @@ const auth = require("../../middleware/auth");
 const User = require("./model");
 
 const issueRoute = require('../issue/userIssue');
+const reviewRoute = require('../review/userIssueReview');
+
 router.use('/issue', issueRoute);
+router.use('/:id/issue/:issueId/reivew', reviewRoute);
 
 router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});

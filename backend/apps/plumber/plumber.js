@@ -9,15 +9,12 @@ router.get(
   "/protected",
   passport.authenticate("jwt", { session: false }),
   (req, res, next) => {
-    res
-      .status(200)
-      .json({
-        success: true,
-        msg: "You are successfully authenticated to this route!",
-      });
+    res.status(200).json({
+      success: true,
+      msg: "You are successfully authenticated to this route!",
+    });
   }
 );
-
 
 router.post("/login", async (req, res, next) => {
   Plumber.findOne({ where: { email: req.body.email } })
@@ -30,13 +27,11 @@ router.post("/login", async (req, res, next) => {
 
       if (plumber.password === req.body.password) {
         const tokenObject = auth.issueJWT(plumber, "plumber"); //this is the part that needs middleware
-        res
-          .status(200)
-          .json({
-            success: true,
-            token: tokenObject.token,
-            expiresIn: tokenObject.expires,
-          });
+        res.status(200).json({
+          success: true,
+          token: tokenObject.token,
+          expiresIn: tokenObject.expires,
+        });
       } else {
         res
           .status(401)
@@ -46,30 +41,29 @@ router.post("/login", async (req, res, next) => {
     .catch((err) => console.log(err));
 });
 
-
 /*
   Get all revien given plumber id
 */
-router.get("/:id/review", passport.authenticate("jwt", { session: false }), async (req, res) => {
-
-  if (!req.user) {
-    res.status(403).json({ msg: "Forbidden" });
-  } else if (req.user.id != req.params.id) {
-    res.status(500).json({ msg: "Error with token!" });
-  } 
-  else {
-    Review.findAll({where: { PlumberId: req.user.id }})
-    .then((result) => {
-      res
-          .status(200)
-          .json({
+router.get(
+  "/:id/review",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    if (!req.user) {
+      res.status(403).json({ msg: "Forbidden" });
+    } else if (req.user.id != req.params.id) {
+      res.status(500).json({ msg: "Error with token!" });
+    } else {
+      Review.findAll({ where: { PlumberId: req.user.id } })
+        .then((result) => {
+          res.status(200).json({
             success: true,
             data: result,
           });
-    }).catch((err) => console.log(err));
-
+        })
+        .catch((err) => console.log(err));
+    }
   }
-});
+);
 
 // Get all plumbers
 router.get("/", async (req, res) => {
@@ -105,43 +99,52 @@ router.post("/register", async (req, res) => {
   });
 });
 
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { id } = req.params;
 
-
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const { email, description, image } = req.body;
-    const plumber = await Plumber.findByPk(id);
-    if (plumber) {
-      //update begins here
-      if (email) {
-        plumber.email = email;
-      }
-      if (description) {
-        plumber.description = description;
-      }
-      if (image) {
-        plumber.image = image;
-      }
-      await plumber.save();
-      res.json(plumber);
-    } else {
-      res.status(404).json({ error: "Plumber account not found" });
-    }
-  } catch (error) {
-    console.error("Error retrieving plumber account:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// Retrieve plumber by plumber ID
-router.get("/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     if (!req.user) {
       res.status(403).json({ msg: "Forbidden" });
     } else if (req.user.id != req.params.id) {
       res.status(500).json({ msg: "Error with token!" });
-    } 
-    else {
+    } else {
+      try {
+        const { email, description, image } = req.body;
+        const plumber = await Plumber.findByPk(id);
+        if (plumber) {
+          //update begins here
+          if (email) {
+            plumber.email = email;
+          }
+          if (description) {
+            plumber.description = description;
+          }
+          if (image) {
+            plumber.image = image;
+          }
+          await plumber.save();
+          res.json(plumber);
+        } else {
+          res.status(404).json({ error: "Plumber account not found" });
+        }
+      } catch (error) {
+        console.error("Error retrieving plumber account:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    }
+  }
+);
+
+// Retrieve plumber by plumber ID
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    if (!req.user) {
+      res.status(403).json({ msg: "Forbidden" });
+    } else {
       const { id } = req.params;
       try {
         // Find the plumber by ID
@@ -162,24 +165,30 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
   }
 );
 
-
 // Update license, by ID
-router.put("/license/:id", async (req, res) => {
+router.put("/license/:id",   passport.authenticate("jwt", { session: false }), async (req, res) => {
   const { id } = req.params;
-  try {
-    const { license } = req.body;
-    const plumber = await Plumber.findByPk(id);
-    if (plumber) {
-      //update begins here
-      plumber.license = license;
-      await plumber.save();
-      res.json(plumber);
-    } else {
-      res.status(404).json({ error: "Plumber account not found" });
+
+  if (!req.user) {
+    res.status(403).json({ msg: "Forbidden" });
+  } else if (req.user.id != req.params.id) {
+    res.status(500).json({ msg: "Error with token!" });
+  } else {
+    try {
+      const { license } = req.body;
+      const plumber = await Plumber.findByPk(id);
+      if (plumber) {
+        //update begins here
+        plumber.license = license;
+        await plumber.save();
+        res.json(plumber);
+      } else {
+        res.status(404).json({ error: "Plumber account not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-  } catch (error) {
-    console.error("Error retrieving plumber account:", error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -250,55 +259,59 @@ router.put("/license/:id", async (req, res) => {
 //   }
 // });
 
-
 // Add a DELETE route to delete a specific image link for a plumber by ID
-router.delete("/image/:id", async (req, res) => {
+router.delete("/image/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const { id } = req.params;
-  const { imageLink } = req.body; // Assuming the URL to delete is sent in the request body
-  try {
-    // Find the plumber by ID
-    const plumber = await Plumber.findByPk(id);
+  if (!req.user) {
+    res.status(403).json({ msg: "Forbidden" });
+  } else if (req.user.id != req.params.id) {
+    res.status(500).json({ msg: "Error with token!" });
+  } else {
+    try {
+      // Find the plumber by ID
+      const plumber = await Plumber.findByPk(id);
 
-    if (!plumber) {
-      // If plumber not found, return a 404 error
-      return res.status(404).json({ error: "Plumber not found" });
+      if (!plumber) {
+        // If plumber not found, return a 404 error
+        return res.status(404).json({ error: "Plumber not found" });
+      }
+
+      if (!plumber.image) {
+        // If plumber has no image links, return a 404 error
+        return res.status(404).json({ error: "Plumber has no image links" });
+      }
+
+      plumber.image = null;
+
+      // // Split the concatenated image links into an array
+      // const imageLinks = plumber.image.split(';');
+
+      // // Find the index of the image link to delete
+      // const indexToDelete = imageLinks.indexOf(imageLink);
+
+      // if (indexToDelete === -1) {
+      //   // If the image link to delete is not found, return a 404 error
+      //   return res.status(404).json({ error: "Image link not found for this plumber" });
+      // }
+
+      // // Remove the image link from the array
+      // imageLinks.splice(indexToDelete, 1);
+
+      // // Join the remaining image links back into a single string
+      // plumber.image = imageLinks.join(';');
+
+      // Save the updated plumber record
+      await plumber.save();
+
+      // Send a success response
+      res.json({ message: "Image link deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting image link:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-
-    if (!plumber.image) {
-      // If plumber has no image links, return a 404 error
-      return res.status(404).json({ error: "Plumber has no image links" });
-    }
-
-    plumber.image = null;
-
-    // // Split the concatenated image links into an array
-    // const imageLinks = plumber.image.split(';');
-
-    // // Find the index of the image link to delete
-    // const indexToDelete = imageLinks.indexOf(imageLink);
-
-    // if (indexToDelete === -1) {
-    //   // If the image link to delete is not found, return a 404 error
-    //   return res.status(404).json({ error: "Image link not found for this plumber" });
-    // }
-
-    // // Remove the image link from the array
-    // imageLinks.splice(indexToDelete, 1);
-
-    // // Join the remaining image links back into a single string
-    // plumber.image = imageLinks.join(';');
-
-    // Save the updated plumber record
-    await plumber.save();
-
-    // Send a success response
-    res.json({ message: "Image link deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting image link:", error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-     
+
 // Add service, by ID
 // router.put("/services/add/:id", async (req, res) => {
 //   const { id } = req.params;
