@@ -33,7 +33,9 @@ export default function PlumberPostsPage() {
 
   return (
     <ScrollView>
-      <Text>Job Listings For You</Text>
+      <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
+      <Logo />
+      <Text className="font-bold text-lg mt-3">Job Listings For You</Text>
       <FlatList
         data={postList}
         renderItem={({ item }) => (

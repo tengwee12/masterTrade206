@@ -11,7 +11,6 @@ export default function PlumberJobDetailsPage({ route }) {
   const fetchIssueData = async () => {
     try {
       const response = await axiosInstance.get(`/api/issue/${issueId}`);
-
       console.log(response.data);
       setIssueData(response.data);
     } catch (err) {

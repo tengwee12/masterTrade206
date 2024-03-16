@@ -50,9 +50,10 @@ const setUpDB = (drop) => {
                   averageRating: 4,
                 },
                 {
-                  email: "plumberPhua@gmail.com",
+                  email: "luigi@gmail.com",
                   password: "12345",
-                  name: "Plumber Phua",
+                  name: "Plumber Luigi",
+                  description: "With a keen eye for detail and a passion for excellence, Luigi tackles every job with precision and professionalism. From minor repairs to major installations, you can trust Luigi to get the job done efficiently and effectively.",
                   license: false,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/luigi.jpeg",
@@ -62,6 +63,7 @@ const setUpDB = (drop) => {
                   email: "kirby@gmail.com",
                   password: "12345",
                   name: "Plumber Kirby",
+                  description: "From routine maintenance to intricate installations, Kirby's precision and skill ensure quality workmanship and lasting results. Count on Plumber Kirby for reliable service, personalized solutions, and a seamless experience from start to finish.",
                   license: true,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/kirby.jpg",

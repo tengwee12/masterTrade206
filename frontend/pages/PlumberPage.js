@@ -17,7 +17,7 @@ export default function PlumberPage({ route }) {
 
   const getReviews = async () => {
     try {
-      const token = await getItemAsync("token");
+      let token = await getItemAsync("token");
       let result = await axiosInstance.get(
         `/api/review/getplumber/${plumberID}`,
         {
@@ -35,14 +35,19 @@ export default function PlumberPage({ route }) {
   };
 
   const getPlumberData = async () => {
-    const response = await axiosInstance.get("/api/plumber", {
-      params: {
-        id: plumberID,
-      },
-    });
+    try {
+      let token = await getItemAsync("token");
+      const response = await axiosInstance.get(`/api/plumber/${plumberID}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
 
-    console.log("get plumber data:", response.data[0]);
-    setPlumberData(response.data[0]);
+      console.log("get plumber data:", response.data[0]);
+      setPlumberData(response.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const navigateToReviewForm = () => {
@@ -67,7 +72,9 @@ export default function PlumberPage({ route }) {
 
           <View className="flex flex-row items-center">
             <View className="pr-3">
-              <Text className="font-bold text-base">{plumberData.name}</Text>
+              <Text className="font-bold text-base">
+                {plumberData.name} {plumberID}
+              </Text>
               {plumberData.license && (
                 <View className="flex flex-row items-center">
                   <MaterialCommunityIcons
@@ -129,7 +136,7 @@ export default function PlumberPage({ route }) {
             <Text className="font-bold text-sm">Reviews</Text>
             <View className="flex flex-row items-center">
               <Text className="pr-2">
-                {plumberData.averageRating.toFixed(1)}
+                {plumberData.averageRating?.toFixed(1)}
               </Text>
               <StarRating rating={plumberData.averageRating} />
               <Text className="pl-2">{reviews.length} review(s)</Text>
