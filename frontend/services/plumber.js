@@ -2,7 +2,7 @@ import { axiosInstance } from "../services/axios";
 
 export async function fetchPlumbers(token) {
   try {
-    const result = await axiosInstance.get("/api/plumber/getAllPlumbers", {
+    const result = await axiosInstance.get("/api/plumber", {
       headers: {
         Authorization: token,
       },

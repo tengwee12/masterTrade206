@@ -43,7 +43,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 /*
-  Get all revien given plumber id
+  Get all review given plumber id
 */
 router.get(
   "/:id/review",

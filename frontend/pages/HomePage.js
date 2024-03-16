@@ -67,7 +67,7 @@ export default function HomePage() {
         </ScrollView>
         <Text className="font-bold text-base pt-4">Plumbers for you</Text>
         <ScrollView horizontal>
-          {plumberList.length > 0 &&
+          {plumberList && plumberList.length > 0 &&
             plumberList.map((p) => <PlumberCard key={p.id} plumberData={p} />)}
         </ScrollView>
       </View>

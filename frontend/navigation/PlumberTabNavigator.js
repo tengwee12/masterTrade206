@@ -1,18 +1,26 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
-import PlumberChats from "../pages/chat/PlumberChats";
+import PlumberChatsPage from "../pages/chat/PlumberChatsPage";
+import PlumberJobStack from "./PlumberJobStack";
+
 
 const Tab = createBottomTabNavigator();
 
 export default function PlumberTabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="PlumberChats"
+      initialRouteName="PlumberPosts"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
+            case 'Jobs':
+              iconName = focused ? 'briefcase' : 'briefcase-outline'
+              break
+            case 'Chats':
+              iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
+              break
           } 
 
           // You can return any component that you like here!
@@ -23,7 +31,8 @@ export default function PlumberTabNavigator() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="PlumberChats" component={PlumberChats} />
+      <Tab.Screen name="Chats" component={PlumberChatsPage} />
+      <Tab.Screen name="Jobs" component={PlumberJobStack} />
     </Tab.Navigator>
   );
 }

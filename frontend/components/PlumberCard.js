@@ -20,7 +20,7 @@ export default PlumberCard = ({ plumberData }) => {
 
       <Text className="">{plumberData.name}</Text>
       <View className="flex flex-row items-center">
-        <Text className="">{plumberData.averageRating}</Text>
+        <Text className="">{plumberData.averageRating.toFixed(1)}</Text>
         <FontAwesome name="star" size={24} color="#f1c40f" />
       </View>
     </Pressable>
