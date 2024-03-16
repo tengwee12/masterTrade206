@@ -16,7 +16,7 @@ const DescribeIssuePage = ({ navigation, route }) => {
             description: description,
         }
         Alert.alert(`Submitted form with title: ${title}\n description: ${description}`)
-        console.log(updatedIssue)
+        // console.log(updatedIssue)
         navigation.navigate('InputAvailabilityScreen', {issue: updatedIssue})
     }
 

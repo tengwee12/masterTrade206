@@ -13,7 +13,7 @@ export default function App({ navigation }) {
             address: "",
             description: "",
         };
-        console.log(issue);
+        // console.log(issue);
         navigation.navigate("MediaUploadScreen", { issue });
     };
     return (

@@ -1,5 +1,5 @@
 // step 2 of 5
-import { View, Image, Alert, Text, FlatList } from "react-native";
+import { View, Image, Platform, Text, FlatList } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button.js";
@@ -55,15 +55,15 @@ const MediaUploadPage = ({ navigation, route }) => {
         }
 
         try {
-            const imageUri = result.assets[0].uri;
-            setImages((prev) => [...prev, imageUri]);
-            console.log("success: ", imageUri);
+            const image_link = result.assets[0].uri;
+            setImages((prev) => [...prev, image_link]);
+            console.log("success: ", image_link);
         } catch (error) {
             console.error(error);
             throw error;
         }
 
-        console.log(images);
+        // console.log(images);
     };
 
     const handleMediaUpload = () => {

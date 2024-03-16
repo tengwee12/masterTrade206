@@ -5,29 +5,56 @@ import {
     TouchableWithoutFeedback,
     Alert,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Keyboard } from "react-native";
 import Button from "../../components/Button";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
+import { axiosInstance } from "../../services/axios";
 
-const SelectLocationScreen = ({navigation, route}) => {
-    const issue = route.params
-    const [location, setLocation] = useState("");
+const SelectLocationScreen = ({ navigation, route }) => {
+    const issue = route.params;
 
     const [country, setCountry] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [address, setAddress] = useState("");
+
+    const getUserId = async () => {
+        try {
+            const response = await getItemAsync("userId");
+            console.log(response);
+            return response;
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        getUserId();
+    }, []);
+
+    // TODO: I THINK THIS IS WRONG OOPS
+    const postIssue = async () => {
+        try {
+            const response = await axiosInstance.post("/api/issue");
+            await setItemAsync("userId", response.data.userId);
+            console.log("i submitted issue:", response.data.title);
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const saveLocation = () => {
         if (country !== "" && postalCode !== "" && address !== "") {
             const updatedIssue = {
                 ...issue,
                 address: `${country}:${postalCode}:${address}`,
-            }
-            console.log(updatedIssue)
-            Alert.alert("Complete!")
+            };
+            console.log(updatedIssue);
+            Alert.alert("Complete!");
             // TODO: we need to send this issue to the backend now
-            navigation.navigate("YourPostsScreen")
-            return
+            postIssue();
+            navigation.navigate("YourPostsScreen");
+            return;
         }
 
         let message = "Following fields cannot be empty: \n";

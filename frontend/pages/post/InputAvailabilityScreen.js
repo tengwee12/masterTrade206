@@ -63,7 +63,7 @@ const InputAvailabilityPage = ({ navigation, route }) => {
                 endDate: endDateTime,
             };
             Alert.alert(`Start: ${startDateTime}, End: ${endDateTime}`);
-            console.log(updatedIssue)
+            // console.log(updatedIssue)
             navigation.navigate("SelectLocationScreen", {issue: updatedIssue})
         }
     };
