@@ -7,6 +7,10 @@ const User = db.define('User', {
         autoIncrement: true,
         primaryKey: true
     },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     email: {
         type: DataTypes.STRING,
         validate: {
