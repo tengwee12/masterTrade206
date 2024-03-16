@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Issue = require("../issue/model");
 const Plumber = require("../plumber/model");
+const User = require("../user/model");
 
 const Review = require("./model");
 
@@ -207,23 +208,25 @@ router.delete("/media/:id", async (req, res) => {
 
 
 // GET route to retrieve all reviews for a specific plumber by plumberId
-router.get('/getplumber/:plumberId', async (req, res) => {
+router.get('/getbyplumber/:plumberId', async (req, res) => {
     const plumberId = req.params.plumberId;
   
     try {
       // Find all reviews with the specified plumberId
-      const issues = await Issue.findAll({
+      let data = await Review.findAll({
         where: { PlumberId: plumberId }
       });
-      let reviews  = [];
-      if (issues) {
-        for (let i = 0; i < issues.length; i++) {
-            const review = await issues[i].getReview();
-            if (review) {
-              reviews.push(review);
-            }
-          }
+      let reviews = []
+      if (data) {
+        for (let i = 0; i < data.length; i++) {
+          let userId = await data[i].UserId;
+          const user = await User.findOne({
+            where: {id: userId}
+          });
+          data[i].dataValues.username = await user.username
+          reviews.push(data[i])
         }
+      }
       
       // Return the reviews as JSON
       res.json(reviews);
