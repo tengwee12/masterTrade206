@@ -43,6 +43,7 @@ const setUpDB = (drop) => {
                   password: "12345",
                   name: "Plumber Chuan",
                   license: true,
+                  description: "More than 15 years experience in the industry, Plumber Phua is always committed to being responsible and responsive to all his customers’ issues",
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png",
                     services: "Sink Choke or Leak; Toilet Bowl Choke or Leak; Water Tap Leak; Water Heater Installation;",
