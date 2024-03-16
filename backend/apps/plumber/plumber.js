@@ -4,6 +4,7 @@ const passport = require("passport");
 const auth = require("../../middleware/auth");
 
 const Plumber = require("./model");
+const Review = require("../review/model");
 
 router.get(
   "/protected",
