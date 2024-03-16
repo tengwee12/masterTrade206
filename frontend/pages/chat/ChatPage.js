@@ -8,8 +8,8 @@ import { getItem } from 'expo-secure-store';
 import Quotation from './Quotation';
 import Message from './Message'; // Import the Message component
 
-  const ChatPage = () => {
-    const { recipientId } = route.params      // Example recipient ID, replace with actual recipient ID
+  const ChatPage = ({ route }) => {
+    const { otherId } = route.params      // Example recipient ID, replace with actual recipient ID
     const [messages, setMessages] = useState([]);
     const userId = getItem('userId');
 
@@ -26,7 +26,7 @@ import Message from './Message'; // Import the Message component
             const recipientId = data.recipient; // Assuming recipient field is added to each message
             
             // Check if the message is sent by the user or is sent to the user
-            if (senderId === userId || recipientId === userId) {
+            if ((senderId === userId && recipientId == otherId) || (senderId == otherId && recipientId === userId)) {
               return {
                 _id: doc.id,
                 createdAt: data.createdAt,
@@ -57,7 +57,7 @@ import Message from './Message'; // Import the Message component
         createdAt: newMessage.createdAt,
         text: newMessage.text,
         user: userId,
-        recipient: recipientId // Include recipient information
+        recipient: otherId // Include recipient information
       };
       addDoc(collection(database, 'chats'), messageToSend);
     }, []);

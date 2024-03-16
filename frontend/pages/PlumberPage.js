@@ -51,7 +51,7 @@ export default function PlumberPage({ route }) {
 
   const navigateToChatPage = () => {
     // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", { recipientId: plumberID });
+    navigation.navigate("ChatPage", { otherId: plumberID });
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function PlumberPage({ route }) {
                 </View>
               )}
             </View>
-            <PurpleButton text="Chat" />
+            <PurpleButton text="Chat" onPress={navigateToChatPage}/>
           </View>
           <View className="flex flex-col gap-y-4">
             <View>
@@ -134,7 +134,7 @@ export default function PlumberPage({ route }) {
             <Text className="font-bold text-sm">Reviews</Text>
             <View className="flex flex-row items-center">
               <Text className="pr-2">
-                {plumberData.averageRating.toFixed(1)}
+                {plumberData.averageRating?.toFixed(1)}
               </Text>
               <StarRating rating={plumberData.averageRating} />
               <Text className="pl-2">{reviews.length} review(s)</Text>
