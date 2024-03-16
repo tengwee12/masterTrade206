@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatScreen from "../pages/chat/ChatPageList";
+import ChatStack from "./ChatStack";
 import { Ionicons } from '@expo/vector-icons';
 import PostStack from "./PostStack";
 import HomeStack from "./HomeStack";
@@ -18,7 +18,7 @@ export default function UserTabNavigator() {
             case 'HomeStack':
               iconName = focused ? 'home' : 'home-outline'
               break
-            case 'Chat':
+            case 'ChatStack':
               iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
               break
             case 'PostStack':
@@ -35,7 +35,7 @@ export default function UserTabNavigator() {
       })}
     >
       <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="Chat" component={ChatScreen} />
+      <Tab.Screen name="ChatStack" component={ChatStack} />
       <Tab.Screen name="PostStack" component={PostStack} />
     </Tab.Navigator>
   );

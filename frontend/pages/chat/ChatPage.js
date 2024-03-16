@@ -9,13 +9,12 @@ import Quotation from './Quotation';
 import Message from './Message'; // Import the Message component
 
   const ChatPage = ({ route }) => {
-    const { otherId } = route.params      // Example recipient ID, replace with actual recipient ID
     const [messages, setMessages] = useState([]);
     const userId = getItem('userId');
 
     useLayoutEffect(() => {
       const loadMessages = async () => {
-        const userId = await getItem('userId');
+        const { otherId } = await route.params      // Example recipient ID, replace with actual recipient ID
         const collectionRef = collection(database, 'chats');
         const q = query(collectionRef, orderBy('createdAt', 'desc'));
         
@@ -26,7 +25,7 @@ import Message from './Message'; // Import the Message component
             const recipientId = data.recipient; // Assuming recipient field is added to each message
             
             // Check if the message is sent by the user or is sent to the user
-            if ((senderId === userId && recipientId == otherId) || (senderId == otherId && recipientId === userId)) {
+            if ((senderId === userId && recipientId === otherId) || (senderId === otherId && recipientId === userId)) {
               return {
                 _id: doc.id,
                 createdAt: data.createdAt,
@@ -52,6 +51,7 @@ import Message from './Message'; // Import the Message component
 
     const onSend = useCallback(async (newMessages = []) => {
       const newMessage = newMessages[0];
+      const { otherId } = await route.params      // Example recipient ID, replace with actual recipient ID
       const messageToSend = {
         _id: newMessage._id,
         createdAt: newMessage.createdAt,

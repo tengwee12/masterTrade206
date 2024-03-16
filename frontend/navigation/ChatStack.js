@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import ChatPage from '../pages/ChatPage';
-import ChatPageList from '../pages/ChatPageList';
+import ChatPage from '../pages/chat/ChatPage';
+import ChatPageList from '../pages/chat/ChatPageList';
 
 
 const Stack = createStackNavigator();
