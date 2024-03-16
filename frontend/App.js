@@ -22,7 +22,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="AuthStack" component={AuthStack}/>  */}
+            <Stack.Screen name="AuthStack" component={AuthStack}/>
             <Stack.Screen name="UserTabNavigator" component={UserTabNavigator} />
             <Stack.Screen name="PlumberTabNavigator" component={PlumberTabNavigator} />
         </Stack.Navigator>

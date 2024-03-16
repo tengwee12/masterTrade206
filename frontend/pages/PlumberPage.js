@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import UserReview from "../components/UserReview";
 import StarRating from "../components/StarRating";
 import { getItemAsync } from "expo-secure-store";
+import BackButton from "../components/BackButton";
 
 export default function PlumberPage({ route }) {
   const { plumberID } = route.params;
@@ -51,6 +52,7 @@ export default function PlumberPage({ route }) {
   return (
     <ScrollView>
       <Image source={require("../assets/mario.png")} />
+      <BackButton color="white" />
 
       <View className="flex flex-row items-center">
         <View className="pr-3">

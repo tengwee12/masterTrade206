@@ -43,6 +43,7 @@ const setUpDB = (drop) => {
                   license: true,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png",
+                    services: "Sink Choke or Leak; Toilet Bowl Choke or Leak; Water Tap Leak; Water Heater Installation;",
                   averageRating: 4,
                 },
                 {
@@ -54,6 +55,15 @@ const setUpDB = (drop) => {
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/luigi.jpeg",
                   averageRating: 3.9,
                 },
+                {
+                  email: "kirby@gmail.com",
+                  password: "12345",
+                  name: "Plumber Kirby",
+                  license: true,
+                  image:
+                    "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/kirby.jpg",
+                  averageRating: 2,
+                },
               ])
                 .then(() => {
                   console.log("successfully added intial user(plumber) data");
@@ -62,8 +72,8 @@ const setUpDB = (drop) => {
                     {
                       description: "test description",
                       title: "test title",
-                      imageLink: "test image link",
-                      category: "test categry",
+                      media: "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/post_img.png",
+                      category: "test category",
                       address: "test address",
                       startDate: Date.now(),
                       endDate: Date.now(),
