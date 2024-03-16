@@ -49,6 +49,11 @@ export default function PlumberPage({ route }) {
     navigation.navigate("Review", { plumberID: plumberID });
   };
 
+  const navigateToChatPage = () => {
+    // checkAndAddRecipient(plumberID);
+    navigation.navigate("ChatPage", { recipientId: plumberID });
+  };
+
   useEffect(() => {
     getReviews();
     getPlumberData();

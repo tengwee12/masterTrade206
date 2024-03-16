@@ -3,37 +3,46 @@ import { View, StyleSheet } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore';
 import { database } from '../../services/firebase';
-import { useNavigation } from '@react-navigation/native';
 import { getItem } from 'expo-secure-store';
 
 import Quotation from './Quotation';
 import Message from './Message'; // Import the Message component
 
   const ChatPage = () => {
+    const { recipientId } = route.params      // Example recipient ID, replace with actual recipient ID
     const [messages, setMessages] = useState([]);
-    const navigation = useNavigation();
     const userId = getItem('userId');
 
     useLayoutEffect(() => {
       const loadMessages = async () => {
+        const userId = await getItem('userId');
         const collectionRef = collection(database, 'chats');
         const q = query(collectionRef, orderBy('createdAt', 'desc'));
-    
+        
         const unsubscribe = onSnapshot(q, snapshot => {
           const updatedMessages = snapshot.docs.map(doc => {
             const data = doc.data();
-            return {
-              _id: doc.id,
-              createdAt: data.createdAt,
-              text: data.text,
-              user: {
-                _id: data.user, // Set user to the actual user ID from Firestore
-              },
-            };
-          });
+            const senderId = data.user;
+            const recipientId = data.recipient; // Assuming recipient field is added to each message
+            
+            // Check if the message is sent by the user or is sent to the user
+            if (senderId === userId || recipientId === userId) {
+              return {
+                _id: doc.id,
+                createdAt: data.createdAt,
+                text: data.text,
+                user: {
+                  _id: senderId, // Set user to the actual sender ID
+                },
+              };
+            } else {
+              return null; // Exclude messages not sent by or to the user
+            }
+          }).filter(message => message !== null); // Filter out null values
+          
           setMessages(updatedMessages);
         });
-    
+        
         return () => unsubscribe();
       };
     
@@ -41,16 +50,17 @@ import Message from './Message'; // Import the Message component
     }, []);
   
 
-  const onSend = useCallback(async (newMessages = []) => {
-    const newMessage = newMessages[0];
-    const messageToSend = {
-      _id: newMessage._id,
-      createdAt: newMessage.createdAt,
-      text: newMessage.text,
-      user: userId // set the user to userId
-    };
-    addDoc(collection(database, 'chats'), messageToSend);
-  }, []);
+    const onSend = useCallback(async (newMessages = []) => {
+      const newMessage = newMessages[0];
+      const messageToSend = {
+        _id: newMessage._id,
+        createdAt: newMessage.createdAt,
+        text: newMessage.text,
+        user: userId,
+        recipient: recipientId // Include recipient information
+      };
+      addDoc(collection(database, 'chats'), messageToSend);
+    }, []);
 
   return (
     <View style={styles.container}>

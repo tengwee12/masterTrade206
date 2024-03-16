@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChatScreen from "../pages/chat/ChatPage";
+import ChatScreen from "../pages/chat/ChatPageList";
 import { Ionicons } from '@expo/vector-icons';
 import PostStack from "./PostStack";
 import HomeStack from "./HomeStack";
