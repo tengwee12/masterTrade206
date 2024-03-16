@@ -95,6 +95,8 @@ const setUpDB = (drop) => {
                         media: "image1.com", // Example media URLs
                         IssueId: 1, // Example issue ID
                         price: 6.9,
+                        plumberId: 1,
+                        UserId: 1
                       })
                         .then(() => console.log("Review created successfully"))
                         .catch((err) =>
