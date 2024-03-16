@@ -32,6 +32,7 @@ const setUpDB = (drop) => {
 
           User.create({
             email: "test@gmail.com",
+            username: "Tester",
             password: "12345",
           })
             .then(() => {
