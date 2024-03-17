@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { collection, addDoc, orderBy, query, onSnapshot } from 'firebase/firestore';
 import { database } from '../../services/firebase';
@@ -10,29 +10,31 @@ import Message from './Message'; // Import the Message component
 
   const ChatPage = ({ route }) => {
     const [messages, setMessages] = useState([]);
-    const userId = getItem('userId');
+    const userEmail = getItem('email');
+    const { otherEmail } = route.params;
 
     useLayoutEffect(() => {
       const loadMessages = async () => {
-        const { otherId } = await route.params      // Example recipient ID, replace with actual recipient ID
+        const { otherEmail } = await route.params      // Example recipient ID, replace with actual recipient ID
         const collectionRef = collection(database, 'chats');
         const q = query(collectionRef, orderBy('createdAt', 'desc'));
         
         const unsubscribe = onSnapshot(q, snapshot => {
           const updatedMessages = snapshot.docs.map(doc => {
             const data = doc.data();
-            const senderId = data.user;
-            const recipientId = data.recipient; // Assuming recipient field is added to each message
+            const senderEmail = data.user;
+            const recipient = data.recipient; // Assuming recipient field is added to each message
             
             // Check if the message is sent by the user or is sent to the user
-            if ((senderId === userId && recipientId === otherId) || (senderId === otherId && recipientId === userId)) {
+            if ((senderEmail === userEmail && recipient === otherEmail) || (senderEmail === otherEmail && recipient === userEmail)) {
               return {
                 _id: doc.id,
                 createdAt: data.createdAt,
                 text: data.text,
                 user: {
-                  _id: senderId, // Set user to the actual sender ID
+                  _id: senderEmail, // Set user to the actual sender ID
                 },
+                recipient : data.recipient,
               };
             } else {
               return null; // Exclude messages not sent by or to the user
@@ -51,24 +53,24 @@ import Message from './Message'; // Import the Message component
 
     const onSend = useCallback(async (newMessages = []) => {
       const newMessage = newMessages[0];
-      const { otherId } = await route.params      // Example recipient ID, replace with actual recipient ID
+      const { otherEmail } = await route.params      // Example recipient ID, replace with actual recipient ID
       const messageToSend = {
         _id: newMessage._id,
         createdAt: newMessage.createdAt,
         text: newMessage.text,
-        user: userId,
-        recipient: otherId // Include recipient information
+        user: userEmail,
+        recipient: otherEmail // Include recipient information
       };
       addDoc(collection(database, 'chats'), messageToSend);
     }, []);
 
   return (
     <View style={styles.container}>
-      <Quotation plumberName="John Doe" quotation="$50 per hour" />
+      <Quotation plumberName={otherEmail} quotation="$50 per hour" />
       <GiftedChat
         messages={messages}
         onSend={onSend}
-        user={{ _id: userId }} // Set user to userId
+        user={{ _id: userEmail }} // Set user to userEmail
         renderMessage={(props) => (
           <Message
             message={props.currentMessage.text}
@@ -84,7 +86,6 @@ import Message from './Message'; // Import the Message component
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
   },
 });
 

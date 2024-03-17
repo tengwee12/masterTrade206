@@ -51,7 +51,7 @@ export default function PlumberPage({ route }) {
 
   const navigateToChatPage = () => {
     // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", { otherId: plumberID });
+    navigation.navigate("ChatPage", { otherEmail: plumberData.email.toString() });
   };
 
   useEffect(() => {

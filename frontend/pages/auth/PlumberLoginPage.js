@@ -24,6 +24,7 @@ export default function PlumberLoginPage({ navigation }) {
         password,
       })
       await setItemAsync("token", response.data.token);
+      await setItemAsync("email", email.toString());
       navigation.navigate("PlumberTabNavigator")
     } catch (err) {
       setError(err.message);
