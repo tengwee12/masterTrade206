@@ -82,7 +82,7 @@ const ChatPageList = () => {
     );
 
     return (
-        <View>
+        <View className="mt-8">
             <FlatList
                 data={chats}
                 renderItem={renderItem}
