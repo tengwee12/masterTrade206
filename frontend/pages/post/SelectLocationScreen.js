@@ -32,27 +32,19 @@ const SelectLocationScreen = ({ navigation, route }) => {
         getUserId();
     }, []);
 
-    // TODO: I THINK THIS IS WRONG OOPS
-    const postIssue = async () => {
-        try {
-            const response = await axiosInstance.post("/api/issue");
-            await setItemAsync("userId", response.data.userId);
-            console.log("i submitted issue:", response.data.title);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const saveLocation = () => {
-        if (country !== "" && postalCode !== "" && address !== "") {
-            const updatedIssue = {
-                ...issue,
-                address: `${country}:${postalCode}:${address}`,
-            };
-            console.log(updatedIssue);
+    const saveLocation = async () => {
+        if (country && postalCode && address) {
+            // console.log(issue);
+            try {
+                const response = await axiosInstance.post("/api/issue", {
+                    ...issue,
+                    address: `${country}:${postalCode}:${address}`,
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.error(error.message);
+            }
             Alert.alert("Complete!");
-            // TODO: we need to send this issue to the backend now
-            postIssue();
             navigation.navigate("YourPostsScreen");
             return;
         }
