@@ -71,7 +71,9 @@ router.get("/", async (req, res) => {
   try {
     // Find all plumbers
     const plumbers = await Plumber.findAll();
-
+    for (let i = 0; i < plumbers.length; i++){
+      plumbers[i].services = parseServices(plumbers[i].services);
+    }
     // Return the plumbers as JSON
     res.json(plumbers);
   } catch (error) {
@@ -167,7 +169,7 @@ router.get(
 );
 
 // Update license, by ID
-router.put("/license/:id",   passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.put("/license/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
   const { id } = req.params;
 
   if (!req.user) {
@@ -364,5 +366,48 @@ router.delete("/image/:id", passport.authenticate("jwt", { session: false }), as
 //     res.status(500).json({ error: "Internal Server Error" });
 //   }
 // });
+
+router.put("/addService/:id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+  const { id } = req.params;
+
+  if (!req.user) {
+    res.status(403).json({ msg: "Forbidden" });
+  } else if (req.user.id != req.params.id) {
+    res.status(500).json({ msg: "Error with token!" });
+  } else {
+    try {
+      const { license } = req.body;
+      const plumber = await Plumber.findByPk(id);
+      if (plumber) {
+        const { name } = req.body;
+        const { media } = req.body;
+        const { price } = req.body;
+        newService =  name + ";" + media + ";" + price + ";";
+        plumber.services += newService
+        await plumber.save();
+        res.json(plumber);
+      } else {
+        res.status(404).json({ error: "Plumber account not found" });
+      }
+    } catch (error) {
+      console.error("Error retrieving plumber account:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+});
+
+function parseServices(servicesString) {
+  const servicesArray = servicesString.split(';').filter(service => service.trim() !== '');
+  const servicesList = [];
+  
+  for (let i = 0; i < servicesArray.length; i += 3) {
+      const name = servicesArray[i];
+      const media = servicesArray[i + 1];
+      const price = servicesArray[i + 2];
+      servicesList.push({ name, media, price });
+  }
+  
+  return servicesList;
+}
 
 module.exports = router;

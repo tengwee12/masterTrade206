@@ -8,6 +8,11 @@ export default function PlumberJobDetailsPage({ route }) {
   const { issueId } = route.params;
   const [issueData, setIssueData] = useState({});
 
+  const navigateToChatPage = () => {
+    // checkAndAddRecipient(plumberID);
+    navigation.navigate("ChatPage", { otherId: plumberID });
+  };
+
   const fetchIssueData = async () => {
     try {
       const response = await axiosInstance.get(`/api/issue/${issueId}`);
@@ -48,7 +53,7 @@ export default function PlumberJobDetailsPage({ route }) {
       )}
       <View className="px-3">
         <PurpleButton text="Offer Quotation" />
-        <PurpleButton text="Chat" />
+        <PurpleButton text="Chat" onPress={navigateToChatPage}/>
       </View>
     </ScrollView>
   );

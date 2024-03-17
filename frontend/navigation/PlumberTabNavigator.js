@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
-import PlumberChatsPage from "../pages/chat/PlumberChatsPage";
+import ChatStack from "./ChatStack";
 import PlumberJobStack from "./PlumberJobStack";
 
 
@@ -31,7 +31,7 @@ export default function PlumberTabNavigator() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="Chats" component={PlumberChatsPage} />
+      <Tab.Screen name="Chats" component={ChatStack} />
       <Tab.Screen name="Jobs" component={PlumberJobStack} />
     </Tab.Navigator>
   );

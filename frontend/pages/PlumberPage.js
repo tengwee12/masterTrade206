@@ -54,6 +54,11 @@ export default function PlumberPage({ route }) {
     navigation.navigate("Review", { plumberID: plumberID });
   };
 
+  const navigateToChatPage = () => {
+    // checkAndAddRecipient(plumberID);
+    navigation.navigate("ChatPage", { otherEmail: plumberData.email.toString() });
+  };
+
   useEffect(() => {
     getReviews();
     getPlumberData();
@@ -86,7 +91,7 @@ export default function PlumberPage({ route }) {
                 </View>
               )}
             </View>
-            <PurpleButton text="Chat" />
+            <PurpleButton text="Chat" onPress={navigateToChatPage}/>
           </View>
           <View className="flex flex-col gap-y-4">
             <View>
