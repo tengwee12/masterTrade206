@@ -1,6 +1,9 @@
 import { View, TextInput, Pressable, Text, Modal } from "react-native";
+import GestureRecognizer from "react-native-swipe-gestures";
+import Slider from "@react-native-community/slider";
 import { useState, useEffect } from "react";
 import PlumberFilterItem from "../components/PlumberFilterItem";
+import PurpleButton from "../components/PurpleButton";
 
 export default function FilterPage({ route }) {
   const { searchBar, plumberList } = route.params;
@@ -8,7 +11,9 @@ export default function FilterPage({ route }) {
   const [plumberData, setPlumberData] = useState(plumberList);
   const [filteredList, setFilteredList] = useState([]);
   const [filterByLicense, setFilterByLicense] = useState(false);
-  const [filterByPriceModalVisible, setFilterByPriceModalVisible] = useState(false);
+  const [filterByRatingModalVisible, setFilterByRatingModalVisible] =
+    useState(false);
+  const [minRating, setMinRating] = useState(0);
 
   const filterPlumbers = () => {
     let filterResults = plumberData;
@@ -21,6 +26,12 @@ export default function FilterPage({ route }) {
 
     if (filterByLicense) {
       filterResults = filterResults?.filter((plumber) => plumber.license);
+    }
+
+    if (minRating > 0) {
+      filterResults = filterResults?.filter(
+        (plumber) => plumber.averageRating >= minRating
+      );
     }
 
     console.log("filtered:", filterResults);
@@ -41,28 +52,54 @@ export default function FilterPage({ route }) {
         placeholder="Search"
         onKeyPress={filterPlumbers}
       />
-      <View className="flex flex-row">
+      <View className="flex flex-row px-3">
         <Pressable
-          className={`${filterByLicense ? "bg-green" : "bg-white"} p-3 rounded`}
+          className={`${filterByLicense ? "border border-white" : "bg-white"} p-3 rounded`}
           onPress={() => {
             filterPlumbers();
             setFilterByLicense((filterByLicense) => !filterByLicense);
           }}
         >
-          <Text>License</Text>
+          <Text className={filterByLicense ? "text-white" : ""}>License</Text>
         </Pressable>
-        <Pressable className="bg-white p-3 rounded" onPress={() => setFilterByPriceModalVisible(true)}>
-          <Text>Complex Filter</Text>
-        </Pressable>
-        <Modal
-            visible={filterByPriceModalVisible}
-            animationType="slide"
-            presentationStyle="pageSheet"
-
+        <Pressable
+          className={`${minRating > 0 ? "border border-white" : "bg-white"} p-3 rounded ml-3`}
+          onPress={() => setFilterByRatingModalVisible(true)}
         >
-        </Modal>
+          <Text className={minRating > 0 ? "text-white" : ""}>Min Rating</Text>
+        </Pressable>
+        <GestureRecognizer
+          onSwipeDown={() => setFilterByRatingModalVisible(false)}
+        >
+          <Modal
+            visible={filterByRatingModalVisible}
+            animationType="slide"
+            transparent={true}
+          >
+            <View className="absolute bottom-0 bg-white w-screen p-5 drop-shadow-lg">
+              <Text className="text-lg font-bold">Minimum Rating:</Text>
+              <Text>{minRating.toFixed(1)}</Text>
+              <Slider
+                minimumValue={0}
+                lowerLimit={0}
+                maximumValue={5}
+                upperLimit={5}
+                step={0.1}
+                value={minRating}
+                onValueChange={setMinRating}
+              />
+              <PurpleButton
+                text="Apply"
+                onPress={() => {
+                  setFilterByRatingModalVisible(false);
+                  filterPlumbers();
+                }}
+              />
+            </View>
+          </Modal>
+        </GestureRecognizer>
       </View>
-      <View className="px-3">
+      <View className="px-3 mt-8">
         {filteredList.map((p) => (
           <PlumberFilterItem key={p.id} plumber={p} />
         ))}

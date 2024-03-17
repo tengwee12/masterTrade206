@@ -1,30 +1,30 @@
 // step 2 of 5
-import { View, Image, Pressable, Text, FlatList } from "react-native";
+import { View, Image, Alert, Text, FlatList } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-// import * as FileSystem from "expo-file-system";
-// import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useState } from "react";
 import Button from "../../components/Button.js";
 
+const MediaUploadPage = ({ navigation, route }) => {
+    const { issue } = route.params;
 
-const PictureUploadPage = ({ navigation }) => {
     const [images, setImages] = useState([]);
 
     const requestPermissions = async (useLibrary) => {
-        let status
+        let status;
         if (useLibrary) {
-            const response = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            const response =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
             status = response.status;
         } else {
             const response = await ImagePicker.requestCameraPermissionsAsync();
             status = response.status;
         }
-        if (status !== 'granted') {
-            alert('Sorry, we need permissions to make this work!');
+        if (status !== "granted") {
+            alert("Sorry, we need permissions to make this work!");
             return false;
         }
         return true;
-    }
+    };
 
     const selectImage = async (useLibrary) => {
         const hasPermission = await requestPermissions(useLibrary);
@@ -32,23 +32,23 @@ const PictureUploadPage = ({ navigation }) => {
         if (!hasPermission) {
             return;
         }
-        
+
         let result;
 
         if (useLibrary) {
-			result = await ImagePicker.launchImageLibraryAsync({
+            result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 1,
             });
-		} else {
-			result = await ImagePicker.launchCameraAsync({
+        } else {
+            result = await ImagePicker.launchCameraAsync({
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 1,
             });
-		}
+        }
 
         if (result.canceled) {
             return;
@@ -56,22 +56,25 @@ const PictureUploadPage = ({ navigation }) => {
 
         try {
             const imageUri = result.assets[0].uri;
-            setImages(prev => [...prev, imageUri]);
-            console.log("success: ", imageUri)
-        } catch(error) {
-            console.error(error)
-            throw error
+            setImages((prev) => [...prev, imageUri]);
+            console.log("success: ", imageUri);
+        } catch (error) {
+            console.error(error);
+            throw error;
         }
 
-        console.log(images)
+        console.log(images);
     };
 
-    // const fetchImage = async (uri) => {
-    //     const response = await fetch(uri);
-    //     const blob = await response.blob();
-    //     return blob;
-    // }
-
+    const handleMediaUpload = () => {
+        // const updatedIssue = {
+        //     ...issue,
+        //     media: [...issue.media, ...images], 
+        // };
+        // console.log(issue)
+        const updatedIssue = issue
+        navigation.navigate("DescribeIssueScreen", { issue: updatedIssue });
+    };
 
     return (
         <View className="p-4">
@@ -80,18 +83,25 @@ const PictureUploadPage = ({ navigation }) => {
                 Upload photos/videos of the issue
             </Text>
             <View className="">
-                <FlatList 
+                <FlatList
                     data={images}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) => (
-                        <Image 
+                        <Image
                             source={{ uri: item }}
-                            style={{ width: 300, height: 200, marginBottom: 10 }} // Explicit dimensions for debugging
+                            style={{
+                                width: 300,
+                                height: 200,
+                                marginBottom: 10,
+                            }} // Explicit dimensions for debugging
                         />
                     )}
-                    contentContainerStyle={{ alignItems: 'center', flexGrow: 1 }}
+                    contentContainerStyle={{
+                        alignItems: "center",
+                        flexGrow: 1,
+                    }}
                     ListEmptyComponent={() => (
-                        <Text style={{ textAlign: 'center', marginTop: 20 }}>
+                        <Text style={{ textAlign: "center", marginTop: 20 }}>
                             No images/videos uploaded yet.
                         </Text>
                     )}
@@ -101,12 +111,18 @@ const PictureUploadPage = ({ navigation }) => {
                         text="Photo Library"
                         onPress={() => selectImage(true)}
                     />
-                    <Button text="Use Camera" onPress={() => selectImage(false)} />
+                    <Button
+                        text="Use Camera"
+                        onPress={() => selectImage(false)}
+                    />
                 </View>
-                <Button text="Go to Describe Issue Screen" onPress={() => navigation.navigate('DescribeIssueScreen')}/>
+                <Button
+                    text="Go to Describe Issue Screen"
+                    onPress={handleMediaUpload}
+                />
             </View>
         </View>
     );
 };
 
-export default PictureUploadPage;
+export default MediaUploadPage;

@@ -32,6 +32,7 @@ const setUpDB = (drop) => {
 
           User.create({
             email: "test@gmail.com",
+            username: "Tester",
             password: "12345",
           })
             .then(() => {
@@ -39,12 +40,18 @@ const setUpDB = (drop) => {
 
               Plumber.bulkCreate([
                 {
+<<<<<<< HEAD
                   email: "chuan@gmail.com",
+=======
+                  email: "plumberchuan@gmail.com",
+>>>>>>> 1669d70e651eeb900aa830521e41b55ebed15e53
                   password: "12345",
                   name: "Plumber Chuan",
                   license: true,
+                  description: "More than 15 years experience in the industry, Plumber Phua is always committed to being responsible and responsive to all his customers’ issues",
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png",
+                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
                   averageRating: 4,
                 },
                 {
@@ -54,7 +61,18 @@ const setUpDB = (drop) => {
                   license: false,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/luigi.jpeg",
+                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
                   averageRating: 3.9,
+                },
+                {
+                  email: "kirby@gmail.com",
+                  password: "12345",
+                  name: "Plumber Kirby",
+                  license: true,
+                  image:
+                    "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/kirby.jpg",
+                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
+                  averageRating: 2,
                 },
               ])
                 .then(() => {
@@ -64,8 +82,8 @@ const setUpDB = (drop) => {
                     {
                       description: "test description",
                       title: "test title",
-                      imageLink: "test image link",
-                      category: "test categry",
+                      media: "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/post_img.png",
+                      category: "test category",
                       address: "test address",
                       startDate: Date.now(),
                       endDate: Date.now(),

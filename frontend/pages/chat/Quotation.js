@@ -1,10 +1,9 @@
 // Quotation.js
 import React, { useState } from 'react';
 import Button from "../../components/Button";
-import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Alert, StatusBar } from 'react-native';
 
 const Quotation = ({ plumberName, quotation }) => {
-
   [quotation, setQuotation] = useState(quotation);
 
 //TODO : Complete the transaction and confirm date and time
@@ -62,8 +61,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#6A1B9A',
     padding: 16,
+    paddingTop: StatusBar.currentHeight + 50,
     marginBottom: 16,
-    borderRadius: 10,
   },
   plumberName: {
     fontSize: 24,

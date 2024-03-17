@@ -23,8 +23,10 @@ export default function UserLoginPage({ navigation }) {
         email,
         password,
       });
+      console.log(response.data)
       await setItemAsync("token", response.data.token);
       await setItemAsync("userId", response.data.userId.toString());
+      await setItemAsync("email", email.toString());
       navigation.navigate("UserTabNavigator");
     } catch (err) {
       setError(err.message);
