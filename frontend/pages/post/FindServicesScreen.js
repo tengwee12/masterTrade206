@@ -5,7 +5,8 @@ export default function App({ navigation }) {
     const categories = ["Pipes", "Ceiling Leak", "Toilet Bowl"];
 
     const createIssueWithCategory = (category) => {
-        navigation.navigate("MediaUploadScreen", {
+        console.log("Selected category:", category);
+        const issue = {
             description: "",
             title: "",
             media: "",
@@ -13,7 +14,9 @@ export default function App({ navigation }) {
             address: "",
             startDate: "",
             endDate: "",
-        });
+        };
+        console.log(issue);
+        navigation.navigate("MediaUploadScreen", { issue: issue });
     };
     return (
         <View className="p-4">

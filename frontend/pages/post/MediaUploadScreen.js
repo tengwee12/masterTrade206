@@ -1,11 +1,12 @@
 // step 2 of 5
 import { View, Image, Platform, Text, FlatList } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../components/Button.js";
 
 const MediaUploadPage = ({ navigation, route }) => {
     const {issue} = route.params;
+    console.log(issue)
 
     const [images, setImages] = useState([]);
 

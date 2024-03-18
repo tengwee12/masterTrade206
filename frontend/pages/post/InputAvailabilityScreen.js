@@ -7,8 +7,7 @@ import { useState } from "react";
 // TODO: the available slots are not displaying
 
 const InputAvailabilityPage = ({ navigation, route }) => {
-    const {issue} = route.params;
-    console.log(issue)
+    const { issue } = route.params;
     const [date, setDate] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [startTime, setStartTime] = useState("");
@@ -58,14 +57,14 @@ const InputAvailabilityPage = ({ navigation, route }) => {
         if (date && startTime && endTime) {
             const startDateTime = `${date}T${startTime}:00`;
             const endDateTime = `${date}T${endTime}:00`;
-            issue = {
+            const updatedIssue = {
                 ...issue,
                 startDate: startDateTime,
                 endDate: endDateTime,
             };
             Alert.alert(`Start: ${startDateTime}, End: ${endDateTime}`);
-            console.log(issue)
-            navigation.navigate("SelectLocationScreen", {issue})
+            console.log(updatedIssue);
+            navigation.navigate("SelectLocationScreen", { issue: updatedIssue });
         }
     };
 

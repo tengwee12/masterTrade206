@@ -5,7 +5,7 @@ import {
     TouchableWithoutFeedback,
     Alert,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Keyboard } from "react-native";
 import Button from "../../components/Button";
 import { axiosInstance } from "../../services/axios";
@@ -19,12 +19,12 @@ const SelectLocationScreen = ({ navigation, route }) => {
 
     const saveLocation = async () => {
         if (country && postalCode && address) {
-            issue = {
+            const updatedIssue = {
                 ...issue,
                 address: `${country}:${postalCode}:${address}`,
             };
             try {
-                const response = await axiosInstance.post("/api/issue", issue);
+                const response = await axiosInstance.post("/api/issue", updatedIssue);
                 console.log(response.data);
             } catch (error) {
                 console.error(error.message);
