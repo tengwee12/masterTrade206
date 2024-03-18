@@ -8,38 +8,23 @@ import {
 import { useState, useEffect } from "react";
 import { Keyboard } from "react-native";
 import Button from "../../components/Button";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { axiosInstance } from "../../services/axios";
 
 const SelectLocationScreen = ({ navigation, route }) => {
-    const issue = route.params;
+    const { issue } = route.params;
 
     const [country, setCountry] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [address, setAddress] = useState("");
 
-    const getUserId = async () => {
-        try {
-            const response = await getItemAsync("userId");
-            console.log(response);
-            return response;
-        } catch (error) {
-            console.error(error.message);
-        }
-    };
-
-    useEffect(() => {
-        getUserId();
-    }, []);
-
     const saveLocation = async () => {
         if (country && postalCode && address) {
-            // console.log(issue);
+            issue = {
+                ...issue,
+                address: `${country}:${postalCode}:${address}`,
+            };
             try {
-                const response = await axiosInstance.post("/api/issue", {
-                    ...issue,
-                    address: `${country}:${postalCode}:${address}`,
-                });
+                const response = await axiosInstance.post("/api/issue", issue);
                 console.log(response.data);
             } catch (error) {
                 console.error(error.message);

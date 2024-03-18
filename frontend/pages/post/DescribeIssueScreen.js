@@ -1,24 +1,36 @@
 // step 3 of 5
-import { Alert, View, Text, TextInput, TouchableWithoutFeedback } from "react-native";
+import {
+    Alert,
+    View,
+    Text,
+    TextInput,
+    TouchableWithoutFeedback,
+} from "react-native";
 import Button from "../../components/Button";
 import { useState } from "react";
 import { Keyboard } from "react-native";
 
+
 const DescribeIssuePage = ({ navigation, route }) => {
-    const issue = route.params
-    const [title, onChangeTitle] = useState("")
-    const [description, onChangeDescription] = useState("")
+    const {issue} = route.params;
+
+    const [title, onChangeTitle] = useState("");
+    const [description, onChangeDescription] = useState("");
 
     const handleSubmit = () => {
-        const updatedIssue = {
-            ...issue,
-            title: title,
-            description: description,
+        if (title && description) {
+            const updatedIssue = {
+                ...issue,
+                title: title,
+                description: description,
+            }
+            Alert.alert(
+                `Submitted form with title: ${title}\n description: ${description}`
+            );
+            console.log("After adding title and description: \n", updatedIssue);
+            navigation.navigate("InputAvailabilityScreen", { issue: updatedIssue });
         }
-        Alert.alert(`Submitted form with title: ${title}\n description: ${description}`)
-        // console.log(updatedIssue)
-        navigation.navigate('InputAvailabilityScreen', {issue: updatedIssue})
-    }
+    };
 
     return (
         <View className="p-4">
@@ -30,7 +42,7 @@ const DescribeIssuePage = ({ navigation, route }) => {
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View>
                     <Text className="pb-2 pt-4">Title</Text>
-                    <TextInput 
+                    <TextInput
                         value={title}
                         placeholder="Enter title here"
                         onChangeText={onChangeTitle}
@@ -46,14 +58,14 @@ const DescribeIssuePage = ({ navigation, route }) => {
                         className="p-4 bg-inputGray rounded-md h-2/5"
                     />
 
-                    <Text className="pt-2">Include clear details so that your contractor understands the problem.</Text>
+                    <Text className="pt-2">
+                        Include clear details so that your contractor
+                        understands the problem.
+                    </Text>
                 </View>
             </TouchableWithoutFeedback>
 
-            <Button 
-                text="Submit"
-                onPress={handleSubmit}
-            />
+            <Button text="Submit" onPress={handleSubmit} />
         </View>
     );
 };

@@ -5,16 +5,15 @@ export default function App({ navigation }) {
     const categories = ["Pipes", "Ceiling Leak", "Toilet Bowl"];
 
     const createIssueWithCategory = (category) => {
-        const issue = {
-            category: category,
+        navigation.navigate("MediaUploadScreen", {
+            description: "",
+            title: "",
+            media: "",
+            category: category, // Set the selected category
+            address: "",
             startDate: "",
             endDate: "",
-            media: [],
-            address: "",
-            description: "",
-        };
-        // console.log(issue);
-        navigation.navigate("MediaUploadScreen", { issue });
+        });
     };
     return (
         <View className="p-4">

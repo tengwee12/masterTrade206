@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Button from "../../components/Button.js";
 
 const MediaUploadPage = ({ navigation, route }) => {
-    const { issue } = route.params;
+    const {issue} = route.params;
 
     const [images, setImages] = useState([]);
 
@@ -67,12 +67,11 @@ const MediaUploadPage = ({ navigation, route }) => {
     };
 
     const handleMediaUpload = () => {
-        // const updatedIssue = {
-        //     ...issue,
-        //     media: [...issue.media, ...images], 
-        // };
-        // console.log(issue)
-        const updatedIssue = issue
+        const updatedIssue = {
+            ...issue,
+            media: "media string", 
+        };
+        console.log("After adding media: \n", updatedIssue)
         navigation.navigate("DescribeIssueScreen", { issue: updatedIssue });
     };
 
