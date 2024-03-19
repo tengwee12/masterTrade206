@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, FlatList } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PurpleButton from "../components/PurpleButton";
 import { useState, useEffect } from "react";
@@ -17,9 +17,9 @@ export default function PlumberPage({ route }) {
 
   const getReviews = async () => {
     try {
-      const token = await getItemAsync("token");
+      let token = await getItemAsync("token");
       let result = await axiosInstance.get(
-        `/api/review/getplumber/${plumberID}`,
+        `/api/review/getbyplumber/${plumberID}`,
         {
           headers: {
             Authorization: token,
@@ -35,14 +35,19 @@ export default function PlumberPage({ route }) {
   };
 
   const getPlumberData = async () => {
-    const response = await axiosInstance.get("/api/plumber", {
-      params: {
-        id: plumberID,
-      },
-    });
+    try {
+      let token = await getItemAsync("token");
+      const response = await axiosInstance.get(`/api/plumber/${plumberID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    console.log("get plumber data:", response.data[0]);
-    setPlumberData(response.data[0]);
+      console.log("get plumber data:", response.data);
+      setPlumberData(response.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const navigateToReviewForm = () => {
@@ -51,7 +56,9 @@ export default function PlumberPage({ route }) {
 
   const navigateToChatPage = () => {
     // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", { otherEmail: plumberData.email.toString() });
+    navigation.navigate("ChatPage", {
+      otherEmail: plumberData.email.toString(),
+    });
   };
 
   useEffect(() => {
@@ -84,7 +91,7 @@ export default function PlumberPage({ route }) {
                 </View>
               )}
             </View>
-            <PurpleButton text="Chat" onPress={navigateToChatPage}/>
+            <PurpleButton text="Chat" onPress={navigateToChatPage} />
           </View>
           <View className="flex flex-col gap-y-4">
             <View>
@@ -99,38 +106,19 @@ export default function PlumberPage({ route }) {
               <Text className="text-sm">{plumberData.description}</Text>
             </View>
             <Text className="font-bold text-sm">Services Provided</Text>
-            <View className="flex flex-row">
-              <View className="w-1/2">
-                <Image
-                  source={require("../assets/sink-leak.jpg")}
-                  className="h-32"
-                />
-                <Text>Sink Choke or Leak ($80-100)</Text>
-              </View>
-              <View className="w-1/2">
-                <Image
-                  source={require("../assets/toilet-leak.jpg")}
-                  className="h-32"
-                />
-                <Text>Toilet Bowl Choke or Leak ($60)</Text>
-              </View>
-            </View>
-            <View className="flex flex-row">
-              <View className="w-1/2">
-                <Image
-                  source={require("../assets/tap-leak.jpg")}
-                  className="h-32"
-                />
-                <Text>Water Tap Leak($90-100)</Text>
-              </View>
-              <View className="w-1/2">
-                <Image
-                  source={require("../assets/heater-leak.jpg")}
-                  className="h-32"
-                />
-                <Text>Water Heater Installation ($70-90)</Text>
-              </View>
-            </View>
+            <FlatList
+              horizontal
+              data={plumberData.services}
+              renderItem={({ item }) => (
+                <View className="pr-2">
+                  <Image
+                    source={{ uri: item.media}}
+                    className="h-32 w-44"
+                  />
+                  <Text>{item.name} (${item.price})</Text>
+                </View>
+              )}
+            />
             <Text className="font-bold text-sm">Reviews</Text>
             <View className="flex flex-row items-center">
               <Text className="pr-2">
