@@ -104,6 +104,8 @@ export default function FilterPage({ route }) {
             setFilterByLicense(false);
             setFilterByService("");
             setMinRating(0);
+            setSearch("");
+            filterPlumbers();
           }}
         >
           <Text>Reset</Text>
