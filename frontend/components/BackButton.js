@@ -10,7 +10,7 @@ export default BackButton = ({ color }) => {
   };
 
   return (
-    <Pressable className="absolute top-10 left-2" onPress={handleGoBack}>
+    <Pressable className="absolute top-12 left-2" onPress={handleGoBack}>
       <Ionicons name="chevron-back-sharp" size={32} color={color} />
     </Pressable>
   );

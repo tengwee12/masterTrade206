@@ -1,17 +1,12 @@
-import { ScrollView, Text, Image, View } from "react-native";
+import { ScrollView, View, Text, Image } from "react-native";
 import { useEffect, useState } from "react";
 import PurpleButton from "../../components/PurpleButton";
 import BackButton from "../../components/BackButton";
 import { fetchIssueData } from "../../services/issue";
 
-export default function PlumberJobDetailsPage({ route }) {
+export default function IssueDetailsScreen({ route }) {
   const { issueId } = route.params;
   const [issueData, setIssueData] = useState({});
-
-  const navigateToChatPage = () => {
-    // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", { otherId: plumberID });
-  };
 
   const fetchIssue = async () => {
     try {
@@ -50,10 +45,6 @@ export default function PlumberJobDetailsPage({ route }) {
           </View>
         </View>
       )}
-      <View className="px-3">
-        <PurpleButton text="Offer Quotation" />
-        <PurpleButton text="Chat" onPress={navigateToChatPage} />
-      </View>
     </ScrollView>
   );
 }

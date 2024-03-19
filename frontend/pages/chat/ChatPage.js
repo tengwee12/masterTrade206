@@ -66,7 +66,7 @@ import Message from './Message'; // Import the Message component
 
   return (
     <View style={styles.container}>
-      <Quotation plumberName={otherEmail} quotation="$50 per hour" />
+      <Quotation plumberName={otherEmail} quotation="$50" />
       <GiftedChat
         messages={messages}
         onSend={onSend}
