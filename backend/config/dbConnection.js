@@ -40,7 +40,7 @@ const setUpDB = (drop) => {
 
               Plumber.bulkCreate([
                 {
-                  email: "plumberchuan@gmail.com",
+                  email: "chuan@gmail.com",
                   password: "12345",
                   name: "Plumber Chuan",
                   license: true,
