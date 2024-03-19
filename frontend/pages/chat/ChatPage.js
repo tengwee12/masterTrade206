@@ -11,7 +11,9 @@ import Message from './Message'; // Import the Message component
   const ChatPage = ({ route }) => {
     const [messages, setMessages] = useState([]);
     const userEmail = getItem('email');
-    const { otherEmail } = route.params;
+    const { otherEmail, issue } = route.params;
+    // console.log(issue)
+    // console.log(otherEmail)
 
     useLayoutEffect(() => {
       const loadMessages = async () => {
@@ -24,9 +26,10 @@ import Message from './Message'; // Import the Message component
             const data = doc.data();
             const senderEmail = data.user;
             const recipient = data.recipient; // Assuming recipient field is added to each message
+            const issueId = data.issueId.toString();
             
             // Check if the message is sent by the user or is sent to the user
-            if ((senderEmail === userEmail && recipient === otherEmail) || (senderEmail === otherEmail && recipient === userEmail)) {
+            if (((senderEmail === userEmail && recipient === otherEmail) || (senderEmail === otherEmail && recipient === userEmail)) && (issue == issueId)) {
               return {
                 _id: doc.id,
                 createdAt: data.createdAt,
@@ -35,6 +38,7 @@ import Message from './Message'; // Import the Message component
                   _id: senderEmail, // Set user to the actual sender ID
                 },
                 recipient : data.recipient,
+                issueId: issue,
               };
             } else {
               return null; // Exclude messages not sent by or to the user
@@ -53,20 +57,21 @@ import Message from './Message'; // Import the Message component
 
     const onSend = useCallback(async (newMessages = []) => {
       const newMessage = newMessages[0];
-      const { otherEmail } = await route.params      // Example recipient ID, replace with actual recipient ID
+      const { otherEmail, issue } = await route.params      // Example recipient ID, replace with actual recipient ID
       const messageToSend = {
         _id: newMessage._id,
         createdAt: newMessage.createdAt,
         text: newMessage.text,
         user: userEmail,
-        recipient: otherEmail // Include recipient information
+        recipient: otherEmail, // Include recipient information
+        issueId: issue.toString(),
       };
       addDoc(collection(database, 'chats'), messageToSend);
     }, []);
 
   return (
     <View style={styles.container}>
-      <Quotation plumberName={otherEmail} quotation="50" />
+      <Quotation otherEmail={otherEmail} quotation={"no input"} issue={issue === null ? "no input" : issue.toString()}/>
       <GiftedChat
         messages={messages}
         onSend={onSend}

@@ -25,6 +25,7 @@ export default function PlumberLoginPage({ navigation }) {
       })
       await setItemAsync("token", response.data.token);
       await setItemAsync("email", email.toString());
+      await setItemAsync("isPlumber", "true");                     //true is to indicate that user is a plumber 
       navigation.navigate("PlumberTabNavigator")
     } catch (err) {
       setError(err.message);

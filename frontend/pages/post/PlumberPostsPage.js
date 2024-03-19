@@ -19,7 +19,7 @@ export default function PlumberPostsPage() {
     setPostList(results.data);
   };
 
-  const goToPostDetailsPage = () => {
+  const goToPostDetailsPage = (issue) => {
     navigation.navigate("PlumberJobDetailsPage", { issueId: issue.id });
   };
 
@@ -34,7 +34,7 @@ export default function PlumberPostsPage() {
       <FlatList
         data={postList}
         renderItem={({ item }) => (
-         <IssueCard issue={item} onPress={goToPostDetailsPage}/>
+        <IssueCard issue={item} onPress={() => goToPostDetailsPage(item)}/>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
