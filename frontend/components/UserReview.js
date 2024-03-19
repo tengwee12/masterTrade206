@@ -24,7 +24,7 @@ export default function UserReview({ reviewData }) {
 
   return (
     <View key={reviewData.id} className="py-3">
-      <Text className="font-bold">Bob Tan</Text>
+      <Text className="font-bold">{reviewData.username}</Text>
       <View className="flex flex-row items-center">
         <StarRating rating={reviewData.rating} />
         <Text className="pl-3">{readableDate}</Text>

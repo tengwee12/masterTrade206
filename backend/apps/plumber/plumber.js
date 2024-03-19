@@ -158,6 +158,7 @@ router.get(
           return res.status(404).json({ error: "Plumber not found" });
         }
 
+        plumber.services = parseServices(plumber.services)
         // Return the plumber information as JSON
         res.json(plumber);
       } catch (error) {

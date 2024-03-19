@@ -1,7 +1,9 @@
-import { Text } from 'react-native'
+import { Text } from "react-native";
 
-export default Logo = () => {
-    return (
-        <Text className="text-white font-poppinsExtrabold text-center p-5 pt-10 drop-shadow text-lg">mastertrade</Text>
-    )
-}
+export default Logo = ({ text }) => {
+  return (
+    <Text className="text-white font-poppinsExtrabold text-center p-3 pt-12 drop-shadow text-lg">
+      {text ? text : "mastertrade"}
+    </Text>
+  );
+};

@@ -9,19 +9,19 @@ const Tab = createBottomTabNavigator();
 export default function UserTabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="HomeStack"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           switch (route.name) {
-            case 'HomeStack':
+            case 'Home':
               iconName = focused ? 'home' : 'home-outline'
               break
-            case 'ChatStack':
+            case 'Chat':
               iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
               break
-            case 'PostStack':
+            case 'Post':
               iconName = focused ? 'create' : 'create-outline'
               break
           } 
@@ -34,9 +34,9 @@ export default function UserTabNavigator() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="ChatStack" component={ChatStack} />
-      <Tab.Screen name="PostStack" component={PostStack} />
+      <Tab.Screen name="Home" component={HomeStack} />
+      <Tab.Screen name="Chat" component={ChatStack} />
+      <Tab.Screen name="Post" component={PostStack} />
     </Tab.Navigator>
   );
 }

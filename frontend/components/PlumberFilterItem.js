@@ -19,7 +19,7 @@ export default function PlumberFilterItem({ plumber }) {
         <Text className="font-bold">{plumber.name}</Text>
         <View className="flex flex-row items-center">
           <FontAwesome name="star" size={24} color="#f1c40f" />
-          <Text className="pl-1">{plumber.averageRating.toFixed(1)}</Text>
+          <Text className="pl-1">{plumber.averageRating?.toFixed(1)}</Text>
         </View>
         <View className="flex flex-row items-center">
           <Entypo name="location-pin" size={24} color="black" />

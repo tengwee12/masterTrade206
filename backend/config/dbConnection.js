@@ -47,27 +47,29 @@ const setUpDB = (drop) => {
                   description: "More than 15 years experience in the industry, Plumber Phua is always committed to being responsible and responsive to all his customers’ issues",
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png",
-                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
+                    services: "Sink;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/sink-leak.jpg;$80-100;Water Tap;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/tap-leak.jpg;$90-100;Toilet Bowl;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/toilet-leak.jpg;$60;",
                   averageRating: 4,
                 },
                 {
-                  email: "plumberPhua@gmail.com",
+                  email: "luigi@gmail.com",
                   password: "12345",
-                  name: "Plumber Phua",
+                  name: "Plumber Luigi",
+                  description: "With a keen eye for detail and a passion for excellence, Luigi tackles every job with precision and professionalism. From minor repairs to major installations, you can trust Luigi to get the job done efficiently and effectively.",
                   license: false,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/luigi.jpeg",
-                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
+                    services: "Sink;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/sink-leak.jpg;$80-100;Water Tap;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/tap-leak.jpg;$90-100;Toilet Bowl;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/toilet-leak.jpg;$60;",
                   averageRating: 3.9,
                 },
                 {
                   email: "kirby@gmail.com",
                   password: "12345",
                   name: "Plumber Kirby",
+                  description: "From routine maintenance to intricate installations, Kirby's precision and skill ensure quality workmanship and lasting results. Count on Plumber Kirby for reliable service, personalized solutions, and a seamless experience from start to finish.",
                   license: true,
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/kirby.jpg",
-                    services: "SinkCleaning;lmao.com;100;plumbing1;plumbbb.net;200;electriic1;electric.com;300;",
+                    services: "Sink;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/sink-leak.jpg;$80-100;Water Tap;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/tap-leak.jpg;$90-100;Toilet Bowl;https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/toilet-leak.jpg;$60;",
                   averageRating: 2,
                 },
               ])

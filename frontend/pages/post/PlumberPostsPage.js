@@ -1,14 +1,11 @@
 import {
-  ScrollView,
-  Pressable,
   FlatList,
-  Text,
-  Image,
   View,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../services/axios";
 import { useNavigation } from "@react-navigation/native";
+import IssueCard from "../../components/IssueCard";
 
 /* To do: change to filter by date range */
 
@@ -22,35 +19,25 @@ export default function PlumberPostsPage() {
     setPostList(results.data);
   };
 
-  const goToPostDetailsPage = (issueId) => {
-    console.log(issueId)
-    navigation.navigate("PlumberJobDetailsPage", { issueId })
-  }
+  const goToPostDetailsPage = () => {
+    navigation.navigate("PlumberJobDetailsPage", { issueId: issue.id });
+  };
 
   useEffect(() => {
     getPostList();
   }, []);
 
   return (
-    <ScrollView>
-      <Text>Job Listings For You</Text>
+    <View>
+      <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
+      <Logo text="Job Listings"/>
       <FlatList
         data={postList}
         renderItem={({ item }) => (
-          <Pressable className="flex flex-row py-2" onPress={() => goToPostDetailsPage(item.id)}>
-            <Image
-              source={{ uri: item.media }}
-              resizeMode="cover"
-              className="h-32 w-32 rounded"
-            />
-            <View className="pl-2">
-              <Text className="font-bold">{item.title}</Text>
-              <Text>{item.description}</Text>
-            </View>
-          </Pressable>
+         <IssueCard issue={item} onPress={goToPostDetailsPage}/>
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-    </ScrollView>
+    </View>
   );
 }

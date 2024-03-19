@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Alert, StatusBar } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert, StatusBar } from "react-native";
 import Button from "../../components/Button";
+import BackButton from "../../components/BackButton";
 import {
   collection,
   addDoc,
@@ -135,11 +136,22 @@ const Quotation = ({ plumberName, quotation }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.plumberName}>{plumberName}</Text>
-        <View style={styles.contentContainer}>
-          <Text style={styles.quotation}>{"$" + quotation + " per hour"}</Text>
-          <Button text="edit offer" onPress={() => handleEditOffer()} />
-          <Button text="Complete" onPress={() => handleCompletePress()} />
+        <BackButton color="white" />
+        <Text className="text-lg font-bold text-white text-center">{plumberName}</Text>
+        <View className="flex flex-row items-center mt-4">
+          <Text style={styles.quotation}>Quotation: {quotation}</Text>
+          <Pressable
+            className="bg-white p-3 rounded mr-5"
+            onPress={() => handleEditOffer()}
+          >
+            <Text>Edit Offer</Text>
+          </Pressable>
+          <Pressable
+            className="bg-white p-3 rounded"
+            onPress={() => handleCompletePress()}
+          >
+            <Text>Complete</Text>
+          </Pressable>
         </View>
       </View>
     </>
@@ -148,19 +160,19 @@ const Quotation = ({ plumberName, quotation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#6A1B9A",
+    backgroundColor: "#440d88",
     padding: 16,
     paddingTop: StatusBar.currentHeight + 50,
     marginBottom: 16,
   },
   plumberName: {
     fontSize: 24,
-    color: "#FFFFFF",
-    fontWeight: "bold",
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
   contentContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   quotation: {
     fontSize: 16,

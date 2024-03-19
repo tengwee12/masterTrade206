@@ -37,10 +37,11 @@ router.post("/", async (req, res) => {
     endDate,
   })
     .then((issue) => {
-      response.end(issue);
+      res.json(issue);
     })
     .catch((err) => {
-      response.status(500).end();
+      res.status(500).json();
+      console.error(err.message)
     });
 });
 
