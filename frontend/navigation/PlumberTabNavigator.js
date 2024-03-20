@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from '@expo/vector-icons';
 import ChatStack from "./ChatStack";
 import PlumberJobStack from "./PlumberJobStack";
-
+import PlumberScheduleStack from "./PlumberScheduleStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +21,9 @@ export default function PlumberTabNavigator() {
             case 'Chats':
               iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
               break
+            case 'Schedule':
+              iconName = focused ? 'time' : 'time-outline'
+              break
           } 
 
           // You can return any component that you like here!
@@ -33,6 +36,7 @@ export default function PlumberTabNavigator() {
     >
       <Tab.Screen name="Chats" component={ChatStack} />
       <Tab.Screen name="Jobs" component={PlumberJobStack} />
+      <Tab.Screen name="Schedule" component={PlumberScheduleStack} />
     </Tab.Navigator>
   );
 }
