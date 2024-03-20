@@ -4,6 +4,7 @@ import ReviewPage from "../pages/review/ReviewPage";
 import HomePage from "../pages/HomePage";
 import FilterPage from "../pages/FilterPage";
 import ChatPage from '../pages/chat/ChatPage';
+import SelectIssuePage from "../pages/SelectIssuePage";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function HomeStack() {
       <Stack.Screen name="Plumber" component={PlumberPage} />
       <Stack.Screen name="Review" component={ReviewPage} />
       <Stack.Screen name="ChatPage" component={ChatPage} />
+      <Stack.Screen name="SelectIssuePage" component={SelectIssuePage} />
     </Stack.Navigator>
   );
 }
