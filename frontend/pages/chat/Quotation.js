@@ -210,7 +210,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
         <BackButton color="white" />
         <Text className="text-lg font-bold text-white text-center">{otherEmail}</Text>
         <View className="flex flex-row items-center mt-4">
-          <Text style={styles.quotation}>Quotation: {quotation}</Text>
+          <Text style={styles.quotation}>Quotation: ${quotation}</Text>
           <Pressable
             className="bg-white p-3 rounded mr-5"
             onPress={() => handleEditOffer()}
