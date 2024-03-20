@@ -88,7 +88,9 @@ router.get("/getByUser/:customerId", async (req, res) => {
   const { customerId } = req.params;
 
   try {
-    const issues = await Issue.findAll({ where: { UserId: customerId }})
+    const issues = await Issue.findAll({ where: { 
+      UserId: customerId,
+      status: false }})
     res.json(issues);
   } catch (error) {
     console.error('Error retrieving issues:', error);
