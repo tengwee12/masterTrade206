@@ -4,6 +4,8 @@ const Issue = require("../apps/issue/model");
 const Review = require("../apps/review/model");
 const User = require("../apps/user/model");
 const Plumber = require("../apps/plumber/model");
+const Transaction = require("../apps/transaction/model");
+
 
 const setUpDB = (drop) => {
   db.authenticate()
@@ -13,15 +15,18 @@ const setUpDB = (drop) => {
     .then(() => {
       User.hasMany(Issue);
 
+      //sus??
       Issue.belongsTo(Plumber);
       Issue.hasOne(Review);
-      
+      Issue.hasOne(Transaction);
 
       Plumber.hasMany(Review);
 
       Review.belongsTo(Issue);
       Review.belongsTo(User);
       Review.belongsTo(Plumber);
+
+      Transaction.belongsTo(Issue);
 
       db.sync({
         force: drop,
@@ -132,6 +137,33 @@ const setUpDB = (drop) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+
+    Transaction.bulkCreate([
+      {
+        dateTime: new Date(),
+        quotation: 100.00,
+        PlumberId: 1, // Assuming PlumberId 1 exists in your database
+        IssueId: 2
+      },
+      {
+        dateTime: new Date(),
+        quotation: 120.00,
+        PlumberId: 2, // Assuming PlumberId 2 exists in your database
+        IssueId: 3
+      },
+      {
+        dateTime: new Date(),
+        quotation: 90.00,
+        PlumberId: 3, // Assuming PlumberId 3 exists in your database
+        IssueId: 4
+      }
+    ])
+    .then(() => {
+      console.log("Successfully added 3 separate transactions");
+    })
+    .catch((error) => {
+      console.error("Error adding transactions:", error);
     });
 };
 

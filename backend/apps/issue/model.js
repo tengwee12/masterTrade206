@@ -41,6 +41,7 @@ const Issue = db.define('Issue', {
     endDate: {
         type:DataTypes.DATEONLY
     }
+
 })
 
 module.exports = Issue;

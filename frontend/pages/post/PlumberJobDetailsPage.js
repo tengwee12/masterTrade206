@@ -3,15 +3,30 @@ import { useEffect, useState } from "react";
 import PurpleButton from "../../components/PurpleButton";
 import BackButton from "../../components/BackButton";
 import { fetchIssueData } from "../../services/issue";
+import { useNavigation } from "@react-navigation/native";
+import { axiosInstance } from "../../services/axios";
 
 export default function PlumberJobDetailsPage({ route }) {
   const { issueId } = route.params;
   const [issueData, setIssueData] = useState({});
+  const navigation = useNavigation();
 
-  const navigateToChatPage = () => {
-    // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", { otherId: plumberID });
+  const navigateToChatPage = async () => {
+    try {
+      console.log(issueData);
+      if (issueData && issueData.UserId) {
+        const Uid = issueData.UserId;
+        const emailResponse = await axiosInstance.get(`/api/user/getemail/${Uid}`);
+        const otherId = emailResponse.data;
+        navigation.navigate("ChatPage", { otherEmail: otherId, issue: issueData.id });
+      } else {
+        console.log("Issue data or UserId is missing.");
+      }
+    } catch (error) {
+      console.error("Error navigating to ChatPage:", error);
+    }
   };
+  
 
   const fetchIssue = async () => {
     try {
@@ -52,7 +67,7 @@ export default function PlumberJobDetailsPage({ route }) {
       )}
       <View className="px-3">
         <PurpleButton text="Offer Quotation" />
-        <PurpleButton text="Chat" onPress={navigateToChatPage} />
+        <PurpleButton text="Chat" onPress={() => navigateToChatPage(issueData)} />
       </View>
     </ScrollView>
   );

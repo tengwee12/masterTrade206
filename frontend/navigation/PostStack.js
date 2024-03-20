@@ -19,22 +19,10 @@ export default function PostStack() {
       <Stack.Screen name="YourPostsScreen" component={YourPostsScreen} />
       <Stack.Screen name="FindServicesScreen" component={FindServicesScreen} />
       <Stack.Screen name="MediaUploadScreen" component={MediaUploadScreen} />
-      <Stack.Screen
-        name="DescribeIssueScreen"
-        component={DescribeIssueScreen}
-      />
-      <Stack.Screen
-        name="InputAvailabilityScreen"
-        component={InputAvailabilityScreen}
-      />
-      <Stack.Screen
-        name="SelectLocationScreen"
-        component={SelectLocationScreen}
-      />
-      <Stack.Screen
-        name="IssueDetailsScreen"
-        component={IssueDetailsScreen}
-      />
+      <Stack.Screen name="DescribeIssueScreen" component={DescribeIssueScreen}/>
+      <Stack.Screen name="InputAvailabilityScreen" component={InputAvailabilityScreen}/>
+      <Stack.Screen name="SelectLocationScreen" component={SelectLocationScreen}/>
+      <Stack.Screen name="IssueDetailsScreen" component={IssueDetailsScreen} />
     </Stack.Navigator>
   );
 }

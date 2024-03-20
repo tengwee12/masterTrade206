@@ -27,6 +27,7 @@ export default function UserLoginPage({ navigation }) {
       await setItemAsync("token", response.data.token);
       await setItemAsync("userId", response.data.userId.toString());
       await setItemAsync("email", email.toString());
+      await setItemAsync("isPlumber", "false");                             //0 is to indicate that user is not a plumber
       navigation.navigate("UserTabNavigator");
     } catch (err) {
       setError(err.message);
