@@ -32,6 +32,7 @@ router.post("/login", async (req, res, next) => {
           success: true,
           token: tokenObject.token,
           expiresIn: tokenObject.expires,
+          plumberId: plumber.id
         });
       } else {
         res

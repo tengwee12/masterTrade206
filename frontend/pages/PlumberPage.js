@@ -54,9 +54,9 @@ export default function PlumberPage({ route }) {
     navigation.navigate("Review", { plumberID: plumberID });
   };
 
-  const navigateToChatPage = () => {
+  const navigateToSelectIssuePage = () => {
     // checkAndAddRecipient(plumberID);
-    navigation.navigate("ChatPage", {otherEmail: plumberData.email.toString(), issue: "no input"});
+    navigation.navigate("SelectIssuePage", { plumberID, otherEmail: plumberData.email.toString() });
   };
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export default function PlumberPage({ route }) {
                 </View>
               )}
             </View>
-            <PurpleButton text="Chat" onPress={navigateToChatPage} />
+            <PurpleButton text="Chat" onPress={navigateToSelectIssuePage} />
           </View>
           <View className="flex flex-col gap-y-4">
             <View>

@@ -84,6 +84,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/getByUser/:customerId", async (req, res) => {
+  const { customerId } = req.params;
+
+  try {
+    const issues = await Issue.findAll({ where: { 
+      UserId: customerId,
+      status: false }})
+    res.json(issues);
+  } catch (error) {
+    console.error('Error retrieving issues:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 // Update startDate, endDate, by ID
 router.put("/date-range/:id", async (req, res) => {
   const { id } = req.params;

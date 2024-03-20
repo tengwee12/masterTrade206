@@ -58,8 +58,16 @@ router.get('/getByPlumber/:PlumberId', async (req, res) => {
     if (transactions.length === 0) {
       return res.status(404).json({ error: 'No transactions found for the given PlumberId' });
     }
+    ret = []
+    for (let i = 0; i < transactions.length; i++) {
+      let issue = await Issue.findOne({where : {id : transactions[i].IssueId}});
+      issue.dataValues.TransactionId = transactions[i].id;
+      issue.dataValues.meetingDate = transactions[i].dateTime;
+      issue.dataValues.quotation = transactions[i].quotation;
+      ret.push(issue);
+    }
 
-    res.json(transactions);
+    res.json(ret);
   } catch (error) {
     console.error('Error retrieving transactions:', error);
     res.status(500).json({ error: 'Internal Server Error' });

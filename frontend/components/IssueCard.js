@@ -3,7 +3,7 @@ import { View, Text, Image, Pressable } from "react-native";
 const IssueCard = ({ issue, onPress }) => {
   return (
     <Pressable
-      className="bg-white rounded-lg shadow-md m-2 p-4 flex flex-row"
+      className="bg-white rounded-lg shadow-md my-2 p-4 flex flex-row"
       onPress={onPress}
     >
       {issue.media ? (

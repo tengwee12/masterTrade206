@@ -66,7 +66,6 @@ export default function PlumberJobDetailsPage({ route }) {
         </View>
       )}
       <View className="px-3">
-        <PurpleButton text="Offer Quotation" />
         <PurpleButton text="Chat" onPress={() => navigateToChatPage(issueData)} />
       </View>
     </ScrollView>

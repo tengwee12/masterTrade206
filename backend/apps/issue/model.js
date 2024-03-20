@@ -40,6 +40,10 @@ const Issue = db.define('Issue', {
     },
     endDate: {
         type:DataTypes.DATEONLY
+    },
+    status: {
+      type:DataTypes.BOOLEAN,
+      defaultValue: false
     }
 
 })
