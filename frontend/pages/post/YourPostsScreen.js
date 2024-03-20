@@ -37,14 +37,14 @@ const YourPostsPage = ({ navigation }) => {
     <View>
       <View className="absolute left-0 right-0 top-0 h-32 bg-brandPurple"></View>
       <Logo text="My Posts" />
-      <FlatList
-        data={issues}
-        keyExtractor={({ id }) => id}
-        renderItem={({ item }) => (
-          <IssueCard issue={item} onPress={() => goToIssueDetails(item.id)} />
-        )}
-      />
       <View className="mx-2">
+        <FlatList
+          data={issues}
+          keyExtractor={({ id }) => id}
+          renderItem={({ item }) => (
+            <IssueCard issue={item} onPress={() => goToIssueDetails(item.id)} />
+          )}
+        />
         <PurpleButton
           text="Create New Post"
           onPress={() => navigation.navigate("FindServicesScreen")}
