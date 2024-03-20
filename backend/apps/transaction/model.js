@@ -25,3 +25,4 @@ const Transaction = db.define('Transaction', {
 });
 
 module.exports = Transaction;
+

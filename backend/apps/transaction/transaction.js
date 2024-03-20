@@ -49,4 +49,20 @@ router.post('/', async (req, res) => {
         })
 });
 
+// Modified endpoint to fetch transactions by PlumberId
+router.get('/checkExists/:PlumberId', async (req, res) => {
+  try {
+    const { PlumberId } = req.params; // Extract PlumberId from request parameters
+    const transactions = await Transaction.findAll({ where: { PlumberId } });
+
+    if (transactions.length === 0) {
+      return res.status(404).json({ error: 'No transactions found for the given PlumberId' });
+    }
+
+    res.json(transactions);
+  } catch (error) {
+    console.error('Error retrieving transactions:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 module.exports = router;
