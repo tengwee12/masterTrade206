@@ -19,6 +19,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
   const userEmail = getItem("email");
   [quotation, setQuotation] = useState(quotation);
   [issue, setIssue] = useState(issue)
+  const [date, setDate] = useState("no date");
 
   //TODO : Complete the transaction and confirm date and time
   const handleCompletePress = () => {
@@ -60,6 +61,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
           // If quotation exists, set the quotation state
           const data = querySnapshot.docs[0].data();
           setQuotation(data.quotation);
+          setDate(data.date);
         } else {
           if (isPlumber === "true") {
             Alert.prompt(
@@ -165,7 +167,6 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
                     plumberName: currentUser,
                     quotation: `${newValue}`,
                     issue: issue,
-                    createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp(),
                   });
                 } else {
@@ -203,30 +204,98 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
       console.error("Error updating quotation:", error);
     }
   };
+
+  const handleEditDate = async () => {
+    try {
+      Alert.prompt(
+        "Edit Date",
+        "Enter the new date and time (YYYY-MM-DD HH:MM)",
+        [
+          {
+            text: "Cancel",
+            style: "cancel",
+          },
+          {
+            text: "Save",
+            onPress: async (newDate) => {
+              if (newDate) {
+                const quotationRef = collection(database, "quotations");
+                const q = query(
+                  quotationRef,
+                  where("userEmail", "==", userEmail),
+                  where("plumberName", "==", otherEmail),
+                  where("issue", "==", issue)
+                );
+  
+                const querySnapshot = await getDocs(q);
+  
+                if (!querySnapshot.empty) {
+                  querySnapshot.forEach(async (doc) => {
+                    await updateDoc(doc.ref, {
+                      userEmail: userEmail,
+                      plumberName: otherEmail,
+                      date: `${newDate}`,
+                      issue: issue,
+                      updatedAt: serverTimestamp(),
+
+                    });
+                  });
+                  setDate(newDate);
+  
+                  Alert.alert(
+                    "Date Updated",
+                    "The date of the quotation has been successfully updated."
+                  );
+                } else {
+                  Alert.alert(
+                    "Quotation Not Found",
+                    "Unable to find the quotation to update the date."
+                  );
+                }
+              }
+            },
+          },
+        ],
+        "plain-text",
+        date // Initial value for the input field
+      );
+    } catch (error) {
+      console.error("Error updating date:", error);
+    }
+  };
+  
   
   return (
     <>
       <View style={styles.container}>
         <BackButton color="white" />
         <Text className="text-lg font-bold text-white text-center">{otherEmail}</Text>
-        <View className="flex flex-row items-center mt-4">
-          <Text style={styles.quotation}>Quotation: ${quotation}</Text>
-          <Pressable
-            className="bg-white p-3 rounded mr-5"
-            onPress={() => handleEditOffer()}
-          >
-            <Text>Edit Offer</Text>
-          </Pressable>
-          <Pressable
-            className="bg-white p-3 rounded"
-            onPress={() => handleCompletePress()}
-          >
-            <Text>Complete</Text>
-          </Pressable>
+        <View className="flex flex-row items-center justify-between mt-4 w-full">
+          <View className="flex flex-col">
+            <Text style={styles.quotation}>Quotation: ${quotation}</Text>
+            <Text style={styles.quotation}>Date: {date}</Text>
+          </View>
+
+          {getItem("isPlumber") === "true" && ( // Conditionally render if user is a plumber
+            <Pressable
+              className="bg-white p-3 rounded flex flex-end"
+              onPress={() => handleEditOffer()}
+            >
+              <Text>Edit Offer</Text>
+            </Pressable>
+          )}
+          {getItem("isPlumber") === "false" && ( // Conditionally render if user's email matches otherEmail
+            <Pressable
+              className="bg-white p-3 rounded flex flex-end"
+              onPress={() => handleEditDate()}
+            >
+              <Text>Edit Date</Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </>
-  );
+  );  
 };
 
 const styles = StyleSheet.create({
