@@ -13,6 +13,7 @@ const setUpDB = (drop) => {
     .then(() => {
       User.hasMany(Issue);
 
+      //sus??
       Issue.belongsTo(Plumber);
       Issue.hasOne(Review);
       

@@ -40,6 +40,12 @@ const Issue = db.define('Issue', {
     },
     endDate: {
         type:DataTypes.DATEONLY
+    },
+    status: {
+        type:DataTypes.BOOLEAN
+    },
+    meetDate: {
+      type:DataTypes.DATE
     }
 })
 
