@@ -8,12 +8,16 @@ const userRoute = require('./user/user');
 const plumberRoute = require('./plumber/plumber');
 const reviewRoute = require('./review/review');
 const Plumber = require("./plumber/model");
+const transactionRoute = require("./transaction/transaction");
+
 
 // add routes
 router.use('/issue', issueRoute);
 router.use('/user', userRoute);
 router.use('/plumber',plumberRoute);
 router.use('/review', reviewRoute);
+router.use('/transaction', transactionRoute);
+
 
 router.get('/', (req, res) => {
   // todo documentation

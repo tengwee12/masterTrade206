@@ -4,6 +4,8 @@ const Issue = require("../apps/issue/model");
 const Review = require("../apps/review/model");
 const User = require("../apps/user/model");
 const Plumber = require("../apps/plumber/model");
+const Transaction = require("../apps/transaction/model");
+
 
 const setUpDB = (drop) => {
   db.authenticate()
@@ -16,13 +18,15 @@ const setUpDB = (drop) => {
       //sus??
       Issue.belongsTo(Plumber);
       Issue.hasOne(Review);
-      
+      Issue.hasOne(Transaction);
 
       Plumber.hasMany(Review);
 
       Review.belongsTo(Issue);
       Review.belongsTo(User);
       Review.belongsTo(Plumber);
+
+      Transaction.belongsTo(Issue);
 
       db.sync({
         force: drop,
