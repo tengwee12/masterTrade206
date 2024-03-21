@@ -92,6 +92,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
           } else {
             setQuotation("50");
           }
+          setStatus(2);
         }
       } catch (error) {
         console.error("Error fetching quotation:", error);
