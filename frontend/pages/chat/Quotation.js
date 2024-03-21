@@ -19,6 +19,10 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
 
   const [isDatePickerVisible, setDatePickerVisible] = useState(false);
 
+  const pid = getItem("plumberId");
+
+  // console.log(pid);
+
   useEffect(() => {
     const fetchQuotation = async () => {
       try {
@@ -187,7 +191,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
             {getItem("isPlumber") === "true" && status === 1 && (
               <Pressable
                 className="bg-green-500 text-white p-3 rounded"
-                onPress={() => AcceptDate(otherEmail, userEmail, issue, date, status, setStatus)}
+                onPress={() => AcceptDate(otherEmail, userEmail, issue, date, status, setStatus, pid)}
               >
                 <Text>Accept Date</Text>
               </Pressable>
