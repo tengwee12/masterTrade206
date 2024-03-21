@@ -8,7 +8,7 @@ const Review = db.define('Review', {
         primaryKey: true
     },
     description:{
-        type:DataTypes.STRING
+        type:DataTypes.TEXT('long')
     },
     dateTime:{
         type:DataTypes.STRING,
