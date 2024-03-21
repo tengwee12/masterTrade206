@@ -34,11 +34,23 @@ const setUpDB = (drop) => {
           console.log("created initial tables");
           // load initial data
 
-          User.create({
-            email: "test@gmail.com",
-            username: "Tester",
-            password: "12345",
-          })
+          User.bulkCreate([
+            {
+              email: "test@gmail.com",
+              username: "Tester",
+              password: "12345",
+            },
+            {
+              email: "test2@gmail.com",
+              username: "Tester2",
+              password: "12345",
+            },
+            {
+              email: "test3@gmail.com",
+              username: "Tester3",
+              password: "12345",
+            },
+          ])
             .then(() => {
               console.log("successfully added intial user data");
 
@@ -88,50 +100,91 @@ const setUpDB = (drop) => {
 
                   Issue.bulkCreate([
                     {
-                      description: "test description",
-                      title: "test title",
+                      description:
+                        "注意到我的马桶管道待续滴水, 尽快需要有经验的水管工！🛠️ ",
+                      title: "马桶水管漏水",
                       media:
                         "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/post_img.png",
-                      category: "test category",
-                      address: "test address",
-                      startDate: Date.now(),
-                      endDate: Date.now(),
+                      category: "管道",
+                      address: "盛港",
+                      startDate: "2024-04-10 18:00:00",
+                      endDate: "2024-04-10 21:00:00",
                       UserId: 1,
-                      PlumberId: 1,
                     },
                     {
-                      description: "test description",
-                      title: "test title",
-                      imageLink: "test image link",
-                      category: "test categry",
-                      address: "test address",
-                      startDate: Date.now(),
-                      endDate: Date.now(),
+                      description:
+                        "我家的天花板最近出现了严重的漏水问题，每次下雨都会有水滴从天花板渗出来，严重影响了居住环境和家庭生活。我们急需找一位专业的水管工来解决这个问题。希望能找到有经验、技术过硬的水管工，能够快速准确地定位并修复漏水处。如果您是一位水管工，并且能够及时处理此问题，请随时与我联系。谢谢！",
+                      title: "天花板漏水",
+                      media:
+                        "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/ceilingLeak.jpeg",
+                      category: "天花板",
+                      address: "宏茂桥",
+                      startDate: "2024-04-11 18:00:00",
+                      endDate: "2024-04-11 20:00:00",
                       UserId: 1,
-                      PlumberId: 1,
                     },
                   ])
                     .then(() => {
                       console.log("successfully added initial posting data");
 
-                      Review.create({
-                        customerId: 1, // Example customer ID
-                        description: "Great service!", // Example review description
-                        dateTime: "2024-03-04 12:00:00", // Example date and time
-                        rating: 5, // Example rating
-                        media: "image1.com", // Example media URLs
-                        IssueId: 1, // Example issue ID
-                        price: 6.9,
-                        PlumberId: 1,
-                        UserId: 1,
-                      })
+                      Review.bulkCreate([
+                        {
+                          customerId: 1, // Example customer ID
+                          description: "Great service! would look to him again", // Example review description
+                          dateTime: "2024-03-04 12:00:00", // Example date and time
+                          rating: 5, // Example rating
+                          media: "image1.com", // Example media URLs
+                          IssueId: 1, // Example issue ID
+                          price: 6.9,
+                          PlumberId: 1,
+                          UserId: 1,
+                        },
+                        {
+                          customerId: 2,
+                          description: "Good service",
+                          dateTime: "2024-03-02 12:00:00",
+                          rating: 4,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 2,
+                          UserId: 2,
+                        },
+                        {
+                          customerId: 3,
+                          description: "Good service",
+                          dateTime: "2024-03-01 12:00:00",
+                          rating: 4,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 2,
+                          UserId: 3,
+                        },
+                        {
+                          customerId: 1,
+                          description:
+                            "Didn't really fix my problem correctly. the sink just started to leak again",
+                          dateTime: "2024-03-07 12:00:00",
+                          rating: 4,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 2,
+                          UserId: 1,
+                        },
+                      ])
                         .then(() => {
-                          Transaction.bulkCreate([{
-                            dateTime: new Date(),
-                            quotation: 80,
-                            PlumberId: 1,
-                            IssueId: 1
-                          }]).then(() => {}).catch((err) => console.log("done!!!!!"));
+                          Transaction.bulkCreate([
+                            {
+                              dateTime: new Date(),
+                              quotation: 80,
+                              PlumberId: 1,
+                              IssueId: 1,
+                            },
+                          ])
+                            .then(() => {})
+                            .catch((err) => console.log("done!!!!!"));
                         })
                         .catch((err) =>
                           console.error("Error creating review:", err)

@@ -15,13 +15,13 @@ export default function PlumberTabNavigator() {
           let iconName;
 
           switch (route.name) {
-            case 'Jobs':
+            case '工作':
               iconName = focused ? 'briefcase' : 'briefcase-outline'
               break
-            case 'Chats':
+            case '对话':
               iconName = focused ? 'chatbox-ellipses' : 'chatbox-ellipses-outline'
               break
-            case 'Schedule':
+            case '时间表':
               iconName = focused ? 'time' : 'time-outline'
               break
           } 
@@ -34,9 +34,9 @@ export default function PlumberTabNavigator() {
         headerShown: false
       })}
     >
-      <Tab.Screen name="Chats" component={ChatStack} />
-      <Tab.Screen name="Jobs" component={PlumberJobStack} />
-      <Tab.Screen name="Schedule" component={PlumberScheduleStack} />
+      <Tab.Screen name="对话" component={ChatStack} />
+      <Tab.Screen name="工作" component={PlumberJobStack} />
+      <Tab.Screen name="时间表" component={PlumberScheduleStack} />
     </Tab.Navigator>
   );
 }

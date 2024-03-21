@@ -16,9 +16,14 @@ export default function PlumberJobDetailsPage({ route }) {
       console.log(issueData);
       if (issueData && issueData.UserId) {
         const Uid = issueData.UserId;
-        const emailResponse = await axiosInstance.get(`/api/user/getemail/${Uid}`);
+        const emailResponse = await axiosInstance.get(
+          `/api/user/getemail/${Uid}`
+        );
         const otherId = emailResponse.data;
-        navigation.navigate("ChatPage", { otherEmail: otherId, issue: issueData.id });
+        navigation.navigate("ChatPage", {
+          otherEmail: otherId,
+          issue: issueData.id,
+        });
       } else {
         console.log("Issue data or UserId is missing.");
       }
@@ -26,7 +31,6 @@ export default function PlumberJobDetailsPage({ route }) {
       console.error("Error navigating to ChatPage:", error);
     }
   };
-  
 
   const fetchIssue = async () => {
     try {
@@ -62,11 +66,15 @@ export default function PlumberJobDetailsPage({ route }) {
               </Text>
             </View>
             <Text>{issueData.description}</Text>
+            <Text className="mt-5">可用日期: 2024-05-10, 16:00 - 17:00</Text>
           </View>
         </View>
       )}
       <View className="px-3">
-        <PurpleButton text="Chat" onPress={() => navigateToChatPage(issueData)} />
+        <PurpleButton
+          text="开始对话"
+          onPress={() => navigateToChatPage(issueData)}
+        />
       </View>
     </ScrollView>
   );

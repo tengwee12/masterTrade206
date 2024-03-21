@@ -27,7 +27,8 @@ export default function PlumberPostsPage() {
     return (
         <View>
             <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
-            <Logo text="服务" />
+            <Logo text="工作" />
+            <View className="px-2">
             <FlatList
                 data={postList}
                 renderItem={({ item }) => (
@@ -38,6 +39,7 @@ export default function PlumberPostsPage() {
                 )}
                 keyExtractor={(item) => item.id.toString()}
             />
+            </View>
         </View>
     );
 }

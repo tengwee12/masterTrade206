@@ -26,7 +26,7 @@ const Quotation = ({ otherEmail, quotation, issue }) => {
     const userEmail = getItem("email");
     [quotation, setQuotation] = useState(quotation);
     [issue, setIssue] = useState(issue);
-    const [date, setDate] = useState("no date");
+    const [date, setDate] = useState("没有确认日期");
 
     //TODO : Complete the transaction and confirm date and time
     const handleCompletePress = () => {

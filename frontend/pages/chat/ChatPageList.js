@@ -104,7 +104,8 @@ const ChatPageList = () => {
   return (
     <View>
       <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
-      <Logo text="My Chats"/>
+      <Logo text="对话"/>
+      {chats.length === 0 && <Text className="text-center mt-10">No chats yet!</Text>}
       <FlatList
         data={chats}
         renderItem={renderItem}
