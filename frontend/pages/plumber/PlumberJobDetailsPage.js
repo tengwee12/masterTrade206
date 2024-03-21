@@ -55,10 +55,10 @@ export default function PlumberJobDetailsPage({ route }) {
             <Text className="font-bold text-lg py-2">{issueData.title}</Text>
             <View className="flex flex-row mb-2">
               <Text className="p-2 bg-inputGray rounded">
-                Category: {issueData.category}
+                种类: {issueData.category}
               </Text>
               <Text className="p-2 bg-inputGray rounded ml-2">
-                Location: {issueData.address}
+                地址: {issueData.address}
               </Text>
             </View>
             <Text>{issueData.description}</Text>

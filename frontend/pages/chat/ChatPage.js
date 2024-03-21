@@ -71,7 +71,7 @@ import Message from './Message'; // Import the Message component
 
   return (
     <View style={styles.container}>
-      <Quotation otherEmail={otherEmail} quotation={"no input"} issue={issue === null ? "no input" : issue.toString()}/>
+      <Quotation otherEmail={otherEmail} quotation={"没有输入"} issue={issue === null ? "没有输入" : issue.toString()}/>
       <GiftedChat
         messages={messages}
         onSend={onSend}
