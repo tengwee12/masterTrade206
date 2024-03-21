@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import StarRating from "../components/StarRating";
 
 export default function UserReview({ reviewData }) {
@@ -26,10 +26,12 @@ export default function UserReview({ reviewData }) {
     <View key={reviewData.id} className="py-3">
       <Text className="font-bold">{reviewData.username}</Text>
       <View className="flex flex-row items-center">
+        <Text className="mr-2">{reviewData.rating?.toFixed(1)}</Text>
         <StarRating rating={reviewData.rating} />
         <Text className="pl-3">{readableDate}</Text>
       </View>
       <Text>{reviewData.description}</Text>
+      {reviewData.media && reviewData.media.length > 0 && <Image source={{ uri: reviewData.media }} className="h-32 w-32 my-2" resizeMode="cover"/>}
     </View>
   );
 }
