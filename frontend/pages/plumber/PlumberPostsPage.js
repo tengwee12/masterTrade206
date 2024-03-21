@@ -27,7 +27,7 @@ export default function PlumberPostsPage() {
     return (
         <View>
             <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
-            <Logo text="任务" />
+            <Logo text="服务" />
             <FlatList
                 data={postList}
                 renderItem={({ item }) => (
