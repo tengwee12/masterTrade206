@@ -27,6 +27,7 @@ export default function PlumberPage({ route }) {
         }
       );
 
+      console.log("plumberID:", plumberID)
       console.log("get reviews:", result.data);
       setReviews(result.data);
     } catch (error) {

@@ -130,10 +130,10 @@ const setUpDB = (drop) => {
                       Review.bulkCreate([
                         {
                           customerId: 1, // Example customer ID
-                          description: "Great service! would look to him again", // Example review description
+                          description: "Phua was extremely professional. He ran tests on all the pipes in my house to identify the root cause of the choke and explained how the piping network runs so that I could get a better understanding. His dedication and sincerely was greatly appreciated. Highly recommend!!!", // Example review description
                           dateTime: "2024-03-04 12:00:00", // Example date and time
                           rating: 5, // Example rating
-                          media: "image1.com", // Example media URLs
+                          media: "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/reviewPhoto.webp", // Example media URLs
                           IssueId: 1, // Example issue ID
                           price: 6.9,
                           PlumberId: 1,
@@ -141,9 +141,44 @@ const setUpDB = (drop) => {
                         },
                         {
                           customerId: 2,
-                          description: "Good service",
+                          description: "Phua was very responsive and he fixed the following day to visit my home for inspection. He quoted me the pipe replacement charges on instantly get it fixed. I'm very much appreciated, highly recommended on his service and responsiveness.",
                           dateTime: "2024-03-02 12:00:00",
                           rating: 4,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 1,
+                          UserId: 2,
+                        },
+                        {
+                          customerId: 3,
+                          description: "Water leakage in bathroom via heater. Plumber is efficient and reliable. Can resolve problems effectively. Thank you",
+                          dateTime: "2024-03-01 12:00:00",
+                          rating: 4,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 1,
+                          UserId: 3,
+                        },
+                        {
+                          customerId: 1,
+                          description:
+                            "Quoted an acceptable price but wanted to charge me more afterwards. As he's already held me hostage so had to agreed to him. This happened about a year ago when I had accidentally broken my built-in water supply pipe.",
+                          dateTime: "2024-03-07 12:00:00",
+                          rating: 3,
+                          media: "",
+                          IssueId: 2,
+                          price: 70,
+                          PlumberId: 2,
+                          UserId: 1,
+                        },
+                        {
+                          customerId: 2,
+                          description:
+                            "Doesn't solve the issue, charges me $120,not recommend!",
+                          dateTime: "2024-03-07 12:00:00",
+                          rating: 2,
                           media: "",
                           IssueId: 2,
                           price: 70,
@@ -152,17 +187,6 @@ const setUpDB = (drop) => {
                         },
                         {
                           customerId: 3,
-                          description: "Good service",
-                          dateTime: "2024-03-01 12:00:00",
-                          rating: 4,
-                          media: "",
-                          IssueId: 2,
-                          price: 70,
-                          PlumberId: 2,
-                          UserId: 3,
-                        },
-                        {
-                          customerId: 1,
                           description:
                             "Didn't really fix my problem correctly. the sink just started to leak again",
                           dateTime: "2024-03-07 12:00:00",
@@ -171,7 +195,7 @@ const setUpDB = (drop) => {
                           IssueId: 2,
                           price: 70,
                           PlumberId: 2,
-                          UserId: 1,
+                          UserId: 3,
                         },
                       ])
                         .then(() => {
