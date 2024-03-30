@@ -1,7 +1,4 @@
-import {
-  FlatList,
-  View,
-} from "react-native";
+import { FlatList, View } from "react-native";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../services/axios";
 import { useNavigation } from "@react-navigation/native";
@@ -29,15 +26,20 @@ export default function PlumberPostsPage() {
 
   return (
     <View>
-      <View className="absolute left-0 right-0 top-0 h-24 bg-brandPurple"></View>
-      <Logo text="Job Listings"/>
-      <FlatList
-        data={postList}
-        renderItem={({ item }) => (
-         <IssueCard issue={item} onPress={() => goToPostDetailsPage(item.id)}/>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View className="absolute left-0 right-0 top-0 h-28 bg-brandPurple"></View>
+      <Logo text="Job Listings" />
+      <View className="px-2">
+        <FlatList
+          data={postList}
+          renderItem={({ item }) => (
+            <IssueCard
+              issue={item}
+              onPress={() => goToPostDetailsPage(item.id)}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      </View>
     </View>
   );
 }
