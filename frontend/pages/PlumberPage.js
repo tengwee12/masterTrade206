@@ -52,7 +52,7 @@ export default function PlumberPage({ route }) {
   };
 
   const navigateToReviewForm = () => {
-    navigation.navigate("Review", { plumberID: plumberID });
+    navigation.navigate("Review", { plumberID: plumberID, plumberName: plumberData.name });
   };
 
   const navigateToSelectIssuePage = () => {

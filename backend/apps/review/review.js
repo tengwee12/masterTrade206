@@ -37,7 +37,8 @@ router.post('/', async (req, res) => {
             rating,
             media,
             IssueId,
-            price
+            price,
+            plumberId: 1
         });
         const issue = await Issue.findByPk(IssueId);
         const plumber = await issue.getPlumber();

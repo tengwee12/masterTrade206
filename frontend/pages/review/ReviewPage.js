@@ -16,11 +16,12 @@ import { uploadData } from "aws-amplify/storage";
 import { axiosInstance } from "../../services/axios";
 import { useNavigation } from "@react-navigation/native";
 import { getItemAsync } from "expo-secure-store";
+import BackButton from "../../components/BackButton";
 
 const ReviewPage = ({ route }) => {
   const navigation = useNavigation();
 
-  const { plumberID } = route.params;
+  const { plumberID, plumberName } = route.params;
   const [images, setImages] = useState([]);
   const [s3uris, setS3uris] = useState([]);
   const [rating, setRating] = useState(2.5);
@@ -96,8 +97,12 @@ const ReviewPage = ({ route }) => {
 
   return (
     <ScrollView>
-      <View className="p-4 bg-white flex flex-col gap-y-4">
-        <Text>Rate your experience for {plumberID}</Text>
+      <View className="absolute left-0 right-0 top-0 h-32 bg-brandPurple" />
+      <Logo text="Write a Review"/>
+      <BackButton color="white"/>
+      <View className="mt-5"/>
+      <View className="px-4 bg-white flex flex-col gap-y-4">
+        <Text className="mt-5">Rate your experience for {plumberName}</Text>
         <Rating
           defaultRating={0}
           ratingCount={5}
