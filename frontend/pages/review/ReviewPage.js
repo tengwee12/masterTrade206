@@ -23,7 +23,7 @@ const ReviewPage = ({ route }) => {
   const { plumberID } = route.params;
   const [images, setImages] = useState([]);
   const [s3uris, setS3uris] = useState([]);
-  const [rating, setRating] = useState({});
+  const [rating, setRating] = useState(2.5);
   const [description, setDescription] = useState("");
 
   const handleRatingCompleted = (rating) => {
@@ -68,12 +68,15 @@ const ReviewPage = ({ route }) => {
 
   const handlePostReview = async () => {
     try {
+      const userId = await getItemAsync("userId");
       const token = await getItemAsync("token");
       let result = await axiosInstance.post(
         "/api/review/",
         {
           plumberId: plumberID,
-          customerId: 1,
+          customerId: userId,
+          IssueId: 1,
+          price: 100,
           description: description,
           dateTime: new Date(),
           rating: rating,
