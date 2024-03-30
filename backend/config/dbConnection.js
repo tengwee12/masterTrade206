@@ -61,7 +61,7 @@ const setUpDB = (drop) => {
                   name: "Plumber Chuan",
                   license: true,
                   description:
-                    "More than 15 years experience in the industry, Plumber Phua is always committed to being responsible and responsive to all his customers’ issues",
+                    "More than 15 years experience in the industry, Plumber Chuan is always committed to being responsible and responsive to all his customers’ issues",
                   image:
                     "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/mario.png",
                   services:
@@ -129,7 +129,7 @@ const setUpDB = (drop) => {
                       Review.bulkCreate([
                         {
                           customerId: 1, // Example customer ID
-                          description: "Phua was extremely professional. He ran tests on all the pipes in my house to identify the root cause of the choke and explained how the piping network runs so that I could get a better understanding. His dedication and sincerely was greatly appreciated. Highly recommend!!!", // Example review description
+                          description: "Chuan was extremely professional. He ran tests on all the pipes in my house to identify the root cause of the choke and explained how the piping network runs so that I could get a better understanding. His dedication and sincerely was greatly appreciated. Highly recommend!!!", // Example review description
                           dateTime: "2024-03-04 12:00:00", // Example date and time
                           rating: 5, // Example rating
                           media: "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/reviewPhoto.webp", // Example media URLs
@@ -140,7 +140,7 @@ const setUpDB = (drop) => {
                         },
                         {
                           customerId: 2,
-                          description: "Phua was very responsive and he fixed the following day to visit my home for inspection. He quoted me the pipe replacement charges on instantly get it fixed. I'm very much appreciated, highly recommended on his service and responsiveness.",
+                          description: "Chuan was very responsive and he fixed the following day to visit my home for inspection. He quoted me the pipe replacement charges on instantly get it fixed. I'm very much appreciated, highly recommended on his service and responsiveness.",
                           dateTime: "2024-03-02 12:00:00",
                           rating: 4,
                           media: "",
