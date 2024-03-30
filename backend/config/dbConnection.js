@@ -100,23 +100,23 @@ const setUpDB = (drop) => {
 
                   Issue.bulkCreate([
                     {
-                      description: "test description",
-                      title: "test title",
+                      description: "pipe next to toiler bowl leaking, cannot flush properly",
+                      title: "toilet pipe problem",
                       media:
                         "https://mastertrade-bucket1173044-spm.s3.ap-southeast-1.amazonaws.com/public/post_img.png",
-                      category: "test category",
-                      address: "test address",
+                      category: "pipe",
+                      address: "Pasir Ris 47583",
                       startDate: Date.now(),
                       endDate: Date.now(),
                       UserId: 1,
                       PlumberId: 1,
                     },
                     {
-                      description: "test description",
-                      title: "test title",
+                      description: "My kitchen sink keeps dripping water, even when the faucet is entirely closed",
+                      title: "kitchen sink leakage",
                       imageLink: "test image link",
-                      category: "test categry",
-                      address: "test address",
+                      category: "leak",
+                      address: "Serangoon 177013",
                       startDate: Date.now(),
                       endDate: Date.now(),
                       UserId: 1,
